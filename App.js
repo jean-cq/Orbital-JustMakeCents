@@ -1,20 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
+//import S_botton from './assets/S_botton.js';
+import DefaultImage from './assets/starting_page.png';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+const DEFAULT_IMAGE = Image.resolveAssetSource(DefaultImage).uri;
+
+export default App = () => {
+    return (
+        <View style={styles.container}>
+            <Image source={{ uri: DEFAULT_IMAGE }} style={styles.image}/>
+
+        </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+        toppadding: 10,
+        backgroundColor: '#EBECF0',
+        alignItems: 'center',
+       justifyContent: 'flex-start'
+    }, image: {
+                width: 500,
+        height: 800,
+        justifyContent: "flex-start"
+    },
+       botton: {
+
+    }
+    
 });
+
