@@ -1,17 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, View } from 'react-native';
-//import S_botton from './assets/S_botton.js';
+import {Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
+import Flatbutton from './components/Flatbutton.js';
 import DefaultImage from './assets/starting_page.png';
+import { NavigationContainer } from '@react-navigation/native';
 
 const DEFAULT_IMAGE = Image.resolveAssetSource(DefaultImage).uri;
+const Separator = () => (
+  <View style={styles.separator} />
+);
 
 export default App = () => {
     return (
-        <View style={styles.container}>
-            <Image source={{ uri: DEFAULT_IMAGE }} style={styles.image}/>
-
-        </View>
-  );
+        <NavigationContainer>
+        <SafeAreaView style={styles.container}>
+            <View>
+                <Image source={{ uri: DEFAULT_IMAGE }}
+                    style={styles.image} />
+            </View>
+            <Separator />
+            <View style={styles.fixToText}>
+                <Flatbutton text='Log In' onPress={() => Alert.alert('Simple Button pressed')} />
+                <Flatbutton text='Register' onPress={() => Alert.alert('Simple Button pressed')} color = 'maroon' />
+                </View>
+                <StatusBar style ='auto'/>
+            </SafeAreaView>
+            </NavigationContainer>
+        )
 }
 
 const styles = StyleSheet.create({
@@ -22,13 +36,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
        justifyContent: 'flex-start'
     }, image: {
-                width: 500,
+        width: 500,
         height: 800,
         justifyContent: "flex-start"
-    },
-       botton: {
+    }, fixToText: {
+        flexDirection: 'row',
+        justifyContent: "space-around"
+    }, separator: {
+        marginVertical: 8,
+        orderBottomColor: 'white',
+        borderBottomWidth: StyleSheet.hairlineWidth,
 
-    }
-    
+    },
 });
 
