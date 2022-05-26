@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import {Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
 import Flatbutton from './components/Flatbutton.js';
 import DefaultImage from './assets/starting_page.png';
-import { NavigationContainer } from '@react-navigation/native';
 
 const DEFAULT_IMAGE = Image.resolveAssetSource(DefaultImage).uri;
 const Separator = () => (
