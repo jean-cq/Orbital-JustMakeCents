@@ -16,11 +16,11 @@ export default Flat_button = ({ text, onPress  }) => {
             borderRadius: 20,
             paddingVertical: 14,
             paddingHorizontal: 10,
-            backgroundColor: '#ffd700',
+            backgroundColor: 'yellow',
             marginHorizontal: 50
                     },
         buttontext: {
-           color: 'white',
+           color: 'grey',
             fontSize: 20,
             textAlign: 'center'
         }

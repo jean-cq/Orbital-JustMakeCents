@@ -1,29 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
-import {Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
+import { Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
 import Flatbutton from './components/Flatbutton.js';
 import DefaultImage from './assets/starting_page.png';
+import Login_page from './screens/Login_page.js'
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Starting_page from './screens/Starting_page.js';
 
-const DEFAULT_IMAGE = Image.resolveAssetSource(DefaultImage).uri;
-const Separator = () => (
-  <View style={styles.separator} />
-);
+//import Navigator from './Navigation/HomeStack.js'
+
+const Stack = createNativeStackNavigator();
+
 
 export default App = () => {
+    
     return (
         <NavigationContainer>
-        <SafeAreaView style={styles.container}>
-            <View>
-                <Image source={{ uri: DEFAULT_IMAGE }}
-                    style={styles.image} />
-            </View>
-            <Separator />
-            <View style={styles.fixToText}>
-                <Flatbutton text='Log In' onPress={() => Alert.alert('Simple Button pressed')} />
-                <Flatbutton text='Register' onPress={() => Alert.alert('Simple Button pressed')} color = 'maroon' />
-                </View>
-                <StatusBar style ='auto'/>
-            </SafeAreaView>
-            </NavigationContainer>
+
+            <Stack.Navigator style={styles.navigator}>
+                <Stack.Screen name="Welcome" component={Starting_page} options={{
+                    title: 'Awesome app'
+                }}
+                />
+                <Stack.Screen name="Login_page" component={Login_page} options={{
+                    title: 'Log In',
+                    backgroundColor:'gold'
+                }}/>
+                    </Stack.Navigator>
+            
+           </NavigationContainer>
         )
 }
 
@@ -47,5 +52,9 @@ const styles = StyleSheet.create({
         borderBottomWidth: StyleSheet.hairlineWidth,
 
     },
+    navigator: {
+        flex: 1,
+        backgroundColor:'gold'
+    }
 });
 
