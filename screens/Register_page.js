@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
+import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import React, { useState } from 'react';
 import { useTheme } from '@react-navigation/native';
 import { supabase } from '../lib/supabase';
@@ -129,6 +130,18 @@ export default Register_page = () => {
                 />
 
             </View>
+
+            <View style={styles.icons}>
+            <TouchableOpacity onPress={() => handleGoogleLogin('SIGNUP', email, password)}>
+            <AntDesign
+                name="google"
+                color={colors.text}
+                size={20}
+
+                />
+            </TouchableOpacity>
+            </View>
+
             <View style={styles.fixToText}>
                 <Flatbutton text='Register' onPress={() => handleLogin('SIGNUP', email, password)} />
             </View>
@@ -143,12 +156,12 @@ export default Register_page = () => {
 
 const styles = StyleSheet.create({
     container: {
-            flex: 1,
-            toppadding: 10,
+        flex: 1,
+        toppadding: 10,
         backgroundColor: 'gold',
         alignItems: 'stretch',
 
-            justifyContent: 'flex-start'
+        justifyContent: 'flex-start'
     },
     header: {
         fontSize: 30,
@@ -174,9 +187,12 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         marginVertical: 50,
     },
-        text_footer: {
-            color: '#05375a',
-            fontSize: 18
-    }
+    text_footer: {
+        color: '#05375a',
+        fontSize: 18
+    }, icons: {
+    flexDirection: 'row',
+    alignContent: 'flex-end'
+}
 
 });

@@ -165,12 +165,14 @@ export default Login_page = () => {
             </View>
 
             <View style={styles.icons}>
+            <TouchableOpacity onPress={() => handleGoogleLogin('LOGIN', email, password)}>
             <AntDesign
                 name="google"
                 color={colors.text}
                 size={20}
 
-            />
+                />
+            </TouchableOpacity>
             </View>
 
             <View style={styles.fixToText}>
