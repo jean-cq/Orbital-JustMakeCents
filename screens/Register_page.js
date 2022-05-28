@@ -7,27 +7,44 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '@react-navigation/native';
+import { supabase } from '../lib/supabase'
 
 const Stack = createNativeStackNavigator();
 export default Register_page = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState('')
+
+    const handleValidUser = (val) => {
+        if (val.trim().length >= 4) {
+            setData({
+                ...data,
+                isValidUser: true
+            });
+        } else {
+            setData({
+                ...data,
+                isValidUser: false
+            });
+        }
+    }
+
     const { colors } = useTheme();
     //const { params } = useRoute();
-    const updateSecureTextEntry = () => {
-        setData({
-            ...data,
-            secureTextEntry: !data.secureTextEntry
-        });
-    }
-    const [data, setData] = React.useState({
-        username: '',
-        password: '',
-        check_textInputChange: false,
-        secureTextEntry: true,
-        isValidUser: true,
-        isValidPassword: true,
-    });
+
+    const handleLogin = async (type, email, password) => {
+        setLoading(type)
+        const { error, user } =
+          type === 'LOGIN'
+            ? await supabase.auth.signIn({ email, password })
+            : await supabase.auth.signUp({ email, password })
+        if (!error && !user) Alert.alert('Check your email for the login link!')
+        if (error) Alert.alert(error.message)
+        setLoading('')
+      }
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={[styles.text_footer, {
@@ -46,7 +63,8 @@ export default Register_page = () => {
                     marginHorizontal={10}
                     style={styles.textInput}
                     autoCapitalize="none"
-                    onChangeText={(val) => textInputChange(val)}
+                    value={email}
+                    onChangeText={(text) => setEmail(text)}
                     onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
                 />
 
@@ -68,29 +86,10 @@ export default Register_page = () => {
                     style={styles.textInput}
                     marginHorizontal={10}
                     autoCapitalize="none"
-                    onChangeText={(val) => textInputChange(val)}
+                    onChangeText={(text) => setPassword(text)}
                     onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
                 />
-                <TouchableOpacity
-                    onPress={updateSecureTextEntry}
-                >
-                    <View style={{ marginLeft: 200 }}>
-                        {data.secureTextEntry ?
-                            <Feather
-                                name="eye-off"
-                                color="grey"
-                                size={20}
 
-                            />
-                            :
-                            <Feather
-                                name="eye"
-                                color="grey"
-                                size={20}
-                            />
-                        }
-                    </View>
-                </TouchableOpacity>
             </View>
            
             <Text style={[styles.text_footer, {
@@ -109,33 +108,13 @@ export default Register_page = () => {
                     marginHorizontal={10}
                     style={styles.textInput}
                     autoCapitalize="none"
-                    onChangeText={(val) => textInputChange(val)}
+                    onChangeText={(text) => setPassword(text)}
                     onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
                 />
-                <TouchableOpacity
-                    onPress={updateSecureTextEntry}
-                >
-                    <View style={{ marginLeft: 140 }}>
-                    {data.secureTextEntry ?
-                        <Feather
-                            name="eye-off"
-                            color="grey"
-                            size={20}
-                            
-                        />
-                        :
-                        <Feather
-                            name="eye"
-                            color="grey"
-                            size={20}
-                        />
-                    }
-                        </View>
 
-                </TouchableOpacity>
             </View>
             <View style={styles.fixToText}>
-                <Flatbutton text='Register' onPress={() => Alert.alert('Simple Button pressed')} />
+                <Flatbutton text='Register' onPress={() => handleLogin('SIGNUP', email, password)} />
             </View>
            
         </SafeAreaView>

@@ -6,13 +6,11 @@ import Flatbutton from '../components/Flatbutton.js';
 //import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
 import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
-import React from 'react';
 import { useTheme } from '@react-navigation/native';
 // Set up a Login component
 import React, { useState } from 'react'
-import { Alert, StyleSheet, View } from 'react-native'
 import { supabase } from '../lib/supabase'
-import { Button, Input } from 'react-native-elements'
+import { Input } from 'react-native-elements'
 
 
 
@@ -88,6 +86,16 @@ export default Login_page = () => {
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
   
+    const handleLogin = async (type, email, password) => {
+        setLoading(type)
+        const { error, user } =
+          type === 'LOGIN'
+            ? await supabase.auth.signIn({ email, password })
+            : await supabase.auth.signUp({ email, password })
+        if (!error && !user) Alert.alert('Check your email for the login link!')
+        if (error) Alert.alert(error.message)
+        setLoading('')
+      }
     async function signInWithEmail() {
       setLoading(true)
       const { user, error } = await supabase.auth.signIn({
@@ -160,7 +168,7 @@ export default Login_page = () => {
             </View>
             
             <View style={styles.fixToText}>
-                <Flatbutton text='Log In' onPress={() => Alert.alert('Simple Button pressed')} />
+                <Flatbutton text='Log In' onPress={() => handleLogin('LOGIN', email, password)} />
             </View>
             
         </SafeAreaView>

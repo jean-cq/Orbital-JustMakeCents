@@ -5,7 +5,7 @@ import { Button, Input } from "react-native-elements";
 import { ApiError, Session } from "@supabase/supabase-js";
 import React from 'react';
 
-export default function Account({ session }: { session: Session }) {
+export default function Account({ session }) {
   const [loading, setLoading] = React.useState(false);
   const [username, setUsername] = useState("");
   const [website, setWebsite] = useState("");
@@ -36,7 +36,7 @@ export default function Account({ session }: { session: Session }) {
         setAvatarUrl(data.avatar_url);
       }
     } catch (error) {
-      Alert.alert((error as ApiError).message);
+      Alert.alert((error).message);
     } finally {
       setLoading(false);
     }
@@ -46,10 +46,6 @@ export default function Account({ session }: { session: Session }) {
     username,
     website,
     avatar_url,
-  }: {
-    username: string;
-    website: string;
-    avatar_url: string;
   }) {
     try {
       setLoading(true);
@@ -72,7 +68,7 @@ export default function Account({ session }: { session: Session }) {
         throw error;
       }
     } catch (error) {
-      Alert.alert((error as ApiError).message);
+      Alert.alert((error).message);
     } finally {
       setLoading(false);
     }
