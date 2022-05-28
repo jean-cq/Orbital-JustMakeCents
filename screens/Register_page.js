@@ -45,7 +45,7 @@ export default Register_page = () => {
         if (error) Alert.alert(error.message)
         setLoading('')
       }
-    const handleGoogleLogin = async (type, email, password) => {
+/*    const handleGoogleLogin = async (type, email, password) => {
         setLoading(type)
         const { user, session, error } =
             type === 'LOGIN'
@@ -61,7 +61,7 @@ export default Register_page = () => {
                 })
         setLoading('')
     }
-
+*/
     return (
         <SafeAreaView style={styles.container}>
             <Text style={[styles.text_footer, {
@@ -131,17 +131,6 @@ export default Register_page = () => {
 
             </View>
 
-            <View style={styles.icons}>
-            <TouchableOpacity onPress={() => handleGoogleLogin('SIGNUP', email, password)}>
-            <AntDesign
-                name="google"
-                color={colors.text}
-                size={20}
-
-                />
-            </TouchableOpacity>
-            </View>
-
             <View style={styles.fixToText}>
                 <Flatbutton text='Register' onPress={() => handleLogin('SIGNUP', email, password)} />
             </View>
@@ -190,9 +179,21 @@ const styles = StyleSheet.create({
     text_footer: {
         color: '#05375a',
         fontSize: 18
-    }, icons: {
+    },
+    /* icons: {
     flexDirection: 'row',
     alignContent: 'flex-end'
-}
+
+    <View style={styles.icons}>
+            <TouchableOpacity onPress={() => handleGoogleLogin('SIGNUP', email, password)}>
+            <AntDesign
+                name="google"
+                color={colors.text}
+                size={20}
+
+                />
+            </TouchableOpacity>
+            </View>
+} */
 
 });
