@@ -8,6 +8,12 @@ import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import React from 'react';
 import { useTheme } from '@react-navigation/native';
+// Set up a Login component
+import React, { useState } from 'react'
+import { Alert, StyleSheet, View } from 'react-native'
+import { supabase } from '../lib/supabase'
+import { Button, Input } from 'react-native-elements'
+
 
 
 const Stack = createNativeStackNavigator();
@@ -78,6 +84,32 @@ export default Login_page = () => {
         }
     }
     
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
+  
+    async function signInWithEmail() {
+      setLoading(true)
+      const { user, error } = await supabase.auth.signIn({
+        email: email,
+        password: password,
+      })
+  
+      if (error) Alert.alert(error.message)
+      setLoading(false)
+    }
+  
+    async function signUpWithEmail() {
+      setLoading(true)
+      const { user, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+      })
+  
+      if (error) Alert.alert(error.message)
+      setLoading(false)
+    }
+    
     return (
         <SafeAreaView style={styles.container}>
             <Text style={[styles.text_footer, {
@@ -95,7 +127,8 @@ export default Login_page = () => {
                     marginHorizontal={10}
                 style={styles.textInput}
                 autoCapitalize="none"
-                onChangeText={(val) => textInputChange(val)}
+                value={email}
+                onChangeText={(text) => setEmail(text)}
                 onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
             />
 
@@ -118,7 +151,8 @@ export default Login_page = () => {
                     secureTextEntry={true}
                     style={styles.textInput}
                     autoCapitalize="none"
-                    onChangeText={(val) => textInputChange(val)}
+                    value={password}
+                    onChangeText={(text) => setPassword(text)}
                     onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
                 />
                 
