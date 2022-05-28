@@ -9,7 +9,7 @@ import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import React, { useState } from 'react';
 import { useTheme } from '@react-navigation/native';
-import { supabase } from '../lib/supabase'
+import { supabase } from '../lib/supabase';
 
 const Stack = createNativeStackNavigator();
 export default Register_page = () => {
@@ -44,6 +44,22 @@ export default Register_page = () => {
         if (error) Alert.alert(error.message)
         setLoading('')
       }
+    const handleGoogleLogin = async (type, email, password) => {
+        setLoading(type)
+        const { user, session, error } =
+            type === 'LOGIN'
+                ? await supabase.auth.signIn({
+                    provider: 'Google'
+                }, {
+                    redirectTo: 'https://xlmxiwbuyvnpmipnzzfy.supabase.co/auth/v1/callback'
+                })
+                : await supabase.auth.signUp({
+                    provider: 'Google'
+                }, {
+                    redirectTo: 'https://xlmxiwbuyvnpmipnzzfy.supabase.co/auth/v1/callback'
+                })
+        setLoading('')
+    }
 
     return (
         <SafeAreaView style={styles.container}>
