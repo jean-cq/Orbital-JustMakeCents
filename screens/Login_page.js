@@ -98,22 +98,21 @@ export default Login_page = () => {
         setLoading('')
       }
     
-    const handleGoogleLogin = async (type, email, password) => {
+/*    const handleGoogleLogin = async (type) => {
         setLoading(type)
         const { user, session, error } =
             type === 'LOGIN'
                 ? await supabase.auth.signIn({
-                    provider: 'Google'
+                    provider: 'google'
                 }, {
-                    redirectTo: 'https://xlmxiwbuyvnpmipnzzfy.supabase.co/auth/v1/callback'
-                })
+                    redirectTo: 'https://xlmxiwbuyvnpmipnzzfy.supabase.co/auth/v1/authorize?provider=google'})
                 : await supabase.auth.signUp({
-                    provider: 'Google'
+                    provider: 'google'
                 }, {
-                    redirectTo: 'https://xlmxiwbuyvnpmipnzzfy.supabase.co/auth/v1/callback'
-                })
+                    redirectTo: 'https://xlmxiwbuyvnpmipnzzfy.supabase.co/auth/v1/authorize?provider=google'})
         setLoading('')
     }
+*/
 
     return (
         <SafeAreaView style={styles.container}>
@@ -164,17 +163,6 @@ export default Login_page = () => {
 
             </View>
 
-            <View style={styles.icons}>
-            <TouchableOpacity onPress={() => handleGoogleLogin('LOGIN', email, password)}>
-            <AntDesign
-                name="google"
-                color={colors.text}
-                size={20}
-
-                />
-            </TouchableOpacity>
-            </View>
-
             <View style={styles.fixToText}>
                 <Flatbutton text='Log In' onPress={() => handleLogin('LOGIN', email, password)} />
             </View>
@@ -223,10 +211,21 @@ const styles = StyleSheet.create({
         color: '#05375a',
         fontSize: 18
     },
-    icons: {
+    /* icons: {
         flexDirection: 'row',
         alignItems:'flex-end'
-    }
+
+        <View style={styles.icons}>
+            <TouchableOpacity onPress={() => handleGoogleLogin('LOGIN')}>
+            <AntDesign
+                name="google"
+                color={colors.text}
+                size={20}
+
+                />
+            </TouchableOpacity>
+            </View>
+    } */
 
 });
 /*   {data.secureTextEntry ?
