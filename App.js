@@ -1,37 +1,45 @@
 import { StatusBar } from 'expo-status-bar';
 import { Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
 import Flatbutton from './components/Flatbutton.js';
-import DefaultImage from './assets/starting_page.png';
 import Login_page from './screens/Login_page.js'
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Starting_page from './screens/Starting_page.js';
+import Register_page from './screens/Register_page.js';
 
-//import Navigator from './Navigation/HomeStack.js'
 
 const Stack = createNativeStackNavigator();
 
 
-export default App = () => {
+export default App = ({ navigation }) => {
     
     return (
         <NavigationContainer>
 
-            <Stack.Navigator style={styles.navigator}>
-                <Stack.Screen name="Welcome" component={Starting_page} options={{
+            <Stack.Navigator
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: 'gold',
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                },
+            }}
+    >
+                <Stack.Screen name="Starting_page" component={Starting_page} options={{
                     title: 'Awesome app'
                 }}
                 />
                 <Stack.Screen name="Login_page" component={Login_page} options={{
-                    title: 'Log In',
-                    backgroundColor:'gold'
-                }}/>
+                    title: 'Log In'
+                }} />
+                <Stack.Screen name="Register_page" component={Register_page} options={{
+                    title: 'Register'
+                }} />
                     </Stack.Navigator>
             
-           </NavigationContainer>
-        )
-}
-
+           </NavigationContainer>)}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -52,9 +60,5 @@ const styles = StyleSheet.create({
         borderBottomWidth: StyleSheet.hairlineWidth,
 
     },
-    navigator: {
-        flex: 1,
-        backgroundColor:'gold'
-    }
 });
 

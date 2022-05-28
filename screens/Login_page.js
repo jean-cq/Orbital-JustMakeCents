@@ -1,19 +1,98 @@
 // JavaScript source code
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
+//import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
+import Feather from '../node_modules/@expo/vector-icons/Feather.js';
+import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
+import React from 'react';
+import { useTheme } from '@react-navigation/native';
+
 
 const Stack = createNativeStackNavigator();
 export default Login_page = () => {
-    //const { params } = useRoute();
+    const [data, setData] =React.useState({
+        username: '',
+        password: '',
+        check_textInputChange: false,
+        secureTextEntry: true,
+        isValidUser: true,
+        isValidPassword: true,
+    });
+
+    const { colors } = useTheme();
+
+    const textInputChange = (val) => {
+        if (val.trim().length >= 4) {
+            setData({
+                ...data,
+                username: val,
+                check_textInputChange: true,
+                isValidUser: true
+            });
+        } else {
+            setData({
+                ...data,
+                username: val,
+                check_textInputChange: false,
+                isValidUser: false
+            });
+        }
+    }
+
+    const handlePasswordChange = (val) => {
+        if (val.trim().length >= 8) {
+            setData({
+                ...data,
+                password: val,
+                isValidPassword: true
+            });
+        } else {
+            setData({
+                ...data,
+                password: val,
+                isValidPassword: false
+            });
+        }
+    }
+
+    const updateSecureTextEntry = () => {
+        setData({
+            ...data,
+            secureTextEntry: !data.secureTextEntry
+        });
+    }
+
+    const handleValidUser = (val) => {
+        if (val.trim().length >= 4) {
+            setData({
+                ...data,
+                isValidUser: true
+            });
+        } else {
+            setData({
+                ...data,
+                isValidUser: false
+            });
+        }
+    }
+    
     return (
         <SafeAreaView style={styles.container}>
-            
+            <Text style={[styles.text_footer, {
+                marginTop: 35, marginLeft: 10, marginBottom: 10
+            }]}>Username</Text>
             <View style={styles.action}>
+                <FontAwesome
+                    name="user-o"
+                    color={colors.text}
+                    size={20}
+                />
             <TextInput
                 placeholder="Your Email"
                     placeholderTextColor="grey"
+                    marginHorizontal={10}
                 style={styles.textInput}
                 autoCapitalize="none"
                 onChangeText={(val) => textInputChange(val)}
@@ -21,21 +100,35 @@ export default Login_page = () => {
             />
 
             </View>
+            <Text style={[styles.text_footer, {
+                marginTop: 35, marginLeft: 10, marginBottom: 10
+            }]}>Password</Text>
             <View style={styles.action}>
+                
+                <Feather
+                    name="lock"
+                    color={colors.text}
+                    size={20}
+                   
+                />
                 <TextInput
                     placeholder="Your Password"
                     placeholderTextColor="grey"
+                    marginHorizontal={ 10 }
+                    secureTextEntry={true}
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={(val) => textInputChange(val)}
                     onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
                 />
+                
 
             </View>
+            
             <View style={styles.fixToText}>
                 <Flatbutton text='Log In' onPress={() => Alert.alert('Simple Button pressed')} />
             </View>
-
+            
         </SafeAreaView>
         
         
@@ -49,7 +142,8 @@ const styles = StyleSheet.create({
         flex: 1,
         toppadding: 10,
         backgroundColor: 'gold',
-        alignItems: 'center',
+        alignItems: 'stretch',
+
         justifyContent: 'flex-start'
     },
     header: {
@@ -60,7 +154,7 @@ const styles = StyleSheet.create({
     },
         action: {
             flexDirection: 'row',
-            marginTop: 50,
+            marginHorizontal: 10,
             borderBottomWidth: 3,
             borderBottomColor: '#f2f2f2',
             paddingBottom: 5
@@ -74,6 +168,115 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         marginVertical: 50,
         
+    },
+    text_footer: {
+        color: '#05375a',
+        fontSize: 18
     }
 
 });
+/*   {data.secureTextEntry ?
+               <Feather
+                   name="eye-off"
+                   color="grey"
+                   size={20}
+               />
+               :
+               <Feather
+                   name="eye"
+                   color="grey"
+                   size={20}
+               />
+           }
+           */
+/*
+const [data, setData] = React.useState({
+    username: '',
+    password: '',
+    check_textInputChange: false,
+    secureTextEntry: true,
+    isValidUser: true,
+    isValidPassword: true,
+});
+
+        const { colors } = useTheme();
+
+        const { signIn } = React.useContext(AuthContext);
+
+        const textInputChange = (val) => {
+            if (val.trim().length >= 4) {
+                setData({
+                    ...data,
+                    username: val,
+                    check_textInputChange: true,
+                    isValidUser: true
+                });
+            } else {
+                setData({
+                    ...data,
+                    username: val,
+                    check_textInputChange: false,
+                    isValidUser: false
+                });
+            }
+        }
+
+        const handlePasswordChange = (val) => {
+            if (val.trim().length >= 8) {
+                setData({
+                    ...data,
+                    password: val,
+                    isValidPassword: true
+                });
+            } else {
+                setData({
+                    ...data,
+                    password: val,
+                    isValidPassword: false
+                });
+            }
+        }
+
+        const updateSecureTextEntry = () => {
+            setData({
+                ...data,
+                secureTextEntry: !data.secureTextEntry
+            });
+        }
+
+        const handleValidUser = (val) => {
+            if (val.trim().length >= 4) {
+                setData({
+                    ...data,
+                    isValidUser: true
+                });
+            } else {
+                setData({
+                    ...data,
+                    isValidUser: false
+                });
+            }
+        }
+
+        const loginHandle = (userName, password) => {
+
+            const foundUser = Users.filter(item => {
+                return userName == item.username && password == item.password;
+            });
+
+            if (data.username.length == 0 || data.password.length == 0) {
+                Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
+                    { text: 'Okay' }
+                ]);
+                return;
+            }
+
+            if (foundUser.length == 0) {
+                Alert.alert('Invalid User!', 'Username or password is incorrect.', [
+                    { text: 'Okay' }
+                ]);
+                return;
+            }
+            signIn(foundUser);
+          
+        }//const { params } = useRoute(); */

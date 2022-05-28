@@ -3,7 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
 import Flatbutton from '../components/Flatbutton.js';
 import DefaultImage from '../assets/starting_page.png';
-import Login_page from '../screens/Login_page.js'
+import Login_page from '../screens/Login_page.js';
+import Register_page from '../screens/Register_page.js';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -19,7 +20,7 @@ const Separator = () => (
 export default Starting_page = () => {
     const navigation = useNavigation();
     return (
-        //<NavigationContainer>
+
             <SafeAreaView style={styles.container}>
                 <View>
                     <Image source={{ uri: DEFAULT_IMAGE }}
@@ -31,15 +32,12 @@ export default Starting_page = () => {
 
                     <View style={styles.fixToText}>
                         <Flatbutton text='Log In' onPress={() => navigation.navigate('Login_page')} />
-                        <Flatbutton text='Register' onPress={() => Alert.alert('Simple Button pressed')} />
+                <Flatbutton text='Register' onPress={() => navigation.navigate('Register_page')} />
                     </View>
                     <StatusBar style='auto' />
                  
             </SafeAreaView>
-       // </NavigationContainer> 
-        // <Stack.Navigator>
-        // <Stack.Screen name="Login_page" component={Login_page} />
-               // </Stack.Navigator>
+
     )
 }
 
