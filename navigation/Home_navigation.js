@@ -4,6 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Books from '../screens/Books.js'
 import Profile from '../screens/Profile.js';
+import Book_page from '../screens/Book_page.js';
+import Ionicons from '../node_modules/@expo/vector-icons/Ionicons.js';
+import MaterialCommunityIcons from '../node_modules/@expo/vector-icons/MaterialCommunityIcons.js';
+import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js'
 
 function ShoppingListScreen() {
     return (
@@ -35,8 +39,76 @@ function ShoppingListScreen() {
   export default function Home_navigation() {
     return (
   
-        <Tab.Navigator>
-          <Tab.Screen name="ShoppingList" component={ShoppingListScreen} />
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            if (route.name === 'Shopping List') {
+              return (
+                <Ionicons
+                  name={
+                    focused
+                      ? 'list-circle'
+                      : 'list-circle-outline'
+                  }
+                  size={size}
+                  color={color}
+                />
+              );
+            } else if (route.name === 'Analytics') {
+              return (
+                <Ionicons
+                name={
+                  focused
+                    ? 'bar-chart'
+                    : 'bar-chart-outline'
+                }
+                  size={size}
+                  color={color}
+                />
+              );
+            } else if (route.name === 'Books') {
+              return (
+                <MaterialCommunityIcons
+                name={
+                  focused
+                    ? 'book-open-page-variant'
+                    : 'book-open-page-variant-outline'
+                }
+                  size={size}
+                  color={color}
+                />
+              );
+            } else if (route.name === 'LendingAndBorrowing') {
+              return (
+                <MaterialCommunityIcons
+                name={
+                  focused
+                    ? 'account-switch'
+                    : 'account-switch-outline'
+                }
+                  size={size}
+                  color={color}
+                />
+              );
+            } else if (route.name === 'Profile') {
+              return (
+                <FontAwesome
+                name={
+                  focused
+                    ? 'user'
+                    : 'user-o'
+                }
+                  size={size}
+                  color={color}
+                />
+              );
+            }
+          },
+          tabBarInactiveTintColor: 'gray',
+          tabBarActiveTintColor: 'orange',
+        })}
+      >
+          <Tab.Screen name="Shopping List" component={ShoppingListScreen} />
           <Tab.Screen name="Analytics" component={AnanlyticsScreen} />
           <Tab.Screen name="Books" component={Books}/>
           <Tab.Screen name="LendingAndBorrowing" component={LendingScreen}/>
