@@ -8,7 +8,7 @@ import Flatbutton from '../components/Flatbutton.js';
 import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTheme } from '@react-navigation/native';
 import { supabase } from '../lib/supabase';
 import { useNavigation } from '@react-navigation/native';
@@ -25,23 +25,23 @@ export default Register_page = () => {
 
     const handleLogin = async (type, email, password) => {
         setLoading(type)
-        const { error, user } =
+        const { error, session, user } =
           type === 'LOGIN'
             ? await supabase.auth.signIn({ email, password })
             : await supabase.auth.signUp({ email, password })
         if (!error && !user) Alert.alert('Check your email for the login link!')
         if (error) Alert.alert(error.message)
-        else navigation.navigate('Book_page')
+        else navigation.navigate('Login_page')
         setLoading('')
     }
-    const handleTwitterLogin = async (type, email, password) => {
+  /*  const handleTwitterLogin = async (type, email, password) => {
         setLoading(type)
         const { user, session, error } =
             await supabase.auth.signUp({
                     provider: 'twitter'
             })
         setLoading('')
-    }
+    }*/
 /*    const handleGoogleLogin = async (type, email, password) => {
         setLoading(type)
         const { user, session, error } =
@@ -189,7 +189,17 @@ const styles = StyleSheet.create({
     /* icons: {
     flexDirection: 'row',
     alignContent: 'flex-end'
+     </View>
+            <View style={styles.icons}>
+                <TouchableOpacity onPress={() => handleTwitterLogin('LOGIN')}>
+                    <AntDesign
+                        name="twitter"
+                        color={colors.text}
+                        size={20}
 
+                    />
+                </TouchableOpacity>
+            </View>
     <View style={styles.icons}>
             <TouchableOpacity onPress={() => handleGoogleLogin('SIGNUP', email, password)}>
             <AntDesign

@@ -2,7 +2,8 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Book_page from '../screens/Book_page.js'
+import Books from '../screens/Books.js'
+import Profile from '../screens/Profile.js';
 
 function ShoppingListScreen() {
     return (
@@ -28,13 +29,6 @@ function ShoppingListScreen() {
     );
   }
 
-  function ProfileScreen() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Profile!</Text>
-      </View>
-    );
-  }
 
   const Tab = createBottomTabNavigator();
   
@@ -44,9 +38,9 @@ function ShoppingListScreen() {
         <Tab.Navigator>
           <Tab.Screen name="ShoppingList" component={ShoppingListScreen} />
           <Tab.Screen name="Analytics" component={AnanlyticsScreen} />
-          <Tab.Screen name="Books" component={Book_page}/>
+          <Tab.Screen name="Books" component={Books}/>
           <Tab.Screen name="LendingAndBorrowing" component={LendingScreen}/>
-          <Tab.Screen name="Profile" component={ProfileScreen}/>
+          <Tab.Screen name="Profile" component={Profile}/>
         </Tab.Navigator>
     
     );

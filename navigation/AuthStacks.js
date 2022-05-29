@@ -6,14 +6,15 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Starting_page from '../screens/Starting_page.js';
 import Register_page from '../screens/Register_page.js';
-import React, { useState, useEffect } from 'react';
-import Book_page from '../screens/Book_page.js'
+import { useState, useEffect } from 'react';
+import Books from '../screens/Books.js'
+import Home_navigation from './Home_navigation.js';
 
 
 const Stack = createNativeStackNavigator();
 
 
-export default AuthStacks = ({ navigation }) => {
+export default AuthStacks = () => {
     return (
         
             <Stack.Navigator
@@ -38,9 +39,7 @@ export default AuthStacks = ({ navigation }) => {
                     title: 'Register'
                 }} />
 
-                <Stack.Screen name="Book_page" component={Book_page} options={{
-                    title: 'Book'
-                }} />
+            <Stack.Screen name="Home_navigation" component={Home_navigation} />
             </Stack.Navigator>
         )
       

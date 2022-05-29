@@ -6,7 +6,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator }from '@react-navigation/native-stack';
 import  AuthStacks  from './navigation/AuthStacks.js';
 import Home_navigation  from './navigation/Home_navigation.js';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from './lib/supabase';
 
 
@@ -14,20 +14,20 @@ const Stack = createNativeStackNavigator();
 
 
 export default App = ({ navigation }) => {
-    const [auth, setAuth] = React.useState(false);
-    const [loading, setLoading] = React.useState(true);
+    const [auth, setAuth] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setAuth(supabase.auth.session());
         supabase.auth.onAuthStateChange((_event, session) => {
             console.log(session);
-            setAuth(Session);
+            setAuth(session);
 
         })
     });
     return (
         <NavigationContainer>
-            {auth ? <Home_navigation /> : <AuthStacks/>}
+            {auth ? <Home_navigation/> : <AuthStacks/>}
         </NavigationContainer>)
 }
 
