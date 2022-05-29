@@ -4,10 +4,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Books from '../screens/Books.js'
 import Profile from '../screens/Profile.js';
-import Book_page from '../screens/Book_page.js';
+
 import Ionicons from '../node_modules/@expo/vector-icons/Ionicons.js';
 import MaterialCommunityIcons from '../node_modules/@expo/vector-icons/MaterialCommunityIcons.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js'
+
 
 function ShoppingListScreen() {
     return (
