@@ -11,27 +11,15 @@ import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import React, { useState } from 'react';
 import { useTheme } from '@react-navigation/native';
 import { supabase } from '../lib/supabase';
+import { useNavigation } from '@react-navigation/native';
+
 
 const Stack = createNativeStackNavigator();
 export default Register_page = () => {
+    const navigation = useNavigation();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState('')
-
-    const handleValidUser = (val) => {
-        if (val.trim().length >= 4) {
-            setData({
-                ...data,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                isValidUser: false
-            });
-        }
-    }
-
     const { colors } = useTheme();
     //const { params } = useRoute();
 
@@ -43,8 +31,17 @@ export default Register_page = () => {
             : await supabase.auth.signUp({ email, password })
         if (!error && !user) Alert.alert('Check your email for the login link!')
         if (error) Alert.alert(error.message)
+        else navigation.navigate('Book_page')
         setLoading('')
-      }
+    }
+    const handleTwitterLogin = async (type, email, password) => {
+        setLoading(type)
+        const { user, session, error } =
+            await supabase.auth.signUp({
+                    provider: 'twitter'
+            })
+        setLoading('')
+    }
 /*    const handleGoogleLogin = async (type, email, password) => {
         setLoading(type)
         const { user, session, error } =
@@ -82,7 +79,7 @@ export default Register_page = () => {
                     autoCapitalize="none"
                     value={email}
                     onChangeText={(text) => setEmail(text)}
-                    onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                    
                 />
 
             </View>
@@ -104,7 +101,7 @@ export default Register_page = () => {
                     marginHorizontal={10}
                     autoCapitalize="none"
                     onChangeText={(text) => setPassword(text)}
-                    onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                    
                 />
 
             </View>
@@ -126,11 +123,20 @@ export default Register_page = () => {
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={(text) => setPassword(text)}
-                    onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+                  
                 />
 
             </View>
+            <View style={styles.icons}>
+                <TouchableOpacity onPress={() => handleTwitterLogin('LOGIN')}>
+                    <AntDesign
+                        name="twitter"
+                        color={colors.text}
+                        size={20}
 
+                    />
+                </TouchableOpacity>
+            </View>
             <View style={styles.fixToText}>
                 <Flatbutton text='Register' onPress={() => handleLogin('SIGNUP', email, password)} />
             </View>

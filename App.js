@@ -6,6 +6,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Starting_page from './screens/Starting_page.js';
 import Register_page from './screens/Register_page.js';
+import Book_page from './screens/Book_page.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -36,6 +37,10 @@ export default App = ({ navigation }) => {
                 }} />
                 <Stack.Screen name="Register_page" component={Register_page} options={{
                     title: 'Register'
+                }} />
+
+                <Stack.Screen name="Book_page" component={Book_page} options={{
+                    title: 'Book'
                 }} />
                     </Stack.Navigator>
             

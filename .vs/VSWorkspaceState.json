@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
     "",
+    "\\lib",
     "\\screens"
   ],
+  "SelectedNode": "\\screens\\Book_page.js",
   "PreviewInSolutionExplorer": false
 }

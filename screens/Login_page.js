@@ -9,15 +9,16 @@ import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
 // Set up a Login component
-import React, { useState } from 'react'
-import { supabase } from '../lib/supabase'
-import { Input } from 'react-native-elements'
+import React, { useState } from 'react';
+import { supabase } from '../lib/supabase';
+import { Input } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 
 
 
-const Stack = createNativeStackNavigator();
 export default Login_page = () => {
-    const [data, setData] =React.useState({
+    const navigation = useNavigation();
+    const [data, setData] =useState({
         username: '',
         password: '',
         check_textInputChange: false,
@@ -65,7 +66,7 @@ export default Login_page = () => {
     const updateSecureTextEntry = () => {
         setData({
             ...data,
-            secureTextEntry: !data.secureTextEntry
+            secureTextEntry : !data.secureTextEntry
         });
     }
 
@@ -91,13 +92,27 @@ export default Login_page = () => {
         setLoading(type)
         const { error, user } =
           type === 'LOGIN'
-            ? await supabase.auth.signIn({ email, password })
+                ? await supabase.auth.signIn({ email, password })
+             
             : await supabase.auth.signUp({ email, password })
         if (!error && !user) Alert.alert('Check your email for the login link!')
         if (error) Alert.alert(error.message)
+        else navigation.navigate('Book_page')
+
         setLoading('')
       }
-    
+    const handleTwitterLogin = async (type) => {
+        setLoading(type)
+        const { user, session, error } =
+            await supabase.auth.signIn({
+                provider: 'twitter'
+            }, {
+                redirectTo: 'https://xlmxiwbuyvnpmipnzzfy.supabase.co/auth/v1/authorize?provider=twitter'
+            })
+       
+
+        setLoading('')
+    }
 /*    const handleGoogleLogin = async (type) => {
         setLoading(type)
         const { user, session, error } =
@@ -159,10 +174,18 @@ export default Login_page = () => {
                     onChangeText={(text) => setPassword(text)}
                     onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
                 />
-                
 
             </View>
+            <View style={styles.icons}>
+                <TouchableOpacity onPress={() => handleTwitterLogin('LOGIN')}>
+                    <AntDesign
+                        name="twitter"
+                        color={colors.text}
+                        size={20}
 
+                    />
+                </TouchableOpacity>
+            </View>
             <View style={styles.fixToText}>
                 <Flatbutton text='Log In' onPress={() => handleLogin('LOGIN', email, password)} />
             </View>
@@ -210,7 +233,10 @@ const styles = StyleSheet.create({
     text_footer: {
         color: '#05375a',
         fontSize: 18
-    },
+    }, icons: {
+        marginTop:20,
+        marginLeft:300
+    }
     /* icons: {
         flexDirection: 'row',
         alignItems:'flex-end'
