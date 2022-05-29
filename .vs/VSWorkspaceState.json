@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\components",
     "\\lib",
-    "\\screens"
+    "\\screens",
+    "\\stacks"
   ],
-  "SelectedNode": "\\screens\\Book_page.js",
+  "SelectedNode": "\\stacks\\AuthStacks.js",
   "PreviewInSolutionExplorer": false
 }

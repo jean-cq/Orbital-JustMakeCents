@@ -40,7 +40,7 @@ function ShoppingListScreen() {
   
   export default function Home_navigation() {
     return (
-      <NavigationContainer>
+  
         <Tab.Navigator>
           <Tab.Screen name="ShoppingList" component={ShoppingListScreen} />
           <Tab.Screen name="Analytics" component={AnanlyticsScreen} />
@@ -48,6 +48,6 @@ function ShoppingListScreen() {
           <Tab.Screen name="LendingAndBorrowing" component={LendingScreen}/>
           <Tab.Screen name="Profile" component={ProfileScreen}/>
         </Tab.Navigator>
-      </NavigationContainer>
+    
     );
   }

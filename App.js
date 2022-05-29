@@ -3,48 +3,35 @@ import { Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'reac
 import Flatbutton from './components/Flatbutton.js';
 import Login_page from './screens/Login_page.js'
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Starting_page from './screens/Starting_page.js';
-import Register_page from './screens/Register_page.js';
-import Book_page from './screens/Book_page.js';
+import { createNativeStackNavigator }from '@react-navigation/native-stack';
+import  AuthStacks  from './navigation/AuthStacks.js';
+import Home_navigation  from './navigation/Home_navigation.js';
+import React, { useState, useEffect } from 'react';
+import { supabase } from './lib/supabase';
 
 
 const Stack = createNativeStackNavigator();
 
 
 export default App = ({ navigation }) => {
-    
+    const [auth, setAuth] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
+
+    useEffect(() => {
+        setAuth(supabase.auth.session());
+        supabase.auth.onAuthStateChange((_event, session) => {
+            console.log(session);
+            setAuth(Session);
+
+        })
+    });
     return (
         <NavigationContainer>
+            {auth ? <Home_navigation /> : <AuthStacks/>}
+        </NavigationContainer>)
+}
 
-            <Stack.Navigator
-            screenOptions={{
-                headerStyle: {
-                    backgroundColor: 'gold',
-                },
-                headerTintColor: '#fff',
-                headerTitleStyle: {
-                    fontWeight: 'bold',
-                },
-            }}
-    >
-                <Stack.Screen name="Starting_page" component={Starting_page} options={{
-                    title: 'Awesome app'
-                }}
-                />
-                <Stack.Screen name="Login_page" component={Login_page} options={{
-                    title: 'Log In'
-                }} />
-                <Stack.Screen name="Register_page" component={Register_page} options={{
-                    title: 'Register'
-                }} />
 
-                <Stack.Screen name="Book_page" component={Book_page} options={{
-                    title: 'Book'
-                }} />
-                    </Stack.Navigator>
-            
-           </NavigationContainer>)}
 const styles = StyleSheet.create({
     container: {
         flex: 1,

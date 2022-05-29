@@ -90,7 +90,7 @@ export default Login_page = () => {
   
     const handleLogin = async (type, email, password) => {
         setLoading(type)
-        const { error, user } =
+        const { error, session, user } =
           type === 'LOGIN'
                 ? await supabase.auth.signIn({ email, password })
              
