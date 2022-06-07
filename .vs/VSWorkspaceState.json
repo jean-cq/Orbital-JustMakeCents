@@ -3,9 +3,9 @@
     "",
     "\\components",
     "\\lib",
-    "\\screens",
-    "\\stacks"
+    "\\navigation",
+    "\\screens"
   ],
-  "SelectedNode": "\\stacks\\AuthStacks.js",
+  "SelectedNode": "\\screens\\Starting_page.js",
   "PreviewInSolutionExplorer": false
 }
