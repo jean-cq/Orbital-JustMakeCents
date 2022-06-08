@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     text_footer: {
         color: '#05375a',
         fontSize: 18
-    }, icons: {
+    }/*, icons: {
         marginTop:20,
         marginLeft:300
     }
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     } */
 
 });
-   {data.secureTextEntry ?
+/*   {data.secureTextEntry ?
                <Feather
                    name="eye-off"
                    color="grey"
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
                />
            }
            */
-
+/*
 const [data, setData] = React.useState({
     username: '',
     password: '',
