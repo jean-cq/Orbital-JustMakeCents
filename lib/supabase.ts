@@ -17,7 +17,7 @@ const getAllExpenditure = async () => {
 
     return { Expenditure, error }
 }
-}
+
 export const supabase = {
     supabaseClient,
     getAllExpenditure

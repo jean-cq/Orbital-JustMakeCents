@@ -8,6 +8,7 @@ import  AuthStacks  from './navigation/AuthStacks.js';
 import Home_navigation  from './navigation/Home_navigation.js';
 import { useState, useEffect } from 'react';
 import { supabase } from './lib/supabase';
+import supabaseClient from './lib/supabase.ts';
 
 
 const Stack = createNativeStackNavigator();
@@ -29,7 +30,7 @@ export default App = ({ navigation }) => {
         <NavigationContainer>
             {auth ? <Home_navigation/> : <AuthStacks/>}
         </NavigationContainer>)
-}
+})}
 
 
 const styles = StyleSheet.create({

@@ -81,7 +81,7 @@ export default Expenditure = () => {
 const styles = StyleSheet.create({
     navi: {
         borderRadius: 30,
-        color: yellow
+        color: 'gold'
         
     }
 

@@ -2,13 +2,14 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Books from '../screens/Books.js'
 import Profile from '../screens/Profile.js';
 
 import Ionicons from '../node_modules/@expo/vector-icons/Ionicons.js';
 import MaterialCommunityIcons from '../node_modules/@expo/vector-icons/MaterialCommunityIcons.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js'
 
+import ExpenditureStacks from '../navigation/ExpenditureStacks.js';
+import Expenditure from '../screens/Expenditure.js';
 
 function ShoppingListScreen() {
     return (
@@ -67,7 +68,7 @@ function ShoppingListScreen() {
                   color={color}
                 />
               );
-            } else if (route.name === 'Books') {
+            } else if (route.name === 'Expenditure') {
               return (
                 <MaterialCommunityIcons
                 name={
@@ -111,7 +112,7 @@ function ShoppingListScreen() {
       >
           <Tab.Screen name="Shopping List" component={ShoppingListScreen} />
           <Tab.Screen name="Analytics" component={AnanlyticsScreen} />
-          <Tab.Screen name="Books" component={Books}/>
+          <Tab.Screen name="Expenditure" component={ExpenditureStacks}/>
           <Tab.Screen name="LendingAndBorrowing" component={LendingScreen}/>
           <Tab.Screen name="Profile" component={Profile}/>
         </Tab.Navigator>
