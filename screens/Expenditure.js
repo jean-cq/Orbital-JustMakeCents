@@ -43,8 +43,13 @@ export default Expenditure = () => {
   
     return (
         <SafeAreaView>
-            
-            <TouchableOpacity onPress={() => navigation.navigate('Add_Expenditure')} style={styles.navi}/>
+            <View style={styles.buttonposition}>
+            <TouchableOpacity onPress={() => navigation.navigate('Add_Expenditure')}>
+                <View style={styles.button}>
+                    <Text style={styles.buttontext} > + </Text>
+                </View>
+                </TouchableOpacity>
+            </View>
 
             <FlatList
                 showsVerticalScrollIndicator={true}
@@ -54,6 +59,7 @@ export default Expenditure = () => {
                         <View>
                             <Text> {item.name} </Text>
                         </View>
+                       
                         <View>
 
                             <ListItem item={item} />
@@ -79,10 +85,21 @@ export default Expenditure = () => {
 
 
 const styles = StyleSheet.create({
-    navi: {
-        borderRadius: 30,
-        color: 'gold'
-        
+    button: {
+        borderRadius: 70,
+        paddingVertical: 14,
+        paddingHorizontal: 10,
+        backgroundColor: 'yellow',
+        marginHorizontal: 50
+    },
+    buttontext: {
+        color: 'grey',
+        fontSize: 20,
+        textAlign: 'center'
+    },
+    buttonposition: {
+        position: 'absolute',
+        justifyContent: 'flex-end'
     }
 
 
