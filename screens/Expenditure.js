@@ -44,7 +44,7 @@ export default Expenditure = () => {
     return (
         <SafeAreaView>
             <View style={styles.buttonposition}>
-            <TouchableOpacity onPress={() => navigation.navigate('Add_Expenditure')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Add_Expenditure_1')}>
                 <View style={styles.button}>
                     <Text style={styles.buttontext} > + </Text>
                 </View>

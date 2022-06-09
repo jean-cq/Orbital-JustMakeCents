@@ -5,7 +5,7 @@ import Login_page from '../screens/Login_page.js'
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Expenditure from '../screens/Expenditure.js';
-import Add_Expenditure from '../screens/Add_Expenditure.js';
+import Add_Expenditure_1 from '../screens/Add_Expenditure_1.js';
 import { useState, useEffect } from 'react';
 import Books from '../screens/Books.js'
 import Home_navigation from './Home_navigation.js';
@@ -28,11 +28,12 @@ export default ExpenditureStacks = () => {
                     }
                 }}
             >
-                <Stack.Screen name="Expenditure" component={Expenditure} options={{headerShown: false
+                <Stack.Screen name="Expenditure" component={Expenditure} options={{
+                    title: "Expenditure"
                 }}
                 />
-            <Stack.Screen name="Add_Expenditure" component={Add_Expenditure} options={{
-                title: 'Add_Expenditure'
+            <Stack.Screen name="Add_Expenditure_1" component={Add_Expenditure_1} options={{
+                title: 'Add_Expenditure_1'
                 }}/>
             </Stack.Navigator>
         )

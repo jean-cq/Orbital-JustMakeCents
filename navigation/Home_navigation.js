@@ -43,6 +43,7 @@ function ShoppingListScreen() {
   
       <Tab.Navigator
         screenOptions={({ route }) => ({
+           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
             if (route.name === 'Shopping List') {
               return (
