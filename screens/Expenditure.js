@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 const Stack = createNativeStackNavigator();
 
 export default Expenditure = () => {
-
+    const navigation = useNavigation();
     const [items, setItems] = useState([
         { id: '1', status: false, category: 'Beverage', name: 'Milk' },
     ]);
