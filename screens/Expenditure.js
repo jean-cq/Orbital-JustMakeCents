@@ -7,11 +7,10 @@ import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import Shopping_list_a from './Shopping_list_a'
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +20,8 @@ export default Expenditure = () => {
         { id: '1', status: false, category: 'Beverage', name: 'Milk' },
     ]);
     const [inputValue, setInputValue] = useState('');
+    const [ExpenditureData, setExpenditureData] = useState('');
+
     const deleteItem = id => {
         setItems(previousItems => {
             return previousItems.filter(item => item.id !== id);
@@ -30,6 +31,15 @@ export default Expenditure = () => {
         setItems(item => item.status = !item.status)
     }
 
+    const loadAllExpenditure = async () => {
+
+        const { Expenditure, error } = await supabase.getAllExpenditure();
+        setExpenditureData(Expenditure)
+    }
+    useEffect(() => {
+        loadAllExpenditure()
+
+    })
   
     return (
         <SafeAreaView>
@@ -37,16 +47,25 @@ export default Expenditure = () => {
             <TouchableOpacity onPress={() => navigation.navigate('Add_Expenditure')} style={styles.navi}/>
 
             <FlatList
-            
-            data={items}
-            renderItem={({ item }) => (
-                <View>
+                showsVerticalScrollIndicator={true}
+                data={ExpenditureData}
+                renderItem={({ item }) => (
+                    <SafeAreaView>
+                        <View>
+                            <Text> {item.name} </Text>
+                        </View>
+                        <View>
 
-                    <ListItem item={item} />
-                    <TouchableOpacity onPress={() => deleteItem = { deleteItem }} />
-                </View>
-            )}
+                            <ListItem item={item} />
+                            <TouchableOpacity onPress={() => deleteItem = { deleteItem }} />
+                        </View>
+                    </SafeAreaView>
+                )}
+                keyExtractor={
+                    (item) => item.id
+                }
       />
+                    
         </SafeAreaView>
         
         
