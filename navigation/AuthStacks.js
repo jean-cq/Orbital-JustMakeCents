@@ -39,9 +39,7 @@ export default AuthStacks = () => {
                     title: 'Register'
                 }} />
 
-            <Stack.Screen name="Home_navigation" component={Home_navigation} options={{
-                headerShown: false
-            }} />
+            <Stack.Screen name="Home_navigation" component={Home_navigation}  />
             </Stack.Navigator>
         )
       

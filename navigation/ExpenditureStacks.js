@@ -29,8 +29,8 @@ export default ExpenditureStacks = () => {
                 }}
             >
                 <Stack.Screen name="Expenditure" component={Expenditure} options={{
-                title: 'Expenditure'
-                }}
+                headerShown: false,
+            }}
                 />
             <Stack.Screen name="Add_Expenditure" component={Add_Expenditure} options={{
                 title: 'Add_Expenditure'

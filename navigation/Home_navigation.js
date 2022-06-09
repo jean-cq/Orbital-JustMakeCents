@@ -80,7 +80,7 @@ function ShoppingListScreen() {
                   color={color}
                 />
               );
-            } else if (route.name === 'LendingAndBorrowing') {
+            } else if (route.name === 'LendBorrow') {
               return (
                 <MaterialCommunityIcons
                 name={
@@ -113,7 +113,7 @@ function ShoppingListScreen() {
           <Tab.Screen name="Shopping List" component={ShoppingListScreen} />
           <Tab.Screen name="Analytics" component={AnanlyticsScreen} />
           <Tab.Screen name="Expenditure" component={ExpenditureStacks}/>
-          <Tab.Screen name="LendingAndBorrowing" component={LendingScreen}/>
+          <Tab.Screen name="LendBorrow" component={LendingScreen}/>
           <Tab.Screen name="Profile" component={Profile}/>
         </Tab.Navigator>
     
