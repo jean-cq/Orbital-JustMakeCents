@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Books from '../screens/Books.js'
 import Profile from '../screens/Profile.js';
+import ShoppingList from '../screens/Shopping_list.js';
 
 import Ionicons from '../node_modules/@expo/vector-icons/Ionicons.js';
 import MaterialCommunityIcons from '../node_modules/@expo/vector-icons/MaterialCommunityIcons.js';
@@ -109,7 +110,7 @@ function ShoppingListScreen() {
           tabBarActiveTintColor: 'orange',
         })}
       >
-          <Tab.Screen name="Shopping List" component={ShoppingListScreen} />
+          <Tab.Screen name="Shopping List" component={ShoppingList} />
           <Tab.Screen name="Analytics" component={AnanlyticsScreen} />
           <Tab.Screen name="Books" component={Books}/>
           <Tab.Screen name="LendingAndBorrowing" component={LendingScreen}/>
