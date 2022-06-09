@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
+import { Progress } from '../node_modules/react-native-progress/Bar';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,16 +43,16 @@ export default Expenditure = () => {
     })
   
     return (
-        <SafeAreaView>
+        <View>
             <View style={styles.container}>
             <TouchableOpacity onPress={() => Alert.alert('this is wallet')}>
                 <View style={styles.button1}>
-                        <Text style={styles.buttontext} > Wallet </Text>
+                        <Text style={styles.buttontext1} > Wallet </Text>
                 </View>
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'column' }}>
-                    <Text>Budget</Text>
-                    <Progress.Bar progress={0.3} width={200} />
+                    <Text style={{marginLeft: 25, fontSize: 16}}>Budget</Text>
+                    
                     </View>
             </View>
             <FlatList
@@ -82,7 +83,7 @@ export default Expenditure = () => {
                 </View>
                 </TouchableOpacity>
             </View>   
-        </SafeAreaView>
+        </View>
         
         
         
@@ -97,7 +98,7 @@ export default Expenditure = () => {
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor:'grey',
+        backgroundColor:'#C4C4C4',
         flexDirection: 'row',
          padding: 20
     },
@@ -109,22 +110,26 @@ const styles = StyleSheet.create({
       
     },
     button2: {
-        borderRadius: 70,
-        paddingVertical: 14,
-        paddingHorizontal: 10,
+        borderRadius: 100,
+        paddingVertical: 20,
+        paddingHorizontal: 20,
         backgroundColor: 'yellow',
-        marginHorizontal: 50
     },
     buttontext: {
         color: 'grey',
-        fontSize: 20,
+        fontSize: 30,
+        textAlign: 'center'
+    },
+    buttontext1: {
+        color: 'black',
+        fontSize: 18,
         textAlign: 'center'
     },
     buttonposition: {
         position: 'absolute',
         justifyContent: 'flex-end',
-        marginLeft: 350,
-        marginTop: 500
+        marginLeft: 320,
+        marginTop: 640
         
     },
     
