@@ -43,35 +43,45 @@ export default Expenditure = () => {
   
     return (
         <SafeAreaView>
-            <View style={styles.buttonposition}>
-            <TouchableOpacity onPress={() => navigation.navigate('Add_Expenditure_1')}>
-                <View style={styles.button}>
-                    <Text style={styles.buttontext} > + </Text>
+            <View style={styles.container}>
+            <TouchableOpacity onPress={() => Alert.alert('this is wallet')}>
+                <View style={styles.button1}>
+                        <Text style={styles.buttontext} > Wallet </Text>
                 </View>
                 </TouchableOpacity>
+                <View style={{ flexDirection: 'column' }}>
+                    <Text>Budget</Text>
+                    <Progress.Bar progress={0.3} width={200} />
+                    </View>
             </View>
-
             <FlatList
                 showsVerticalScrollIndicator={true}
                 data={ExpenditureData}
                 renderItem={({ item }) => (
-                    <SafeAreaView>
-                        <View>
-                            <Text> {item.name} </Text>
-                        </View>
-                       
-                        <View>
+                    <View >
+                        <View style={{ flexDirection: 'row' }}>
+                            <Text style={{ flex: 1 }}>{item.status}</Text>
 
-                            <ListItem item={item} />
-                            <TouchableOpacity onPress={() => deleteItem = { deleteItem }} />
+                            <Text style={{ flex: 2 }}>{item.category}</Text>
+
+                            <Text style={{ flex: 2 }}> {item.name} </Text>
+                            <Text style={{ flex: 1, textAlign: 'right' }}> {item.income ? '+' : '-'}{item.amount} </Text>
                         </View>
-                    </SafeAreaView>
+                        <View style={{ height: 1, backgroundColor:'grey' }}> </View>
+                      
+                    </View>
                 )}
                 keyExtractor={
                     (item) => item.id
                 }
       />
-                    
+                 <View style={styles.buttonposition}>
+            <TouchableOpacity onPress={() => navigation.navigate('Add_Expenditure_1')}>
+                <View style={styles.button2}>
+                    <Text style={styles.buttontext} > + </Text>
+                </View>
+                </TouchableOpacity>
+            </View>   
         </SafeAreaView>
         
         
@@ -85,7 +95,20 @@ export default Expenditure = () => {
 
 
 const styles = StyleSheet.create({
-    button: {
+
+    container: {
+        backgroundColor:'grey',
+        flexDirection: 'row',
+         padding: 20
+    },
+    button1: {
+        borderRadius: 20,
+        paddingVertical: 14,
+        paddingHorizontal: 10,
+        backgroundColor: 'yellow',
+      
+    },
+    button2: {
         borderRadius: 70,
         paddingVertical: 14,
         paddingHorizontal: 10,
@@ -99,10 +122,20 @@ const styles = StyleSheet.create({
     },
     buttonposition: {
         position: 'absolute',
-        justifyContent: 'flex-end'
-    }
+        justifyContent: 'flex-end',
+        marginLeft: 350,
+        marginTop: 500
+        
+    },
+    
 
 
 
 
 })
+
+/*<View>
+
+                            <ListItem item={item} />
+                          <TouchableOpacity onPress={() => deleteItem = { deleteItem }} />
+                        </View>*/
