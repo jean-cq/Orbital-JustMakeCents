@@ -18,7 +18,10 @@ const Stack = createNativeStackNavigator();
 export default Expenditure = () => {
     const navigation = useNavigation();
     const [items, setItems] = useState([
-        { id: '1', status: false, category: 'Beverage', name: 'Milk' },
+        { id: '1', status: false, category: 'Beverage', name: 'Milk', income: false, amount: 5.00, note: null },
+        { id: '2', status: false, category: 'Food', name: 'Chocolate', income: false, amount: 5.00, note: 'haha' },
+        { id: '3', status: true, category: 'beauty', name: 'lipstick', income: false, amount: 25.00, note: 'lolll' },
+        { id: '4', status: true, category: 'others', name: 'scholarship', income: true, amount: 300.00, note : 'qkym'},
     ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState('');
@@ -57,7 +60,8 @@ export default Expenditure = () => {
             </View>
             <FlatList
                 showsVerticalScrollIndicator={true}
-                data={ExpenditureData}
+                data={ items }
+                //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row' }}>
@@ -67,6 +71,7 @@ export default Expenditure = () => {
 
                             <Text style={{ flex: 2 }}> {item.name} </Text>
                             <Text style={{ flex: 1, textAlign: 'right' }}> {item.income ? '+' : '-'}{item.amount} </Text>
+                            <Text> style={{ flex: 2 }}> {item.note} </Text>
                         </View>
                         <View style={{ height: 1, backgroundColor:'grey' }}> </View>
                       
