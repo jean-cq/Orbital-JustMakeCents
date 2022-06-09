@@ -24,7 +24,7 @@ export default Expenditure = () => {
         { id: '4', status: true, category: 'others', name: 'scholarship', income: true, amount: 300.00, note : 'qkym'},
     ]);
     const [inputValue, setInputValue] = useState('');
-    const [ExpenditureData, setExpenditureData] = useState('');
+    const [ExpenditureData, setExpenditureData] = useState([]);
 
     const deleteItem = id => {
         setItems(previousItems => {
@@ -60,20 +60,21 @@ export default Expenditure = () => {
             </View>
             <FlatList
                 showsVerticalScrollIndicator={true}
-                data={ items }
+                data={ ExpenditureData }
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
-                        <View style={{ flexDirection: 'row' }}>
+                        <View style={{ flexDirection: 'row', padding: 20 }}>
                             <Text style={{ flex: 1 }}>{item.status}</Text>
 
                             <Text style={{ flex: 2 }}>{item.category}</Text>
 
                             <Text style={{ flex: 2 }}> {item.name} </Text>
                             <Text style={{ flex: 1, textAlign: 'right' }}> {item.income ? '+' : '-'}{item.amount} </Text>
-                            <Text> style={{ flex: 2 }}> {item.note} </Text>
+                            <Text style={{ flex: 3, textAlign: 'right', marginRight: 10 }}> {item.note} </Text>
                         </View>
-                        <View style={{ height: 1, backgroundColor:'grey' }}> </View>
+                        <View style={{ height: 1, backgroundColor:'grey' }}> 
+                        </View>
                       
                     </View>
                 )}
