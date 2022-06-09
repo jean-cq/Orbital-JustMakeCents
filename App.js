@@ -20,7 +20,9 @@ export default App = ({ navigation }) => {
 
     useEffect(() => {
         setAuth(supabase.supabaseClient.auth.session());
-        supabase.auth.onAuthStateChange((_event, session) => {
+        supabase.supabaseClient.auth.onAuthStateChange((_event, session) => {
+        setLoading(false);
+        supabase.supabaseClient.auth.onAuthStateChange((_event, session) => {
             console.log(session);
             setAuth(session);
 
