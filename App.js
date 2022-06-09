@@ -8,6 +8,8 @@ import  AuthStacks  from './navigation/AuthStacks.js';
 import Home_navigation  from './navigation/Home_navigation.js';
 import { useState, useEffect } from 'react';
 import { supabase } from './lib/supabase';
+import { PERMISSIONS, check, request } from 'react-native-permissions';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -17,6 +19,24 @@ export default App = ({ navigation }) => {
     const [auth, setAuth] = useState(false);
     const [loading, setLoading] = useState(true);
 
+    const [cameraGranted, setCameraGranted] = useState(false);
+  const handleCameraPermission = async () => {
+    const res = await check(PERMISSIONS.IOS.CAMERA);
+    
+    if (res === RESULTS.GRANTED) {
+      setCameraGranted(true);
+    } else if (res === RESULTS.DENIED) {
+      const res2 = await request(PERMISSIONS.IOS.CAMERA);
+      res2 === RESULTS.GRANTED 
+        ? setCameraGranted(true)
+        : setCameraGranted(false);
+    }
+ };
+  
+  useEffect(() => {
+    handleCameraPermission(); 
+  }, []);
+
     useEffect(() => {
         setAuth(supabase.auth.session());
         supabase.auth.onAuthStateChange((_event, session) => {
@@ -25,10 +45,15 @@ export default App = ({ navigation }) => {
 
         })
     });
-    return (
+    return (<View>
         <NavigationContainer>
             {auth ? <Home_navigation/> : <AuthStacks/>}
-        </NavigationContainer>)
+        </NavigationContainer>
+        {cameraGranted 
+            ? <Text>Camera Granted! Display in-app camera...</Text> 
+            : <Text>Camera Disallowed</Text>
+          }
+          </View>)
 }
 
 
