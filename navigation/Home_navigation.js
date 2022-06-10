@@ -45,19 +45,7 @@ function ShoppingListScreen() {
         screenOptions={({ route }) => ({
            headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
-            if (route.name === 'Shopping List') {
-              return (
-                <Ionicons
-                  name={
-                    focused
-                      ? 'list-circle'
-                      : 'list-circle-outline'
-                  }
-                  size={size}
-                  color={color}
-                />
-              );
-            } else if (route.name === 'Analytics') {
+            if (route.name === 'Analytics') {
               return (
                 <Ionicons
                 name={
@@ -111,7 +99,6 @@ function ShoppingListScreen() {
           tabBarActiveTintColor: 'orange',
         })}
       >
-          <Tab.Screen name="Shopping List" component={ShoppingListScreen} />
           <Tab.Screen name="Analytics" component={AnanlyticsScreen} />
           <Tab.Screen name="Expenditure" component={ExpenditureStacks}/>
           <Tab.Screen name="LendingAndBorrowing" component={LendingScreen}/>
