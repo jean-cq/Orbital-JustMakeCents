@@ -11,6 +11,8 @@ import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js'
 import ExpenditureStacks from '../navigation/ExpenditureStacks.js';
 import Expenditure from '../screens/Expenditure.js';
 
+import AnalyticsStacks from './AnalyticsStacks.js';
+
 function ShoppingListScreen() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -43,7 +45,7 @@ function ShoppingListScreen() {
   
       <Tab.Navigator
         screenOptions={({ route }) => ({
-           headerShown: false,
+           headerShown: true,
           tabBarIcon: ({ focused, color, size }) => {
             if (route.name === 'Analytics') {
               return (
@@ -99,7 +101,7 @@ function ShoppingListScreen() {
           tabBarActiveTintColor: 'orange',
         })}
       >
-          <Tab.Screen name="Analytics" component={AnanlyticsScreen} />
+          <Tab.Screen name="Analytics" component={AnalyticsStacks} />
           <Tab.Screen name="Expenditure" component={ExpenditureStacks}/>
           <Tab.Screen name="LendingAndBorrowing" component={LendingScreen}/>
           <Tab.Screen name="Profile" component={Profile}/>
