@@ -41,9 +41,9 @@ export default Expenditure = () => {
         setExpenditureData(Expenditure)
     }
     useEffect(() => {
-        loadAllExpenditure()
+        loadAllExpenditure();
 
-    })
+    },[])
   
     return (
         <View>
