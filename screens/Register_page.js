@@ -27,8 +27,8 @@ export default Register_page = () => {
         setLoading(type)
         const { error, session, user } =
           type === 'LOGIN'
-            ? await supabase.auth.signIn({ email, password })
-            : await supabase.auth.signUp({ email, password })
+            ? await supabase.supabaseClient.auth.signIn({ email, password })
+            : await supabase.supabaseClient.auth.signUp({ email, password })
         if (!error && !user) Alert.alert('Check your email for the login link!')
         if (error) Alert.alert(error.message)
         else navigation.navigate('Login_page')
