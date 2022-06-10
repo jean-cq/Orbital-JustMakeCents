@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         justifyContent: 'flex-end',
         marginLeft: 320,
-        marginTop: 640
+        marginTop: 500
         
     },
     

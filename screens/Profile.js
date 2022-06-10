@@ -27,35 +27,86 @@ export default Profile = () => {
     }
     return (
         <SafeAreaView>
-            <View>
-                <Text style={styles.text} > Avatar </Text>
+          
+                <View style={styles.container1}>
+                    <View style={styles.edit}>
+                        <TouchableOpacity onPress={() => Alert.alert('This is edit profile')}>
+                            <View style={styles.button1}>
+                                <Text style={styles.buttontext1} > Edit My Profile </Text>
+                            </View>
+                    </TouchableOpacity>
+                    <View style={{ flex: 7, justifyContent:'center' }}>
+                    <FontAwesome
+                    name={
+                        focused
+                            ? 'user'
+                            : 'user-o'
+                    }
+                    size={size}
+                    color={color}
+                        />
+                    </View>
+                    <View style={{ flex: 2, justifyContent: 'center' }}>
+                        <Text> Username </Text>
+                    </View>
+                </View>
             </View>
+                <View style={{ height: 0.5, backgroundColor: 'light grey'  }}>
+                </View>
+                <View style={{ flexDirection: 'column', justifyContent:'flex-end' }}>
+                    <View style={{
+                        flexDirection: 'row', justifyContent: 'flex-end'
+                    }} >
 
-            <TouchableOpacity onPress={() => handleLogOut()}>
+                            <Text> Days Continuing</Text>
+                        </View>
+                    <View style={{
+                        flexDirection: 'row', justifyContent: 'flex-end'
+                    }} >
 
-                <View style={styles.button}>
-                    <Text style={styles.buttontext} > Sign Out </Text>
+                            <Text> Days Recorded</Text>
+                        </View>
+                    <View style={{
+                        flexDirection: 'row', justifyContent: 'flex-end'
+                    }} >
+
+                            <Text> Days Joined</Text>
+                        </View>
                 </View>
 
+                   
+              
 
-            </TouchableOpacity>
+                <View stlyle={styles.signout}>
+                    <TouchableOpacity onPress={() => handleLogOut()}>
 
+                        <View style={styles.button}>
+                            <View style={styles.button2}>
+                                <Text style={styles.buttontext2} > Sign Out </Text>
+                            </View>
+                        </View>
+                            </TouchableOpacity>
+                            
+        
+                </View>
         </SafeAreaView>
-        
-        
-        )
-
-}
+                )}
 
 const styles = StyleSheet.create({
-    text: {
-        color: 'black',
-        fontSize: 20,
-        textAlign: 'center'
-
-
+       button1 : {
+                borderRadius: 20,
+                paddingVertical: 5,
+                paddingHorizontal: 10,
+                backgroundColor: 'orange',
+                marginHorizontal: 50,
+                marginVertical: 30
     },
-    button: {
+    buttontext1: {
+        color: 'white',
+        fontSize: 10,
+        textAlign: 'center'
+    },
+    button2: {
         borderRadius: 20,
         paddingVertical: 14,
         paddingHorizontal: 10,
@@ -63,11 +114,23 @@ const styles = StyleSheet.create({
         marginHorizontal: 50,
         marginVertical: 30
     },
-    buttontext: {
+       buttontext2: {
+                color: 'grey',
+                fontSize: 20,
+                textAlign: 'center'
+    },
+       signout: {
+                marginTop: 500,
+                justifyContent:'center'
 
-        color: 'grey',
-        fontSize: 20,
-        textAlign: 'center'
-    }
+    },
+       container1: {
+
+                },
+    edit: {
+        marginLeft: 200,
+        flex: 1
+
+                }
 
 })
