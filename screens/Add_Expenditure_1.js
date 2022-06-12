@@ -12,12 +12,20 @@ import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
+import Catebutton from '../components/Catebutton.js';
 
 export default Add_Expenditure_1 = () => {
     return (
-        <SafeAreaView>
-            <Catebutton />
-            <Text>lol</Text>
+        <SafeAreaView style={{ flexDirection : 'column' }}>
+            <View style={{flexDirection : 'row'}}>
+            <Catebutton text='Expenditure' onPress={() => Alert.alert('this is expenditure')} />
+            <Catebutton text='Income' onPress={() => Alert.alert('this is income')} />
+            <Catebutton text='Lending' onPress={() => Alert.alert('this is lending')} />
+                <Catebutton text='Borrowing' onPress={() => Alert.alert('this is borrowing')} />
+            </View>
+            <View>
+                <Text>haha</Text>
+            </View>
         </SafeAreaView>
     )
 }

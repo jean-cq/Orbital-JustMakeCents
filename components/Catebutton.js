@@ -1,14 +1,14 @@
 // JavaScript source code
 import { StatusBar } from 'expo-status-bar';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import { TouchableHighlight, StyleSheet, Text, View } from 'react-native';
 
 export default Flat_button = ({ text, onPress }) => {
     return (
-        <TouchableOpacity onPress={onPress}>
+        <TouchableHighlight onPress={onPress}>
             <View style={styles.button}>
                 <Text style={styles.buttontext} > {text} </Text>
             </View>
-        </TouchableOpacity>
+        </TouchableHighlight>
     )
 }
 
