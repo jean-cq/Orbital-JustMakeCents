@@ -83,11 +83,6 @@ export default Expenditure = () => {
                 }
       />
                  <View style={styles.buttonposition}>
-            <TouchableOpacity onPress={() => navigation.navigate('Add_Expenditure_1')}>
-                <View style={styles.button2}>
-                    <Text style={styles.buttontext} > + </Text>
-                </View>
-                </TouchableOpacity>
             </View>   
         </View>
         
@@ -114,17 +109,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: 'yellow',
       
-    },
-    button2: {
-        borderRadius: 100,
-        paddingVertical: 20,
-        paddingHorizontal: 20,
-        backgroundColor: 'yellow',
-    },
-    buttontext: {
-        color: 'grey',
-        fontSize: 30,
-        textAlign: 'center'
     },
     buttontext1: {
         color: 'black',

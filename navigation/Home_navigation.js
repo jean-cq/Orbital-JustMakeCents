@@ -14,6 +14,8 @@ import Expenditure from '../screens/Expenditure.js';
 import AnalyticsStacks from './AnalyticsStacks.js';
 import LendingStacks from './LendingStacks.js';
 
+import Add_Expenditure_1 from '../screens/Add_Expenditure_1.js';
+
 function ShoppingListScreen() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -72,7 +74,20 @@ function ShoppingListScreen() {
                   color={color}
                 />
               );
-            } else if (route.name === 'LendingAndBorrowing') {
+            } else if (route.name === 'New Entry') {
+            return (
+              <Ionicons
+              name={
+                focused
+                  ? 'add-circle'
+                  : 'add-circle-outline'
+              }
+                size={size}
+                color={color}
+              />
+            );
+          }
+            else if (route.name === 'LendingAndBorrowing') {
               return (
                 <MaterialCommunityIcons
                 name={
@@ -104,6 +119,7 @@ function ShoppingListScreen() {
       >
           <Tab.Screen name="Analytics" component={AnalyticsStacks} />
           <Tab.Screen name="Expenditure" component={ExpenditureStacks}/>
+          <Tab.Screen name="New Entry" component={Add_Expenditure_1}/>
           <Tab.Screen name="LendingAndBorrowing" component={LendingStacks}/>
           <Tab.Screen name="Profile" component={Profile}/>
         </Tab.Navigator>

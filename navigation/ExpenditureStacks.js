@@ -33,9 +33,6 @@ export default ExpenditureStacks = () => {
                 headerShown: false
                 }}
                 />
-            <Stack.Screen name="Add_Expenditure_1" component={Add_Expenditure_1} options={{
-                title: 'Add Expenditure'
-                }}/>
             </Stack.Navigator>
         )
       
