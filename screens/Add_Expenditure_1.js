@@ -16,11 +16,11 @@ import Catebutton from '../components/Catebutton.js';
 import SimpleSelectButton from '../node_modules/react-native-simple-select-button/index.js';
 import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
 import VirtualKeyboard from 'react-native-virtual-keyboard';
-import Flatbutton from '../components/Flatbutton.js';
 
 export default Add_Expenditure_1 = () => {
     const [choice, setChoice] = useState('');
     const [chosen, setChosen] = useState('');
+    const [text, setText] = useState({text: ''})
     const button_list = [
         { label: "Expenditure   ", value: "1" },
         { label: "Income   ", value: "2" },
@@ -50,14 +50,8 @@ export default Add_Expenditure_1 = () => {
         );
     }
 
-    const constructor = (props) => {
-        super(props);
-        this.state = {
-            text: '',
-        };
-    }
     const changeText = (newText) => {
-        this.setState({ text: newText })
+       setText({ text: newText })
     }
 
 
@@ -135,8 +129,8 @@ export default Add_Expenditure_1 = () => {
                     <Flatbutton text='Date' onPress={() => Alert.alert("This is date.")} />
                 </View>
                 <View style={{ flex: 3 }}>
-                <Text>{this.state.text}</Text>
-                <VirtualKeyboard color='white' pressMode='string' onPress={(val) => this.changeText(val)} />
+                <Text>{text.text}</Text>
+                <VirtualKeyboard color='white' pressMode='string' onPress={(val) => changeText(val)} />
                 </View>
                 
             </View>
