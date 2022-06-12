@@ -15,7 +15,8 @@ import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';
 import SimpleSelectButton from '../node_modules/react-native-simple-select-button/index.js';
 import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
-
+import VirtualKeyboard from 'react-native-virtual-keyboard';
+import Flatbutton from '../components/Flatbutton.js';
 
 export default Add_Expenditure_1 = () => {
     const [choice, setChoice] = useState('');
@@ -27,13 +28,13 @@ export default Add_Expenditure_1 = () => {
         { label: "Borrowing   ", value: "4" },
     ];
     const icon_list = [
-        { label: "Traffic", value: "2", icon:"car" },
-        { label: "Recreation", value: "3", icon:"angellist" },
+        { label: "Traffic", value: "2", icon: "car" },
+        { label: "Recreation", value: "3", icon: "angellist" },
         { label: "Medical", value: "6", icon: "medkit" },
-        { label: "Beautify", value: "5", icon:"scissors" },
+        { label: "Beautify", value: "5", icon: "scissors" },
         { label: "Diet", value: "1", icon: "cutlery" },
-        { label: "Education", value: "4", icon:"book" },
-        { label: "Necessity", value: "7", icon:"plug" },
+        { label: "Education", value: "4", icon: "book" },
+        { label: "Necessity", value: "7", icon: "plug" },
         { label: "Others", value: "8", icon: "question" },
         { label: "Add", value: "100", icon: "plus" }
     ]
@@ -41,26 +42,38 @@ export default Add_Expenditure_1 = () => {
     const ItemDivider = () => {
         return (
             <View style={{
-                    height: 1,
-                    width: "100%",
-                    backgroundColor: "grey",
-                }}
+                height: 1,
+                width: "100%",
+                backgroundColor: "grey",
+            }}
             />
         );
     }
+
+    const constructor = (props) => {
+        super(props);
+        this.state = {
+            text: '',
+        };
+    }
+    const changeText = (newText) => {
+        this.setState({ text: newText })
+    }
+
+
     return (
-       
+
         <View style={styles.container}>
             <StatusBar style="auto" />
-                <View style={{
+            <View style={{
                 marginVertical: 20,
                 width: 400,
                 height: 50,
                 justifyContent: 'center',
             }}>
-                <FlatList  
+                <FlatList
                     scrollEnabled={false}
-                    horizontal={true} 
+                    horizontal={true}
                     data={button_list}
                     keyExtractor={item => item.value}
                     extraData={choice}
@@ -69,7 +82,8 @@ export default Add_Expenditure_1 = () => {
                             <SimpleSelectButton
                                 onPress={() => {
                                     setChoice(item.value);
-                                     return Alert.alert('hiii, '+item.label + '.')}}
+                                    return Alert.alert('hiii, ' + item.label + '.')
+                                }}
                                 isChecked={choice === item.value}
                                 text={item.label}
                                 textSize={14}
@@ -81,9 +95,9 @@ export default Add_Expenditure_1 = () => {
                     }
                 />
             </View>
-            <View style={{height: 3, backgroundColor: '#EEE9BF', width:'100%'}}>
+            <View style={{ height: 3, backgroundColor: '#EEE9BF', width: '100%' }}>
             </View>
-            
+
             <View style={{
                 marginTop: 1,
                 width: (Dimensions.get('screen').width - 65),
@@ -116,6 +130,17 @@ export default Add_Expenditure_1 = () => {
                     }
                 />
             </View>
+            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                <View style={{ flex: 1 }}>
+                    <Flatbutton text='Date' onPress={() => Alert.alert("This is date.")} />
+                </View>
+                <View style={{ flex: 3 }}>
+                <Text>{this.state.text}</Text>
+                <VirtualKeyboard color='white' pressMode='string' onPress={(val) => this.changeText(val)} />
+                </View>
+                
+            </View>
+
         </View>
     );
 }
