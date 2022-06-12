@@ -14,7 +14,10 @@ import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 
 export default Add_Expenditure_1 = () => {
-    return(
-    <Text>lol</Text>
+    return (
+        <SafeAreaView>
+            <Catebutton />
+            <Text>lol</Text>
+        </SafeAreaView>
     )
 }
