@@ -57,15 +57,16 @@ export default Add_Expenditure_1 = () => {
     }
 
     const CheckNum = (Text) => {
-        typeof (Text) === Float64Array
-            ? Alert.alert('haha')
-            : Alert.alert('gg');
+        
 
     }
 
     /*orange: #f96300
     yellow:#f5c900
     Tan: #cdad7a*/
+
+    let NumAftDot = num.split('.')
+
     return (
 
         <View style={styles.container}>
@@ -140,7 +141,9 @@ export default Add_Expenditure_1 = () => {
                 <View style={{ flex: 1, justifyContent: 'space-between' }}>
                     <Catebutton text='Date' onPress={() => Alert.alert("This is date.")} />
                     <Catebutton text='Card' onPress={() => Alert.alert("This is card.")} />
-                    <Catebutton text='Enter' onPress={CheckNum(num)} />
+                    <Catebutton text='Enter' onPress={()=> (num[0] ===  '0' && num[1] !== '.') || 
+                    (NumAftDot[1] && (NumAftDot[1].length > 2 || 
+                      NumAftDot.length > 2)) ? Alert.alert('gg') : Alert.alert('haha')} />
                 </View>
                 <View style={{ flex: 5 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
