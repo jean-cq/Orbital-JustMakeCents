@@ -2,7 +2,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { TouchableHighlight, StyleSheet, Text, View } from 'react-native';
 
-export default Catebutton = ({ text, onPress }) => {
+export default Cateunbutton = ({ text, onPress }) => {
     return (
         <TouchableHighlight onPress={onPress}>
             <View style={styles.button}>
@@ -17,11 +17,11 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         paddingVertical: 10,
         paddingHorizontal: 7,
-        backgroundColor: 'yellow',
+        backgroundColor: 'orange',
         marginHorizontal: 50
     },
     buttontext: {
-        color: 'grey',
+        color: 'black',
         fontSize: 13,
         textAlign: 'center'
     }
