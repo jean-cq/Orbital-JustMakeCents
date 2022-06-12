@@ -16,7 +16,65 @@ import Catebutton from '../components/Catebutton.js';
 import SimpleSelectButton from 'react-native-simple-select-button';
 
 export default Add_Expenditure_1 = () => {
-    
+    const [choice, setChoice] = useState('');
+
+    const button_list = [
+        { label: "Expenditure", value: "1" },
+        { label: "Income", value: "2" },
+        { label: "Lendin", value: "3" },
+        { label: "Borrowing", value: "4" },
+    ];
+    return (
+       
+        <View style={styles.container}>
+            <StatusBar style="auto" />
+                <View style={{
+                flexDirection : 'row',
+                marginVertical: 5,
+                width: (Dimensions.get('screen').width - 65),
+            }}>
+                <FlatList
+                    data={button_list}
+                    keyExtractor={item => item.value}
+                    extraData={choice}
+                    renderItem={
+                        ({ item }) =>
+                            <SimpleSelectButton
+                                onPress={() => {
+                                    setChoice(item.value);
+                                     return Alert.alert('hiii'+item.label + '.')}}
+                                isChecked={choice === item.value}
+                                text={item.label}
+                                textSize={14}
+                                iconName="checkcircleo"
+                                iconColor="#fff"
+                                iconSize={14}
+                                buttonDefaultColor="#e5e5e5"
+                                buttonSelectedColor="#ff9c5b"
+                                textDefaultColor="#333"
+                                textSelectedColor="#fff"
+                            />
+                    }
+                />
+            </View>
+            
+            <View>
+                <Text>haha</Text>
+            </View>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: 'transparent',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
+/*
     return (
         <SafeAreaView style={{ flexDirection : 'column' }}>
             <View style={{ flexDirection: 'row' }}>
@@ -82,4 +140,4 @@ export default Add_Expenditure_1 = () => {
             </View>
         </SafeAreaView>
     )
-}
+}*/
