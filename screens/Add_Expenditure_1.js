@@ -20,7 +20,9 @@ import VirtualKeyboard from 'react-native-virtual-keyboard';
 export default Add_Expenditure_1 = () => {
     const [choice, setChoice] = useState('');
     const [chosen, setChosen] = useState('');
-    const [text, setText] = useState({text: ''})
+    const [text, setText] = useState('');
+    const [note, setNote] = useState('');
+
     const button_list = [
         { label: "Expenditure   ", value: "1" },
         { label: "Income   ", value: "2" },
@@ -51,10 +53,12 @@ export default Add_Expenditure_1 = () => {
     }
 
     const changeText = (newText) => {
-       setText({ text: newText })
+       setText('newText')
     }
 
-
+    /*orange: #f96300
+    yellow:#f5c900
+    Tan: #cdad7a*/
     return (
 
         <View style={styles.container}>
@@ -81,8 +85,8 @@ export default Add_Expenditure_1 = () => {
                                 isChecked={choice === item.value}
                                 text={item.label}
                                 textSize={14}
-                                buttonDefaultColor="yellow"
-                                buttonSelectedColor="orange"
+                                buttonDefaultColor={item.value % 2 === 0 ? "#f5c900" : " #f96300" }
+                                buttonSelectedColor="#cdad7a"
                                 textDefaultColor="grey"
                                 textSelectedColor="black"
                             />
@@ -113,8 +117,8 @@ export default Add_Expenditure_1 = () => {
                                 isChecked={chosen === item.value}
                                 text={item.label}
                                 textSize={20}
-                                buttonDefaultColor="yellow"
-                                buttonSelectedColor="orange"
+                                buttonDefaultColor={item.value % 2 === 0 ? "#f5c900" : " #f96300"}
+                                buttonSelectedColor="#cdad7a"
                                 textDefaultColor="black"
                                 textSelectedColor="white"
                                 iconName={item.icon}
@@ -125,12 +129,23 @@ export default Add_Expenditure_1 = () => {
                     }
                 />
             </View>
-            <View style={{ marginTop: 460, flexDirection: 'row', position: 'absolute', backgroundColor:'#D1CFD7', paddingVertical: 20 }}>
+            <View style={styles.keyboardContainer}>
                 <View style={{ flex: 1 }}>
                     <Catebutton text='Date' onPress={() => Alert.alert("This is date.")} />
+                    <Catebutton text='Card' onPress={() => Alert.alert("This is card.")} />
                 </View>
                 <View style={{ flex: 5 }}>
-                <Text style={{fontSize: 23, textAlign:'right', marginRight: 70}}>{'$' + text.text}</Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <TextInput
+                            placeholder="Note"
+                            placeholderTextColor="grey"
+                            marginHorizontal={10}
+                            style={styles.textInput}
+                            value={note}
+                            onChangeText={(text) => setNote(text)}                           
+                        />
+                        <Text style={{ fontSize: 23, textAlign: 'right', marginRight: 70 }}>{'$' + text}</Text>
+                    </View>
                 <VirtualKeyboard color='black' pressMode='string' onPress={(val) => changeText(val)} />
                 </View>
                 
@@ -149,6 +164,17 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         marginLeft: 1
     },
+    keyboardContainer: {
+    marginTop: 460,
+        flexDirection: 'row',
+        position: 'absolute',
+        backgroundColor: '#D1CFD7',
+            paddingVertical: 20
+    },
+    textInput: {
+        fontSize: 23,
+        marginLeft:20
+    }
 });
 /*
     return (
