@@ -14,16 +14,40 @@ import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';
 import SimpleSelectButton from 'react-native-simple-select-button';
+import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
+
 
 export default Add_Expenditure_1 = () => {
     const [choice, setChoice] = useState('');
-
+    const [chosen, setChosen] = useState('');
     const button_list = [
         { label: "Expenditure   ", value: "1" },
         { label: "Income   ", value: "2" },
         { label: "Lendin   ", value: "3" },
         { label: "Borrowing   ", value: "4" },
     ];
+    const icon_list = [
+        { label: "Diet", value: "1", icon: "cutlery" },
+        { label: "Traffic", value: "2", icon:"car" },
+        { label: "Recreation", value: "3", icon:"angellist" },
+        { label: "Education", value: "4", icon:"book" },
+        { label: "Beautify", value: "5", icon:"scissors" },
+        { label: "Medical", value: "6", icon: "medkit" },
+        { label: "Necessity", value: "7", icon:"plug" },
+        { label: "Others", value: "8", icon: "question" },
+        { label: "Add", value: "100", icon: "plus" }
+    ]
+
+    const ItemDivider = () => {
+        return (
+            <View style={{
+                    height: 1,
+                    width: "100%",
+                    backgroundColor: "grey",
+                }}
+            />
+        );
+    }
     return (
        
         <View style={styles.container}>
@@ -43,20 +67,51 @@ export default Add_Expenditure_1 = () => {
                             <SimpleSelectButton
                                 onPress={() => {
                                     setChoice(item.value);
-                                     return Alert.alert('hiii'+item.label + '.')}}
+                                     return Alert.alert('hiii, '+item.label + '.')}}
                                 isChecked={choice === item.value}
                                 text={item.label}
                                 textSize={14}
-                                buttonSelectedColor="#ff9c5b"
-                                textDefaultColor="#333"
-                                textSelectedColor="#fff"
+                                buttonDefaultColor="yellow"
+                                buttonSelectedColor="orange"
+                                textDefaultColor="grey"
+                                textSelectedColor="black"
                             />
                     }
                 />
             </View>
             
-            <View>
-                <Text>haha</Text>
+            <View style={{
+                marginTop: 100,
+                width: (Dimensions.get('screen').width - 65),
+                justifyContent: 'center',
+            }}>
+                <FlatList
+                    horizontal={true}
+                    data={icon_list}
+                    keyExtractor={item => item.value}
+                    extraData={chosen}
+                    renderItem={
+                        ({ item }) =>
+                            <SimpleSelectIcon
+                                onPress={() => {
+                                    setChosen(item.value);
+                                    return Alert.alert('hiii, ' + item.label + '.')
+                                }}
+                                numColumns={4}
+                                isChecked={chosen === item.value}
+                                text={item.label}
+                                textSize={14}
+                                buttonDefaultColor="yellow"
+                                buttonSelectedColor="orange"
+                                textDefaultColor="#fff"
+                                textSelectedColor="#fff"
+                                iconName={item.icon}
+                                iconColor="#fff"
+                                iconSize={14}
+                                ItemSeparatorComponent={ItemDivider}
+                            />
+                    }
+                />
             </View>
         </View>
     );
