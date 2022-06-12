@@ -98,6 +98,7 @@ export default Add_Expenditure_1 = () => {
                 justifyContent: 'center',
             }}>
                 <FlatList
+                  scrollEnabled={false}
                     data={icon_list}
                     keyExtractor={item => item.value}
                     extraData={chosen}
@@ -114,23 +115,23 @@ export default Add_Expenditure_1 = () => {
                                 textSize={20}
                                 buttonDefaultColor="yellow"
                                 buttonSelectedColor="orange"
-                                textDefaultColor="grey"
-                                textSelectedColor="black"
+                                textDefaultColor="black"
+                                textSelectedColor="white"
                                 iconName={item.icon}
-                                iconColor="black"
+                                iconColor="white"
                                 iconSize={30}
                                 ItemSeparatorComponent={ItemDivider}
                             />
                     }
                 />
             </View>
-            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+            <View style={{ marginTop: 460, flexDirection: 'row', position: 'absolute', backgroundColor:'#D1CFD7', paddingVertical: 20 }}>
                 <View style={{ flex: 1 }}>
-                    <Flatbutton text='Date' onPress={() => Alert.alert("This is date.")} />
+                    <Catebutton text='Date' onPress={() => Alert.alert("This is date.")} />
                 </View>
-                <View style={{ flex: 3 }}>
-                <Text>{text.text}</Text>
-                <VirtualKeyboard color='white' pressMode='string' onPress={(val) => changeText(val)} />
+                <View style={{ flex: 5 }}>
+                <Text style={{fontSize: 23, textAlign:'right', marginRight: 70}}>{'$' + text.text}</Text>
+                <VirtualKeyboard color='black' pressMode='string' onPress={(val) => changeText(val)} />
                 </View>
                 
             </View>
