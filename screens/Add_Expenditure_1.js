@@ -13,7 +13,7 @@ import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';
-import SimpleSelectButton from 'react-native-simple-select-button';
+import SimpleSelectButton from '../node_modules/react-native-simple-select-button/index.js';
 import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
 
 
@@ -27,12 +27,12 @@ export default Add_Expenditure_1 = () => {
         { label: "Borrowing   ", value: "4" },
     ];
     const icon_list = [
-        { label: "Diet", value: "1", icon: "cutlery" },
         { label: "Traffic", value: "2", icon:"car" },
         { label: "Recreation", value: "3", icon:"angellist" },
-        { label: "Education", value: "4", icon:"book" },
-        { label: "Beautify", value: "5", icon:"scissors" },
         { label: "Medical", value: "6", icon: "medkit" },
+        { label: "Beautify", value: "5", icon:"scissors" },
+        { label: "Diet", value: "1", icon: "cutlery" },
+        { label: "Education", value: "4", icon:"book" },
         { label: "Necessity", value: "7", icon:"plug" },
         { label: "Others", value: "8", icon: "question" },
         { label: "Add", value: "100", icon: "plus" }
@@ -53,11 +53,13 @@ export default Add_Expenditure_1 = () => {
         <View style={styles.container}>
             <StatusBar style="auto" />
                 <View style={{
-                marginVertical: 5,
-                width: (Dimensions.get('screen').width - 65),
+                marginVertical: 20,
+                width: 400,
+                height: 50,
                 justifyContent: 'center',
             }}>
-                <FlatList  contentInset={{ right: 20, top: 0, left: 0, bottom: 0 }}
+                <FlatList  
+                    scrollEnabled={false}
                     horizontal={true} 
                     data={button_list}
                     keyExtractor={item => item.value}
@@ -79,17 +81,19 @@ export default Add_Expenditure_1 = () => {
                     }
                 />
             </View>
+            <View style={{height: 3, backgroundColor: '#EEE9BF', width:'100%'}}>
+            </View>
             
             <View style={{
-                marginTop: 100,
+                marginTop: 1,
                 width: (Dimensions.get('screen').width - 65),
                 justifyContent: 'center',
             }}>
                 <FlatList
-                    horizontal={true}
                     data={icon_list}
                     keyExtractor={item => item.value}
                     extraData={chosen}
+                    numColumns={3}
                     renderItem={
                         ({ item }) =>
                             <SimpleSelectIcon
@@ -97,17 +101,16 @@ export default Add_Expenditure_1 = () => {
                                     setChosen(item.value);
                                     return Alert.alert('hiii, ' + item.label + '.')
                                 }}
-                                numColumns={4}
                                 isChecked={chosen === item.value}
                                 text={item.label}
-                                textSize={14}
+                                textSize={20}
                                 buttonDefaultColor="yellow"
                                 buttonSelectedColor="orange"
-                                textDefaultColor="#fff"
-                                textSelectedColor="#fff"
+                                textDefaultColor="grey"
+                                textSelectedColor="black"
                                 iconName={item.icon}
-                                iconColor="#fff"
-                                iconSize={14}
+                                iconColor="black"
+                                iconSize={30}
                                 ItemSeparatorComponent={ItemDivider}
                             />
                     }

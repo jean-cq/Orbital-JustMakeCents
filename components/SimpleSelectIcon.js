@@ -23,30 +23,32 @@ const SimpleSelectIcon = ({
         <View style={{ flexDirection: 'column' }}>
         <TouchableOpacity
             {...props}
-            style={{ paddingVertical: 10, }}
+            style={{ paddingVertical: 20, paddingHorizontal: 5, justifyContent: 'space-evenly'}}
         >
 
             <View
                 style={{
-                    flexDirection: 'row',
+                    flexDirection: 'column',
                     borderRadius: 80,
                     overflow: 'hidden',
                     textAlign: 'center',
                     justifyContent: 'center',
+                    paddingHorizontal: 10,
                     backgroundColor: isChecked === true ? buttonSelectedColor : buttonDefaultColor
                 }}>
                 
                 <Text
-                    style={[styles.button_item, { position: 'absolute', right: 25, }]}>{isChecked === true ?
+                    style={[styles.button_item, { position: isChecked === true ? 'relative' : 'absolute'}]}>{isChecked === true ?
                         <FontAwesome name={iconName} size={iconSize} color={iconColor} /> : null}
                 </Text>
-            </View>
-
-        </TouchableOpacity>
-        <Text
+                <Text
                     style={[styles.button_item, { fontSize: textSize, color: isChecked === true ? textSelectedColor : textDefaultColor }]}>
                     {text}
             </Text>
+            </View>
+
+        </TouchableOpacity>
+        
             </View>
     )
 
@@ -62,4 +64,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default SimpleSelectButton;
+export default SimpleSelectIcon;
