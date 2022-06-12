@@ -14,15 +14,16 @@ export default Catebutton = ({ text, onPress }) => {
 
 const styles = StyleSheet.create({
     button: {
-        borderRadius: 20,
-        paddingVertical: 10,
-        paddingHorizontal: 7,
+        borderRadius: 10,
+        paddingVertical: 5,
+        paddingHorizontal: 5,
         backgroundColor: 'yellow',
         marginHorizontal: 12,
+        justifyContent:'center'
     },
     buttontext: {
-        color: 'grey',
-        fontSize: 13,
+        color: 'black',
+        fontSize: 10,
         textAlign: 'center'
     }
 }

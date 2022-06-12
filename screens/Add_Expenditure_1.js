@@ -20,7 +20,7 @@ import VirtualKeyboard from 'react-native-virtual-keyboard';
 export default Add_Expenditure_1 = () => {
     const [choice, setChoice] = useState('');
     const [chosen, setChosen] = useState('');
-    const [text, setText] = useState('');
+    const [num, setNum] = useState('');
     const [note, setNote] = useState('');
 
     const button_list = [
@@ -52,8 +52,15 @@ export default Add_Expenditure_1 = () => {
         );
     }
 
-    const changeText = (newText) => {
-       setText(newText)
+    const changeNum = (newNum) => {
+        setNum(newNum);
+    }
+
+    const CheckNum = (Text) => {
+        typeof (Text) === Float64Array
+            ? Alert.alert('haha')
+            : Alert.alert('gg');
+
     }
 
     /*orange: #f96300
@@ -130,9 +137,10 @@ export default Add_Expenditure_1 = () => {
                 />
             </View>
             <View style={styles.keyboardContainer}>
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, justifyContent: 'space-between' }}>
                     <Catebutton text='Date' onPress={() => Alert.alert("This is date.")} />
                     <Catebutton text='Card' onPress={() => Alert.alert("This is card.")} />
+                    <Catebutton text='Enter' onPress={CheckNum(num)} />
                 </View>
                 <View style={{ flex: 5 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -144,9 +152,9 @@ export default Add_Expenditure_1 = () => {
                             value={note}
                             onChangeText={(text) => setNote(text)}                           
                         />
-                        <Text style={{ fontSize: 23, textAlign: 'right', marginRight: 70 }}>{'$' + text}</Text>
+                        <Text style={{ fontSize: 23, textAlign: 'right', marginRight: 70 }}>{'$' + num}</Text>
                     </View>
-                <VirtualKeyboard color='black' pressMode='string' onPress={(val) => changeText(val)} decimal={true} />
+                <VirtualKeyboard color='black' pressMode='string' onPress={(val) => changeNum(val)} decimal={true} />
                 </View>
                 
             </View>
