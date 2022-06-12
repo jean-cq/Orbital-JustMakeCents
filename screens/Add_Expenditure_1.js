@@ -30,15 +30,15 @@ export default Add_Expenditure_1 = () => {
         { label: "Borrowing   ", value: "4" },
     ];
     const icon_list = [
-        { label: "Traffic", value: "2", icon: "car" },
-        { label: "Recreation", value: "3", icon: "angellist" },
-        { label: "Medical", value: "6", icon: "medkit" },
-        { label: "Beautify", value: "5", icon: "scissors" },
-        { label: "Diet", value: "1", icon: "cutlery" },
-        { label: "Education", value: "4", icon: "book" },
+        { label: "Traffic", value: "1", icon: "car" },
+        { label: "Recreation", value: "2", icon: "angellist" },
+        { label: "Medical", value: "3", icon: "medkit" },
+        { label: "Beautify", value: "4", icon: "scissors" },
+        { label: "Diet", value: "5", icon: "cutlery" },
+        { label: "Education", value: "6", icon: "book" },
         { label: "Necessity", value: "7", icon: "plug" },
         { label: "Others", value: "8", icon: "question" },
-        { label: "Add", value: "100", icon: "plus" }
+        { label: "Add", value: "999", icon: "plus" }
     ]
 
     const ItemDivider = () => {
@@ -53,7 +53,7 @@ export default Add_Expenditure_1 = () => {
     }
 
     const changeText = (newText) => {
-       setText('newText')
+       setText(newText)
     }
 
     /*orange: #f96300
@@ -85,10 +85,10 @@ export default Add_Expenditure_1 = () => {
                                 isChecked={choice === item.value}
                                 text={item.label}
                                 textSize={14}
-                                buttonDefaultColor={item.value % 2 === 0 ? "#f5c900" : " #f96300" }
+                                buttonDefaultColor="yellow"
                                 buttonSelectedColor="#cdad7a"
                                 textDefaultColor="grey"
-                                textSelectedColor="black"
+                                textSelectedColor="white"
                             />
                     }
                 />
@@ -117,7 +117,7 @@ export default Add_Expenditure_1 = () => {
                                 isChecked={chosen === item.value}
                                 text={item.label}
                                 textSize={20}
-                                buttonDefaultColor={item.value % 2 === 0 ? "#f5c900" : " #f96300"}
+                                buttonDefaultColor={item.value % 2 === 0 ? "#f5c900" : "yellow"}
                                 buttonSelectedColor="#cdad7a"
                                 textDefaultColor="black"
                                 textSelectedColor="white"
@@ -135,7 +135,7 @@ export default Add_Expenditure_1 = () => {
                     <Catebutton text='Card' onPress={() => Alert.alert("This is card.")} />
                 </View>
                 <View style={{ flex: 5 }}>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <TextInput
                             placeholder="Note"
                             placeholderTextColor="grey"
@@ -146,7 +146,7 @@ export default Add_Expenditure_1 = () => {
                         />
                         <Text style={{ fontSize: 23, textAlign: 'right', marginRight: 70 }}>{'$' + text}</Text>
                     </View>
-                <VirtualKeyboard color='black' pressMode='string' onPress={(val) => changeText(val)} />
+                <VirtualKeyboard color='black' pressMode='string' onPress={(val) => changeText(val)} decimal={true} />
                 </View>
                 
             </View>
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     },
     textInput: {
         fontSize: 23,
-        marginLeft:20
+        marginLeft:64
     }
 });
 /*
