@@ -1,6 +1,6 @@
 // JavaScript source code
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, ListItem } from 'react-native';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, ListItem, Dimensions } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 //import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
@@ -19,21 +19,22 @@ export default Add_Expenditure_1 = () => {
     const [choice, setChoice] = useState('');
 
     const button_list = [
-        { label: "Expenditure", value: "1" },
-        { label: "Income", value: "2" },
-        { label: "Lendin", value: "3" },
-        { label: "Borrowing", value: "4" },
+        { label: "Expenditure   ", value: "1" },
+        { label: "Income   ", value: "2" },
+        { label: "Lendin   ", value: "3" },
+        { label: "Borrowing   ", value: "4" },
     ];
     return (
        
         <View style={styles.container}>
             <StatusBar style="auto" />
                 <View style={{
-                flexDirection : 'row',
                 marginVertical: 5,
                 width: (Dimensions.get('screen').width - 65),
+                justifyContent: 'center',
             }}>
-                <FlatList
+                <FlatList  contentInset={{ right: 20, top: 0, left: 0, bottom: 0 }}
+                    horizontal={true} 
                     data={button_list}
                     keyExtractor={item => item.value}
                     extraData={choice}
@@ -46,10 +47,6 @@ export default Add_Expenditure_1 = () => {
                                 isChecked={choice === item.value}
                                 text={item.label}
                                 textSize={14}
-                                iconName="checkcircleo"
-                                iconColor="#fff"
-                                iconSize={14}
-                                buttonDefaultColor="#e5e5e5"
                                 buttonSelectedColor="#ff9c5b"
                                 textDefaultColor="#333"
                                 textSelectedColor="#fff"
@@ -71,7 +68,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: 'transparent',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
+        marginLeft: 1
     },
 });
 /*

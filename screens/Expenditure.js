@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'yellow',
       
     },
+
     buttontext1: {
         color: 'black',
         fontSize: 18,

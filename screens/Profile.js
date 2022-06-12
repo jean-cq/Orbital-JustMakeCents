@@ -41,3 +41,12 @@ export default Profile = () => {
         
                 </View>
         </SafeAreaView>)}
+
+const styles = StyleSheet.create({
+    button: {
+        
+    },
+    buttontext:{
+        
+    }
+    },)
