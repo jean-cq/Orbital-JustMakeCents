@@ -12,6 +12,7 @@ import ExpenditureStacks from '../navigation/ExpenditureStacks.js';
 import Expenditure from '../screens/Expenditure.js';
 
 import AnalyticsStacks from './AnalyticsStacks.js';
+import LendingStacks from './LendingStacks.js';
 
 function ShoppingListScreen() {
     return (
@@ -103,7 +104,7 @@ function ShoppingListScreen() {
       >
           <Tab.Screen name="Analytics" component={AnalyticsStacks} />
           <Tab.Screen name="Expenditure" component={ExpenditureStacks}/>
-          <Tab.Screen name="LendingAndBorrowing" component={LendingScreen}/>
+          <Tab.Screen name="LendingAndBorrowing" component={LendingStacks}/>
           <Tab.Screen name="Profile" component={Profile}/>
         </Tab.Navigator>
     
