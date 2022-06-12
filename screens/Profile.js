@@ -27,7 +27,6 @@ export default Profile = () => {
     }
     return (
         <SafeAreaView>
-<<<<<<< Updated upstream
 
                 <View>
                     <TouchableOpacity onPress={() => handleLogOut()}>
@@ -41,78 +40,4 @@ export default Profile = () => {
                             
         
                 </View>
-=======
-            <View style={styles.container1}>
-                <View style={styles.edit}>
-                    <TouchableOpacity onPress={() => Alert.alert('This is edit profile')}>
-                        <View style={styles.button1}>
-                            <Text style={styles.buttontext} > {text} </Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <Text style={styles.text} > Avatar </Text>
-            </View>
-            <View stlyle={styles.signout}>
-            <TouchableOpacity onPress={() => handleLogOut()}>
-
-                <View style={styles.button2}>
-                    <Text style={styles.buttontext} > Sign Out </Text>
-                </View>
-                  
-
-            </TouchableOpacity>
-        </View>  
->>>>>>> Stashed changes
-        </SafeAreaView>
-                )}
-
-const styles = StyleSheet.create({
-
-<<<<<<< Updated upstream
-    button: {
-=======
-    },
-    button1: {
-        borderRadius: 20,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        backgroundColor: 'yellow',
-        marginHorizontal: 50,
-        marginVertical: 30
-    },
-    button2: {
->>>>>>> Stashed changes
-        borderRadius: 20,
-        paddingVertical: 14,
-        paddingHorizontal: 10,
-        backgroundColor: 'yellow',
-        marginHorizontal: 50,
-        marginVertical: 30
-    },
-<<<<<<< Updated upstream
-       buttontext: {
-                color: 'grey',
-                fontSize: 20,
-                textAlign: 'center'
-=======
-    buttontext: {
-
-        color: 'grey',
-        fontSize: 20,
-        textAlign: 'center'
-    },
-    signout: {
-        marginTop: 500,
-        justifyContent:'center'
-
-    },
-    container1: {
-
-    },
-    edit: {
-
->>>>>>> Stashed changes
-    }
-   
-
-})
+        </SafeAreaView>)}
