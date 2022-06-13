@@ -11,6 +11,8 @@ import { supabase } from './lib/supabase';
 import {supabaseClient} from './lib/supabase.ts';
 
 
+
+
 const Stack = createNativeStackNavigator();
 
 
