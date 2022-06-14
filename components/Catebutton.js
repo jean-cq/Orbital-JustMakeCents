@@ -2,11 +2,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { TouchableHighlight, StyleSheet, Text, View } from 'react-native';
 
-export default Catebutton = ({ onPress }) => {
+export default Catebutton = ({ text, onPress }) => {
     return (
         <TouchableHighlight onPress={onPress}>
             <View style={styles.button}>
-                <Text style={styles.buttontext} > Edit your profile </Text>
+                <Text style={styles.buttontext} > {text} </Text>
             </View>
         </TouchableHighlight>
     )
