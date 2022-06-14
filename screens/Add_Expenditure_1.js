@@ -56,10 +56,7 @@ export default Add_Expenditure_1 = () => {
         setNum(newNum);
     }
 
-    const CheckNum = (Text) => {
-        
-
-    }
+    
 
     /*orange: #f96300
     yellow:#f5c900

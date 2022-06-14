@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 //import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
 import Feather from '../node_modules/@expo/vector-icons/Feather.js';
-import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
+import Ionicons from '../node_modules/@expo/vector-icons/Ionicons.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
 import { useState } from 'react';
@@ -12,6 +12,7 @@ import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';
+
 
 
 export default Profile = () => {
@@ -29,56 +30,51 @@ export default Profile = () => {
     }
     return (
         <SafeAreaView style={{ flexDirection: 'column' }}>
-            {/*avatar& username*/}
-            <View style={{ flexDirection: 'column' }}>
-                <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                    <Catebutton test='Edit your porfile' onPress={() => Alert.alert("This is date.")} />
-                </View>
-                <FontAwesome
-                    name="user-o"
-                    color={colors.text}
-                    size={20}
-                    style={{ flex: 5, alignItems: 'center' }}
+            <View style={{ flexDirection: 'column', marginTop: 10, marginRight: 10 }}>
+            <Catebutton onPress={() => Alert.alert("This is date.")} />
+                <Ionicons
+                    name="ios-person-circle"
+                    color={'black'}
+                    size={150}
+                    style={{ alignSelf: 'center', marginLeft: 25 }}
                 />
-                <Text style={{ flex: 2, textAlign: 'center' }}>Username</Text>
+                <Text style={{ fontSize: 30, textAlign:'center' }}>Ashley Wang</Text>
             </View>
-            <View style={{ height: 3, backgroundColor: '#EEE9BF', width: '100%' }}>
-            </View>
-            <View style={{ flexDirection: 'row' }}>
-                <View style={{ flexDirection: 'column', flex: 1, backgroundColor:'#F9C70D' }}>
+            <View style={{ flexDirection: 'row', paddingTop: 20 }}>
+                <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#F9C70D', borderTopLeftRadius: 10 }}>
                     <Text
-                        style={{ fontSize: 5, color: '#979C9E' }}>
-                        5
-                    </Text>
-                    <Text
-                        style={{ fontSize: 5, color: '#979C9E'}}>
-                        Days continuing
-                    </Text>
-                </View>
-                <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#979C9E' }}>
-                    <Text
-                        style={{ fontSize: 5, color: '#E6DC14' }}>
+                        style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingTop: 5 }}>
                         30
                     </Text>
                     <Text
-                        style={{ fontSize: 5, color: '#E6DC14' }}>
+                        style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingBottom: 5 }}>
                         Days recorded
                     </Text>
-                </View><View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#E6DC14' }}>
+                </View>
+                <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#cdad7a' }}>
                     <Text
-                        style={{ fontSize: 5, color: '#F9C70D' }}>
+                        style={{ fontSize: 10, fontWeight: 'bold', color: 'white', textAlign: 'center', paddingTop: 5   }}>
+                        5
+                    </Text>
+                    <Text
+                        style={{ fontSize: 10, fontWeight: 'bold', color: 'white', textAlign: 'center', paddingBottom: 5  }}>
+                        Days continuing
+                    </Text>
+                </View><View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#F9C70D', borderTopRightRadius: 10 }}>
+                    <Text
+                        style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingTop: 5 }}>
                         40
                     </Text>
                     <Text
-                        style={{ fontSize: 5, color: '#F9C70D' }}>
+                        style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingBottom: 5 }}>
                         Days joined
                     </Text>
                 </View>
                 </View>
-            <View style={{ height: 3, backgroundColor: '#EEE9BF', width: '100%' }}>
+            <View style={{ height: 1, backgroundColor: '#EEE9BF', width: '100%' }}>
             </View>
             {/*button for sign out*/}
-                <View>
+            <View style={{ marginTop: 10 }}>
                     <TouchableOpacity onPress={() => handleLogOut()}>
 
                         <View style={styles.button}>
@@ -94,9 +90,28 @@ export default Profile = () => {
 
 const styles = StyleSheet.create({
     button: {
-        
+        borderRadius: 20,
+        paddingVertical: 14,
+        paddingHorizontal: 5,
+        backgroundColor: 'yellow',
+        marginHorizontal: 100
     },
-    buttontext:{
-        
+    buttontext: {
+        textAlign: 'center'
     }
     },)
+
+            /*avatar& username
+               <View style={{ flexDirection: 'column', flex: 50 }}>
+                 
+                       <Catebutton test='Edit your porfile' onPress={() => Alert.alert("This is date.")} />
+                  
+                   <FontAwesome
+                       name="user-o"
+                       color={'black'}
+                       size={20}
+                       style={{ flex: 5, alignItems: 'center' }}
+                   />
+                   <Text style={{ flex: 2, textAlign: 'center' }}>Username</Text>
+               </View>
+               */
