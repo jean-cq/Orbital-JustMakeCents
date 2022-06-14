@@ -11,25 +11,27 @@ import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
+import { auth } from '../lib/firebase.js';
 
 
 export default Profile = () => {
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation();
 
-    const handleLogOut = async () => {
-        setLoading('SIGNOUT')
-        const { error, session, user } =
-            await supabase.supabaseClient.auth.signOut()
-        if (error) Alert.alert(error.message)
-        else navigation.navigate('Starting_page')
-        setLoading('')
+    const handleSignOut = () => {
+        auth.signOut()
+        .then(() => {
+            navigation.replace("Starting_page")
+        })
+        .catch(error => alert(error.message))
     }
+    
+
     return (
         <SafeAreaView>
 
                 <View>
-                    <TouchableOpacity onPress={() => handleLogOut()}>
+                    <TouchableOpacity onPress={handleSignOut}>
 
                         <View style={styles.button}>
                            

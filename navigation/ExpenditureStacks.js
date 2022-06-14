@@ -8,7 +8,6 @@ import Expenditure from '../screens/Expenditure.js';
 import Add_Expenditure_1 from '../screens/Add_Expenditure_1.js';
 import { useState, useEffect } from 'react';
 import Books from '../screens/Books.js'
-import Home_navigation from './Home_navigation.js';
 
 
 const Stack = createNativeStackNavigator();
