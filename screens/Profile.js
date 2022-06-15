@@ -1,5 +1,5 @@
-// JavaScript source codeimport { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View } from 'react-native';
+﻿// JavaScript source codeimport { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, ScrollView} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 //import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
@@ -7,15 +7,14 @@ import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
 import Ionicons from '../node_modules/@expo/vector-icons/Ionicons.js';
 import Fontisto from '../node_modules/@expo/vector-icons/Fontisto.js';
 import Tips1 from '../screens/tips1'
-import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
+import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import { useTheme } from '@react-navigation/native';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';
-import PagerView from 'react-native-pager-view';
-
+import PageControl from 'react-native-page-control';
 
 
 export default Profile = () => {
@@ -31,6 +30,22 @@ export default Profile = () => {
         else navigation.navigate('Starting_page')
         setLoading('')
     }
+   const onScroll = (e) => {
+        //拿到x的偏移量
+        let x = e.nativeEvent.contentOffset.x
+        //用偏移量/宽度得到当前页数
+        let currentPage = Math.round(x / screen.width)
+
+        console.log('onScroll  ' + e.nativeEvent.contentOffset.x + '  page ' + currentPage + '  current ' + this.state.currentPage)
+        if (this.state.currentPage != currentPage) {
+            //改变状态机
+
+            this.setState({
+                currentPage: currentPage
+            })
+        }
+    }
+
     return (
         <SafeAreaView style={{ flexDirection: 'column' }}>
             {/*avatar*/}
@@ -107,21 +122,98 @@ export default Profile = () => {
                 
             </View>
             { /*tips*/}
-            <PagerView style={{ backgroundColor: '#C4C4C4', marginTop: 5, flexDirection: 'row', padding: 15, borderRadius: 20, borderColor: 'yellow', borderWidth: 1 }} initialPage={0}>
+            <View style={styles.container}>
+                <ScrollView contentContainerStyle={styles.contentContainer}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    pagingEnabled
+                    onScroll={(e) => onScroll(e)}
+                >
+                    <View style={styles.menuContainer}>
+                        <View key={ 1} style={{ backgroundColor: '#C4C4C4', marginTop: 5, flexDirection: 'row', padding: 15, borderRadius: 20, borderColor: 'yellow', borderWidth: 1 }}>
 
-                <View key="1">
+                <View style={{ flexDirection: 'column', flex: 4 }} >
                     <Text style={{
                         justifyContent: 'center', fontSize: 20, fontWeight: 'bold', fontFamily: 'serif'
                     }} > Daliy Saving Tips </Text>
 
+
+
                     <Text style={{ alignSelf: 'center', fontSize: 15, marginVertical: 10 }} > Switch to supermarket-brand products </Text>
                 </View>
-                
-                <View key="2">
-                    <Text>Second page</Text>
-                </View>
-            </PagerView>
+                <Fontisto
+                    name="shopping-bag-1"
+                    color={'black'}
+                    size={70}
+                    style={{ flex: 1 }} />
+
+
+
+            </View>
+                    </View>
+                </ScrollView>
             
+            <PageControl
+                style={{ left: 0, right: 0, bottom: 10 }}
+                numberOfPages={3}
+                currentPage={0}
+                hidesForSinglePage
+                pageIndicatorTintColor='gray'
+                currentPageIndicatorTintColor='white'
+                indicatorStyle={{ borderRadius: 5 }}
+                currentIndicatorStyle={{ borderRadius: 5 }}
+                indicatorSize={{ width: 8, height: 8 }}
+                
+                />
+            </View>
+            {/*button for badges*/}
+            <View style={{marginTop: 5, flexDirection: 'column', padding: 10, borderRadius: 20}}>
+                <TouchableOpacity onPress={() => Alert.alert("This is Badge.")}>
+
+
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={{
+                            justifyContent: 'center', fontSize: 20, marginRight: 290, fontWeight: 'bold', fontFamily: 'serif'
+                        }} > Badge </Text>
+
+                        <MaterialIcons
+                            name="keyboard-arrow-right"
+                            color={'black'}
+                            size={30}
+                            style={{ alignSelf: 'flex-end' }} />
+
+                    </View>
+                </TouchableOpacity>
+
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1, marginLeft: 2 }} > Date </Text>
+                    <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1 }}> Incomes: $3000 </Text>
+                    <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1 }}> Expenses: $250 </Text>
+
+                </View>
+
+
+
+            </View>
+            {/*button for setting*/}
+            <View style={{ backgroundColor: '#F1EFEF', marginTop: 5, borderRadius: 20}}>
+                <TouchableOpacity onPress={() => Alert.alert("This is Setting.")}>
+                    <Feather
+                        name="settings"
+                        color={'black'}
+                        size={20}
+                        style={{ textAlign: 'left'}} />
+
+              
+                    <Text style={{
+                        textAlign: 'center', fontSize: 20, fontWeight: 'bold', fontFamily: 'serif'
+                        }} > Setting </Text>
+
+                    
+                </TouchableOpacity>
+
+               
+            </View>
             {/*button for sign out*/}
             <View style={{ marginTop: 10 }}>
                     <TouchableOpacity onPress={() => handleLogOut()}>

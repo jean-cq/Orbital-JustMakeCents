@@ -4,7 +4,7 @@ import Fontisto from '../node_modules/@expo/vector-icons/Fontisto.js';
 
 export default Tips1 = () => {
     return(
-<View >
+        <View style={{ backgroundColor: '#C4C4C4', marginTop: 5, flexDirection: 'row', padding: 15, borderRadius: 20, borderColor: 'yellow', borderWidth: 1 }}>
 
     <View style={{ flexDirection: 'column', flex: 4 }} >
         <Text style={{
