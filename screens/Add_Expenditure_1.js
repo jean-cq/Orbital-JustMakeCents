@@ -68,7 +68,11 @@ export default Add_Expenditure_1 = () => {
     yellow:#f5c900
     Tan: #cdad7a*/
 
-    function create () {
+    const create = () => {
+        if ((num[0] ===  '0' && num[1] !== '.') || (NumAftDot[1] && (NumAftDot[1].length > 2 || NumAftDot.length > 2))) {
+            Alert.alert('gg')
+          }
+        else {
         set(ref(db, 'users/' + note), {
             note: note,
             num: num,
@@ -79,7 +83,7 @@ export default Add_Expenditure_1 = () => {
               // The write failed ..
               alert(error)
           })
-    }
+    }}
 
     let NumAftDot = num.split('.')
 
