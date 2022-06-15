@@ -73,9 +73,10 @@ export default Add_Expenditure_1 = () => {
             Alert.alert('gg')
           }
         else {
-        set(ref(db, 'users/' + note), {
+        const unique_ref = note.concat(NumAftDot)
+        set(ref(db, 'expenditure/' + unique_ref), {
             note: note,
-            num: num,
+            num: num.valueOf(),
           }).then(() => {
               // Data saved successfully!
               alert('data submitted');

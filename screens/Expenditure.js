@@ -13,6 +13,9 @@ import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 
+import { getDatabase, ref, onValue} from "firebase/database";
+import { db } from '../lib/firebase.js';
+
 const Stack = createNativeStackNavigator();
 
 export default Expenditure = () => {
@@ -44,6 +47,12 @@ export default Expenditure = () => {
         loadAllExpenditure();
 
     },[])
+
+    const starCountRef = ref(db, 'expenditure/');
+    onValue(starCountRef, (snapshot) => {
+    const data = snapshot.val();
+    updateStarCount(postElement, data);
+    });
   
     return (
         <View>
@@ -60,12 +69,12 @@ export default Expenditure = () => {
             </View>
             <FlatList
                 showsVerticalScrollIndicator={true}
-                data={ ExpenditureData }
+                data={ starCountRef }
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-                            <Text style={{ flex: 1 }}>{item.status}</Text>
+                            <Text style={{ flex: 1 }}>{item.note}</Text>
 
                             <Text style={{ flex: 2 }}>{item.category}</Text>
 
