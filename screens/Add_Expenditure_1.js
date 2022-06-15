@@ -17,6 +17,9 @@ import SimpleSelectButton from '../node_modules/react-native-simple-select-butto
 import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
 import VirtualKeyboard from 'react-native-virtual-keyboard';
 
+import { ref, set } from "firebase/database";
+import { db } from '../lib/firebase.js';
+
 export default Add_Expenditure_1 = () => {
     const [choice, setChoice] = useState('');
     const [chosen, setChosen] = useState('');
@@ -64,6 +67,19 @@ export default Add_Expenditure_1 = () => {
     /*orange: #f96300
     yellow:#f5c900
     Tan: #cdad7a*/
+
+    function create () {
+        set(ref(db, 'users/' + note), {
+            note: note,
+            num: num,
+          }).then(() => {
+              // Data saved successfully!
+              alert('data submitted');
+          }).catch((error) => {
+              // The write failed ..
+              alert(error)
+          })
+    }
 
     let NumAftDot = num.split('.')
 
@@ -141,9 +157,7 @@ export default Add_Expenditure_1 = () => {
                 <View style={{ flex: 1, justifyContent: 'space-between' }}>
                     <Catebutton text='Date' onPress={() => Alert.alert("This is date.")} />
                     <Catebutton text='Card' onPress={() => Alert.alert("This is card.")} />
-                    <Catebutton text='Enter' onPress={()=> (num[0] ===  '0' && num[1] !== '.') || 
-                    (NumAftDot[1] && (NumAftDot[1].length > 2 || 
-                      NumAftDot.length > 2)) ? Alert.alert('gg') : Alert.alert('haha')} />
+                    <Catebutton text='Enter' onPress={create} />
                 </View>
                 <View style={{ flex: 5 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
