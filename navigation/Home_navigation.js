@@ -118,7 +118,9 @@ function ShoppingListScreen() {
         })}
       >
           <Tab.Screen name="Analytics" component={AnalyticsStacks} />
-          <Tab.Screen name="Expenditure" component={ExpenditureStacks}/>
+            <Tab.Screen name="Expend" component={ExpenditureStacks} options={{
+                headerShown: false
+            }}/>
           <Tab.Screen name="New Entry" component={Add_Expenditure_1}/>
           <Tab.Screen name="LendingAndBorrowing" component={LendingStacks}/>
           <Tab.Screen name="Profile" component={Profile}/>

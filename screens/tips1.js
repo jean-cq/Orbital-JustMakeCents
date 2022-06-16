@@ -2,11 +2,11 @@
 import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View } from 'react-native';
 import Fontisto from '../node_modules/@expo/vector-icons/Fontisto.js';
 
-export default Tips1 = ({ text, imagename, key}) => {
+export default Tips1 = ({ text, imagename}) => {
     return (
         
        
-        <View key={ key }>
+       
             <View style={{padding:13, flexDirection: 'row'}}>
         
 
@@ -23,6 +23,6 @@ export default Tips1 = ({ text, imagename, key}) => {
         size={70}
         style={{ flex: 1 }} />
             </View>
-        </View>
+      
   )
 }

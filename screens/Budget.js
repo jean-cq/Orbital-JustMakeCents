@@ -14,13 +14,13 @@ import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 
-export default Expenditure = () => {
+export default Budget = () => {
     const navigation = useNavigation();
     const [items, setItems] = useState([
         { id: '1', status: false, category: 'Beverage', name: 'Milk', income: false, amount: 5.00, note: null },
         { id: '2', status: false, category: 'Food', name: 'Chocolate', income: false, amount: 5.00, note: 'haha' },
         { id: '3', status: true, category: 'beauty', name: 'lipstick', income: false, amount: 25.00, note: 'lolll' },
-        { id: '4', status: true, category: 'others', name: 'scholarship', income: true, amount: 300.00, note : 'qkym'},
+        { id: '4', status: true, category: 'others', name: 'scholarship', income: true, amount: 300.00, note: 'qkym' },
     ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
@@ -42,59 +42,46 @@ export default Expenditure = () => {
     useEffect(() => {
         loadAllExpenditure();
 
-    },[])
-  
+    }, [])
+
     return (
         <View>
-            <View style={styles.container}>
-                <TouchableOpacity onPress={() => navigation.navigate ('Wallet')}>
-                <View style={styles.button1}>
-                        <Text style={styles.buttontext1} > Wallet </Text>
-                </View>
-                </TouchableOpacity>
-                <View style={{ flexDirection: 'column' }}>
-                    <Text style={{ marginLeft: 50, fontSize: 16, fontWeight:'bold' }}>Budget</Text>
+            { /*Budget*/ }
+            <View style={styles.container}>           
+                
+                    <Text style={{ marginLeft: 50, fontSize: 16, fontWeight: 'bold' }}>Budget</Text>
 
-                    <TouchableOpacity style={{ marginLeft: 50}} onPress={() => navigation.navigate('Budget')}>
-
-                        <Svg width='300' height= '30'>
+                    
+                        <Svg width='300' height='30'>
                             <Rect
                                 x="0"
                                 y="10"
                                 width="225"
                                 height="15"
-                                fill= '#3C3056'
+                                fill='#3C3056'
                                 strokeWidth="3"
-                                
+
                             />
                             <Rect
                                 x="0"
                                 y="10"
                                 width={0.75 * 225}
                                 height="15"
-                                fill ='yellow'
+                                fill='yellow'
                                 strokeWidth="3"
-                                
+
                             />
-                           
+
                         </Svg>
 
-                    </TouchableOpacity>
-                    <Text style={{ textAlign: 'right', marginRight: 70,fontSize: 10 }}>75%</Text>
-                    </View>
                     
-            </View>
-            { /* date*/}
-            <View style={{ marginVertical: 20, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                <Text>Month</Text>
-                <Text>Year</Text>
-            </View>
-            <View style={{ height: 1, backgroundColor:'black' }}>
-            </View>
+                    <Text style={{ textAlign: 'right', marginRight: 70, fontSize: 10 }}>75%</Text>
+                </View>
+
+           
             <FlatList
-                style={{  }}
                 showsVerticalScrollIndicator={true}
-                data={ items }
+                data={ExpenditureData}
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
@@ -107,23 +94,23 @@ export default Expenditure = () => {
                             <Text style={{ flex: 1, textAlign: 'right' }}> {item.income ? '+' : '-'}{item.amount} </Text>
                             <Text style={{ flex: 3, textAlign: 'right', marginRight: 10 }}> {item.note} </Text>
                         </View>
-                        <View style={{ height: 1, backgroundColor:'grey' }}> 
+                        <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
-                      
+
                     </View>
                 )}
                 keyExtractor={
                     (item) => item.id
                 }
-      />
-                 <View style={styles.buttonposition}>
-            </View>   
+            />
+            <View style={styles.buttonposition}>
+            </View>
         </View>
-        
-        
-        
-        
-        );
+
+
+
+
+    );
 
 
 }
@@ -133,17 +120,16 @@ export default Expenditure = () => {
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor:'#C4C4C4',
-        flexDirection: 'row',
-        padding: 20,
-        
+        backgroundColor: '#C4C4C4',
+        flexDirection: 'column',
+        padding: 20
     },
     button1: {
         borderRadius: 20,
         paddingVertical: 14,
         paddingHorizontal: 10,
         backgroundColor: 'yellow',
-      
+
     },
 
     buttontext1: {
@@ -156,17 +142,11 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginLeft: 320,
         marginTop: 500
-        
+
     },
-    
+
 
 
 
 
 })
-
-/*<View>
-
-                            <ListItem item={item} />
-                          <TouchableOpacity onPress={() => deleteItem = { deleteItem }} />
-                        </View>*/

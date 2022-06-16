@@ -12,16 +12,16 @@ import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
+import ExpenditureStacks from '../navigation/ExpenditureStacks.js';
 import Svg, { Circle, Rect } from 'react-native-svg';
 
-export default Expenditure = () => {
+export default Wallet = () => {
     const navigation = useNavigation();
     const [items, setItems] = useState([
-        { id: '1', status: false, category: 'Beverage', name: 'Milk', income: false, amount: 5.00, note: null },
-        { id: '2', status: false, category: 'Food', name: 'Chocolate', income: false, amount: 5.00, note: 'haha' },
-        { id: '3', status: true, category: 'beauty', name: 'lipstick', income: false, amount: 25.00, note: 'lolll' },
-        { id: '4', status: true, category: 'others', name: 'scholarship', income: true, amount: 300.00, note : 'qkym'},
-    ]);
+        { id: '0', Type: 'Type', Name: 'Name', DueDate: 'Due Date',  Expenses: 'Expenses', Income: 'Income', Balance: 'Balance' },
+        { id: '1', Type: 'Cash', Name: 'Cash', DueDate:null, Expenses: '13.50', Income:'20.00',  Balance:'6.50' },
+        { id: '2', Type: 'Credit Card', Name: 'Visa', DueDate: '13 May',Expenses: '40.00', Income: '250.50',  Balance: '160.50' },
+        ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
 
@@ -42,88 +42,83 @@ export default Expenditure = () => {
     useEffect(() => {
         loadAllExpenditure();
 
-    },[])
-  
+    }, [])
+
     return (
-        <View>
-            <View style={styles.container}>
-                <TouchableOpacity onPress={() => navigation.navigate ('Wallet')}>
-                <View style={styles.button1}>
-                        <Text style={styles.buttontext1} > Wallet </Text>
-                </View>
-                </TouchableOpacity>
-                <View style={{ flexDirection: 'column' }}>
-                    <Text style={{ marginLeft: 50, fontSize: 16, fontWeight:'bold' }}>Budget</Text>
+    <View>
+        { /*Budget*/ }
+           
+            < View style={styles.container} >
+                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                    <Text style={{ marginLeft: 50, fontSize: 16, fontWeight: 'bold' }}>Budget</Text>
 
-                    <TouchableOpacity style={{ marginLeft: 50}} onPress={() => navigation.navigate('Budget')}>
+                    <TouchableOpacity style={{ marginLeft: 70 }} onPress={() => navigation.navigate('Budget')}>
 
-                        <Svg width='300' height= '30'>
+                        <Svg width='300' height='30'>
                             <Rect
                                 x="0"
                                 y="10"
                                 width="225"
                                 height="15"
-                                fill= '#3C3056'
+                                fill='#3C3056'
                                 strokeWidth="3"
-                                
+
                             />
                             <Rect
                                 x="0"
                                 y="10"
                                 width={0.75 * 225}
                                 height="15"
-                                fill ='yellow'
+                                fill='yellow'
                                 strokeWidth="3"
-                                
+
                             />
-                           
+
                         </Svg>
 
-                    </TouchableOpacity>
-                    <Text style={{ textAlign: 'right', marginRight: 70,fontSize: 10 }}>75%</Text>
-                    </View>
-                    
+                </TouchableOpacity>
+                </View>
+                <View >
+                    <Text style={{ textAlign: 'right', marginRight: 40, fontSize: 10 }}>75%</Text>
+                </View >
             </View>
-            { /* date*/}
-            <View style={{ marginVertical: 20, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                <Text>Month</Text>
-                <Text>Year</Text>
-            </View>
-            <View style={{ height: 1, backgroundColor:'black' }}>
-            </View>
+           
             <FlatList
-                style={{  }}
                 showsVerticalScrollIndicator={true}
-                data={ items }
+                data={items}
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-                            <Text style={{ flex: 1 }}>{item.status}</Text>
+                            <Text style={{ flex: 2 }}>{item.Type}</Text>
 
-                            <Text style={{ flex: 2 }}>{item.category}</Text>
+                            <Text style={{ flex: 2 }}>{item.Name}</Text>
 
-                            <Text style={{ flex: 2 }}> {item.name} </Text>
-                            <Text style={{ flex: 1, textAlign: 'right' }}> {item.income ? '+' : '-'}{item.amount} </Text>
-                            <Text style={{ flex: 3, textAlign: 'right', marginRight: 10 }}> {item.note} </Text>
+                            <Text style={{ flex: 3 }}> {item.DueDate} </Text>
+                            <Text style={{ flex: 3, textAlign: 'right' }}> {item.Expenses} </Text>
+
+                            <Text style={{ flex: 3, textAlign: 'right' }}> {item.Income} </Text>
+
+                            <Text style={{ flex: 3, textAlign: 'right' }}> {(item.Income > item.Expenses) ? '+' : '-'}{item.Balance} </Text>
+                           
                         </View>
-                        <View style={{ height: 1, backgroundColor:'grey' }}> 
+                        <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
-                      
+
                     </View>
                 )}
                 keyExtractor={
                     (item) => item.id
                 }
-      />
-                 <View style={styles.buttonposition}>
-            </View>   
+            />
+            <View style={styles.buttonposition}>
+            </View>
         </View>
-        
-        
-        
-        
-        );
+
+
+
+
+    );
 
 
 }
@@ -133,17 +128,17 @@ export default Expenditure = () => {
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor:'#C4C4C4',
-        flexDirection: 'row',
+        backgroundColor: '#C4C4C4',
+        flexDirection: 'column',
         padding: 20,
-        
+        justifyContent:'center'
     },
     button1: {
         borderRadius: 20,
         paddingVertical: 14,
         paddingHorizontal: 10,
         backgroundColor: 'yellow',
-      
+
     },
 
     buttontext1: {
@@ -156,17 +151,11 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginLeft: 320,
         marginTop: 500
-        
+
     },
-    
+
 
 
 
 
 })
-
-/*<View>
-
-                            <ListItem item={item} />
-                          <TouchableOpacity onPress={() => deleteItem = { deleteItem }} />
-                        </View>*/

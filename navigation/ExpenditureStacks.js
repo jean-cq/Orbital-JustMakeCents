@@ -7,8 +7,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Expenditure from '../screens/Expenditure.js';
 import Add_Expenditure_1 from '../screens/Add_Expenditure_1.js';
 import { useState, useEffect } from 'react';
-import Books from '../screens/Books.js'
-import Home_navigation from './Home_navigation.js';
+import Wallet from '../screens/Wallet.js';
+import Budget from '../screens/Budget.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -20,9 +20,9 @@ export default ExpenditureStacks = () => {
             <Stack.Navigator
                 screenOptions={{
                     headerStyle: {
-                        backgroundColor: 'gold',
+                        backgroundColor: 'white',
                     },
-                    headerTintColor: '#fff',
+                    headerTintColor: 'black',
                     headerTitleStyle: {
                         fontWeight: 'bold',
                     }
@@ -30,9 +30,21 @@ export default ExpenditureStacks = () => {
             >
                 <Stack.Screen name="Expenditure" component={Expenditure} options={{
                 title: "Expenditure",
-                headerShown: false
+                headerShown: true
                 }}
-                />
+            />
+
+            <Stack.Screen name="Wallet" component={Wallet} options={{
+                title: "Wallet",
+                
+            }}
+            />
+
+            <Stack.Screen name="Budget" component={Budget} options={{
+                title: "Budget",
+                
+            }}
+            />
             </Stack.Navigator>
         )
       
@@ -41,7 +53,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         toppadding: 10,
-        backgroundColor: '#EBECF0',
+        backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'flex-start'
     }, image: {
