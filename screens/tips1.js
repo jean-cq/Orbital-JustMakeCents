@@ -2,26 +2,27 @@
 import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View } from 'react-native';
 import Fontisto from '../node_modules/@expo/vector-icons/Fontisto.js';
 
-export default Tips1 = () => {
-    return(
-        <View style={{ backgroundColor: '#C4C4C4', marginTop: 5, flexDirection: 'row', padding: 15, borderRadius: 20, borderColor: 'yellow', borderWidth: 1 }}>
+export default Tips1 = ({ text, imagename, key}) => {
+    return (
+        
+       
+        <View key={ key }>
+            <View style={{padding:13, flexDirection: 'row'}}>
+        
 
     <View style={{ flexDirection: 'column', flex: 4 }} >
         <Text style={{
             justifyContent: 'center', fontSize: 20, fontWeight: 'bold', fontFamily: 'serif'
         }} > Daliy Saving Tips </Text>
 
-
-
-        <Text style={{ alignSelf: 'center', fontSize: 15, marginVertical: 10 }} > Switch to supermarket-brand products </Text>
+                <Text style={{ alignSelf: 'center', textAlign: 'center', fontSize: 15, marginVertical: 10 }} > {text} </Text>
     </View>
     <Fontisto
-        name="shopping-bag-1"
+        name={imagename}
         color={'black'}
         size={70}
         style={{ flex: 1 }} />
-
-
-
-</View>)
+            </View>
+        </View>
+  )
 }
