@@ -7,12 +7,15 @@ import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
+import DatePicker from 'react-native-modern-datepicker';
+
+
 
 export default Expenditure = () => {
     const navigation = useNavigation();
@@ -24,6 +27,19 @@ export default Expenditure = () => {
     ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
+    const [date, setDate] = useState('Select');
+    const [show, setShow] = useState(false);
+
+    const showPicker = useCallback((value) => setShow(value), []);
+    const onValueChange = useCallback(
+        (newDate) => {
+            const selectedDate = newDate || date;
+
+            showPicker(false);
+            setDate(selectedDate);
+        },
+        [date, showPicker],
+    );
 
     const deleteItem = id => {
         setItems(previousItems => {
@@ -85,9 +101,20 @@ export default Expenditure = () => {
                     
             </View>
             { /* date*/}
-            <View style={{ marginVertical: 20, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                <Text>Month</Text>
-                <Text>Year</Text>
+            <View style={{ margin: 20}}>
+                
+                <TouchableOpacity style={styles.picker} onPress={() => showPicker(true)}>
+                    <Text style={{ color: 'C4C4C4', fontWeight:'bold' }}>Date: {date}</Text>
+            </TouchableOpacity>
+                {show && (
+                    < DatePicker
+                      
+                    mode="monthYear"
+                    selectorStartingYear={2000}
+                    onMonthYearChange={onValueChange}
+                />
+
+                )}
             </View>
             <View style={{ height: 1, backgroundColor:'black' }}>
             </View>
@@ -144,6 +171,15 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: 'yellow',
       
+    },
+    picker: {
+        borderRadius: 20,
+        paddingVertical: 14,
+        paddingHorizontal: 10,
+        borderColor: '#C4C4C4',
+        borderWidth: 2,
+        justifyContent: 'flex-start'
+
     },
 
     buttontext1: {

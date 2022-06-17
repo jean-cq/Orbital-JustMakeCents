@@ -10,7 +10,7 @@ import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js'
 
 import ExpenditureStacks from '../navigation/ExpenditureStacks.js';
 import Expenditure from '../screens/Expenditure.js';
-
+import BudgetStacks from './BudgetStack.js';
 import AnalyticsStacks from './AnalyticsStacks.js';
 import LendingStacks from './LendingStacks.js';
 
@@ -118,7 +118,7 @@ function ShoppingListScreen() {
         })}
       >
           <Tab.Screen name="Analytics" component={AnalyticsStacks} />
-            <Tab.Screen name="Expend" component={ExpenditureStacks} options={{
+            <Tab.Screen name="Expenditure" component={ExpenditureStacks} options={{
                 headerShown: false
             }}/>
           <Tab.Screen name="New Entry" component={Add_Expenditure_1}/>

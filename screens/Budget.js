@@ -13,6 +13,7 @@ import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
+import BudgetStacks from '../navigation/BudgetStack.js';
 
 export default Budget = () => {
     const navigation = useNavigation();
@@ -76,9 +77,8 @@ export default Budget = () => {
 
                     
                     <Text style={{ textAlign: 'right', marginRight: 70, fontSize: 10 }}>75%</Text>
-                </View>
-
-           
+            </View>
+        
             <FlatList
                 showsVerticalScrollIndicator={true}
                 data={ExpenditureData}

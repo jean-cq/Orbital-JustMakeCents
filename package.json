@@ -31,6 +31,8 @@
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~2.2.1",
     "react-native-immersive-bars": "^1.0.4",
+    "react-native-modern-datepicker": "^1.0.0-beta.91",
+    "react-native-month-year-picker": "^1.8.1",
     "react-native-page-control": "^1.1.2",
     "react-native-pager-view": "^5.4.15",
     "react-native-progress": "^5.0.0",

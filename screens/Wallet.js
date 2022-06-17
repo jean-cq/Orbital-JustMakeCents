@@ -45,7 +45,7 @@ export default Wallet = () => {
     }, [])
 
     return (
-    <View>
+        <View style={{flexDirection:'column'}}>
         { /*Budget*/ }
            
             < View style={styles.container} >
@@ -82,7 +82,15 @@ export default Wallet = () => {
                     <Text style={{ textAlign: 'right', marginRight: 40, fontSize: 10 }}>75%</Text>
                 </View >
             </View>
-           
+            { /*Edit*/}
+            
+                <TouchableOpacity onPress={() => Alert.alert('This is edit.')}>
+                    <View style={styles.editbutton} >
+                        <Text>Edit</Text>
+                    </View>
+            </TouchableOpacity>
+            <View style={{ height: 1, backgroundColor:'#C4C4C4' }}>
+            </View >
             <FlatList
                 showsVerticalScrollIndicator={true}
                 data={items}
@@ -151,6 +159,18 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginLeft: 320,
         marginTop: 500
+
+    },
+    editbutton: {
+        borderRadius: 20,
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        marginLeft: 20,
+        marginRight: 325,
+        marginVertical: 10,
+        
+        backgroundColor: 'orange',
+       
 
     },
 

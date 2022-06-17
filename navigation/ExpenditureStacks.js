@@ -9,6 +9,7 @@ import Add_Expenditure_1 from '../screens/Add_Expenditure_1.js';
 import { useState, useEffect } from 'react';
 import Wallet from '../screens/Wallet.js';
 import Budget from '../screens/Budget.js';
+import BudgetStacks from '../navigation/BudgetStack.js';
 
 
 const Stack = createNativeStackNavigator();
