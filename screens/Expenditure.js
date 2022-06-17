@@ -15,6 +15,11 @@ import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import DatePicker from 'react-native-modern-datepicker';
 
+import { getDatabase, ref, onValue} from "firebase/database";
+import { db, auth } from '../lib/firebase.js';
+import { getAuth } from "firebase/auth";
+
+const Stack = createNativeStackNavigator();
 
 
 export default Expenditure = () => {
@@ -58,8 +63,28 @@ export default Expenditure = () => {
     useEffect(() => {
         loadAllExpenditure();
 
-    },[])
-  
+    },[]);
+
+    const user = auth.currentUser;
+    const userId = user.uid;
+    
+    const expenditureRef = ref(db, 'expenditure/' + user.uid + '/');
+
+        onValue(expenditureRef, (snapshot) => {
+            snapshot.forEach((entry) => {
+                const amount = entry.val().amount;
+                const category = entry.val().category;
+                const id = entry.val().id;
+                const income = entry.val().income;
+                const name = entry.val().name;
+                const status = entry.val().status;
+                const note = entry.val().note;
+                const newData = entry.val()
+            })
+    });
+
+    
+
     return (
         <View>
             <View style={styles.container}>
@@ -121,12 +146,12 @@ export default Expenditure = () => {
             <FlatList
                 style={{  }}
                 showsVerticalScrollIndicator={true}
-                data={ items }
+                data={ expenditureRef }
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-                            <Text style={{ flex: 1 }}>{item.status}</Text>
+                            <Text style={{ flex: 1 }}>{item.note}</Text>
 
                             <Text style={{ flex: 2 }}>{item.category}</Text>
 

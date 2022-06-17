@@ -9,12 +9,13 @@ import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
 // Set up a Login component
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
+import { auth } from '../lib/firebase.js';
 
-
+import Home_navigation from '../navigation/Home_navigation.js';
 
 export default Login_page = () => {
     const navigation = useNavigation();
@@ -88,7 +89,24 @@ export default Login_page = () => {
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
   
-    const handleLogin = async (type, email, password) => {
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
+                navigation.navigate(Home_navigation)
+            }
+        })
+        return unsubscribe
+    }, [])
+
+    const handleLogin = () => {
+        auth
+        .signInWithEmailAndPassword(email, password)
+        .then(userCredentials => {
+            const user = userCredentials.user;
+        })
+        .catch(error => alert(error.message))
+    }
+/*    const handleLogin = async (type, email, password) => {
         setLoading(type)
         const { error, user } =
           type === 'LOGIN'
@@ -177,7 +195,7 @@ export default Login_page = () => {
                 </View>
             
             <View style={styles.fixToText}>
-                <Flatbutton text='Log In' onPress={() => handleLogin('LOGIN', email, password)} />
+                <Flatbutton text='Log In' onPress={handleLogin} />
             </View>
             
         </SafeAreaView>

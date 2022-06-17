@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';
 import PageControl from 'react-native-page-control';
 import PagerView from 'react-native-pager-view';
+import { auth } from '../lib/firebase.js';
 
 
 export default Profile = () => {
@@ -28,19 +29,16 @@ export default Profile = () => {
     const [current, setCurrent] = useState(0)
     const navigation = useNavigation();
 
-    //gonna change to firebase
-    const handleLogOut = async () => {
-        setLoading('SIGNOUT')
-        const { error, session, user } =
-            await supabase.supabaseClient.auth.signOut()
-        if (error) Alert.alert(error.message)
-        else navigation.navigate('Starting_page')
-        setLoading('')
-    }
-    const viewPagerSelectCurrent = (tag) => {
-        setCurrent(+tag.nativeEvent.position);
+
+    const handleSignOut = () => {
+        auth.signOut()
+        .then(() => {
+            navigation.replace("Starting_page")
+        })
+        .catch(error => alert(error.message))
     }
     
+
     return (
         <SafeAreaView style={{ flexDirection: 'column' }}>
             <ScrollView>
@@ -54,7 +52,6 @@ export default Profile = () => {
                     style={{ alignSelf: 'center', marginLeft: 25 }}/>
                 <Text style={{ fontSize: 30, textAlign:'center' }}>Ashley Wang</Text>
             </View>
-
             <View style={{ flexDirection: 'row', paddingTop: 20 }}>
                 <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#F9C70D', borderTopLeftRadius: 20 }}>
                     <Text
@@ -258,7 +255,7 @@ export default Profile = () => {
            
             {/*button for sign out*/}
             <View style={{ marginTop: 10 }}>
-                    <TouchableOpacity onPress={() => handleLogOut()}>
+                    <TouchableOpacity onPress={handleSignOut}>
 
                         <View style={styles.button}>
                            
