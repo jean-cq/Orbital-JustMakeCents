@@ -37,7 +37,9 @@ export default Profile = () => {
         })
         .catch(error => alert(error.message))
     }
-    
+    const viewPagerSelectCurrent = (tag) => {
+        setCurrent(+tag.nativeEvent.position);
+    }
 
     return (
         <SafeAreaView style={{ flexDirection: 'column' }}>
