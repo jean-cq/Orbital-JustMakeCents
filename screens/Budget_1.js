@@ -14,12 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import BudgetStacks from '../navigation/BudgetStack.js';
-import SegmentedControl from '@react-native-segmented-control/segmented-control';
-import PagerView from 'react-native-pager-view';
 
-import B_week from '../screens/B_week.js';
-import B_month from '../screens/B_month.js';
-import B_year from '../screens/B_year.js';
 
 export default Budget = () => {
     const navigation = useNavigation();
@@ -53,40 +48,42 @@ export default Budget = () => {
 
     return (
         <View>
-            { /*Budget*/}
-            <View style={styles.container}>
+            { /*Budget*/ }
+            <View style={styles.container}>           
+                
+                    <Text style={{ marginLeft: 50, fontSize: 16, fontWeight: 'bold' }}>Budget</Text>
 
-                <Text style={{ marginLeft: 50, fontSize: 16, fontWeight: 'bold' }}>Budget</Text>
+                    
+                        <Svg width='300' height='30'>
+                            <Rect
+                                x="0"
+                                y="10"
+                                width="225"
+                                height="15"
+                                fill='#3C3056'
+                                strokeWidth="3"
 
+                            />
+                            <Rect
+                                x="0"
+                                y="10"
+                                width={0.75 * 225}
+                                height="15"
+                                fill='yellow'
+                                strokeWidth="3"
 
-                <Svg width='300' height='30'>
-                    <Rect
-                        x="0"
-                        y="10"
-                        width="225"
-                        height="15"
-                        fill='#3C3056'
-                        strokeWidth="3"
+                            />
 
-                    />
-                    <Rect
-                        x="0"
-                        y="10"
-                        width={0.75 * 225}
-                        height="15"
-                        fill='yellow'
-                        strokeWidth="3"
+                        </Svg>
 
-                    />
-
-                </Svg>
-
-
-                <Text style={{ textAlign: 'right', marginRight: 70, fontSize: 10 }}>75%</Text>
+                    
+                    <Text style={{ textAlign: 'right', marginRight: 70, fontSize: 10 }}>75%</Text>
             </View>
+
             {/*navigation bar*/}
             
-         <FlatList
+        
+            <FlatList
                 showsVerticalScrollIndicator={true}
                 data={ExpenditureData}
                 //ExpenditureData
@@ -125,11 +122,7 @@ export default Budget = () => {
 
 
 const styles = StyleSheet.create({
-    segmentContainer:{
-    
-    flexDirection: 'column',
-    padding: 20
-},
+
     container: {
         backgroundColor: '#C4C4C4',
         flexDirection: 'column',
