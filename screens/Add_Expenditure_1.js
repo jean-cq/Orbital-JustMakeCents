@@ -85,7 +85,12 @@ export default Add_Expenditure_1 = () => {
         const unique_ref = new Date().valueOf(); /* unique code generated using time*/
         set(ref(db, 'expenditure/' + user.uid + '/' + unique_ref), {
             note: note,
-            num: num.valueOf(),
+            amount: num.valueOf(),
+            id: "2",
+            status: true,
+            category: "Traffic", 
+            name: "default",
+            income: false,
           }).then(() => {
               // Data saved successfully!
               alert('data submitted');

@@ -14,7 +14,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 
 import { getDatabase, ref, onValue} from "firebase/database";
-import { db } from '../lib/firebase.js';
+import { db, auth } from '../lib/firebase.js';
+import { getAuth } from "firebase/auth";
 
 const Stack = createNativeStackNavigator();
 
@@ -46,7 +47,27 @@ export default Expenditure = () => {
     useEffect(() => {
         loadAllExpenditure();
 
-    },[])
+    },[]);
+
+    const user = auth.currentUser;
+    const userId = user.uid;
+    
+    const expenditureRef = ref(db, 'expenditure/' + user.uid + '/');
+
+        onValue(expenditureRef, (snapshot) => {
+            snapshot.forEach((entry) => {
+                const amount = entry.val().amount;
+                const category = entry.val().category;
+                const id = entry.val().id;
+                const income = entry.val().income;
+                const name = entry.val().name;
+                const status = entry.val().status;
+                const note = entry.val().note;
+                const newData = entry.val()
+            })
+    });
+
+    
 
     return (
         <View>
@@ -63,7 +84,7 @@ export default Expenditure = () => {
             </View>
             <FlatList
                 showsVerticalScrollIndicator={true}
-                data={ starCountRef }
+                data={ expenditureRef }
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
