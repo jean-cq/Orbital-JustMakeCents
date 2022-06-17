@@ -48,12 +48,6 @@ export default Expenditure = () => {
 
     },[])
 
-    const starCountRef = ref(db, 'expenditure/');
-    onValue(starCountRef, (snapshot) => {
-    const data = snapshot.val();
-    updateStarCount(postElement, data);
-    });
-  
     return (
         <View>
             <View style={styles.container}>
