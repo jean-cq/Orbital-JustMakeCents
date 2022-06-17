@@ -6,10 +6,14 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator }from '@react-navigation/native-stack';
 import  AuthStacks  from './navigation/AuthStacks.js';
 import Home_navigation  from './navigation/Home_navigation.js';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { supabase } from './lib/supabase';
 import {supabaseClient} from './lib/supabase.ts';
 
+import auth from '@react-native-firebase/auth';
+import {AuthContext} from '../lib/AuthProvider.js';
+
+import Providers from './navigation';
 
 
 
@@ -17,20 +21,23 @@ const Stack = createNativeStackNavigator();
 
 
 export default App = ({ navigation }) => {
-    const [auth, setAuth] = useState(false);
+    const {user, setUser} = useContext(AuthContext);
+    const [initializing, setInitializing] = useState(true);
+
+    const onAuthStateChanged = (user) => {
+        setUser(user);
+        if (initializing) setInitializing(false);
+    };
 
     useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount
+    }, []);
 
-        setAuth(supabase.supabaseClient.auth.session());
-        supabase.supabaseClient.auth.onAuthStateChange((_event, session) => {
-            console.log(session);
-            setAuth(session);
-
-        })
-    });
+    if (initializing) return null;
     return (
         <NavigationContainer>
-            {auth ? <Home_navigation/> : <AuthStacks/>}
+            {user ? <Home_navigation/> : <AuthStacks/>}
         </NavigationContainer>)
 }
 
