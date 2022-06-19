@@ -6,12 +6,11 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator }from '@react-navigation/native-stack';
 import  AuthStacks  from './navigation/AuthStacks.js';
 import Home_navigation  from './navigation/Home_navigation.js';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from './lib/supabase';
 import {supabaseClient} from './lib/supabase.ts';
 
-import auth from '@react-native-firebase/auth';
-
+import {auth} from 'firebase/auth';
 
 
 
@@ -19,24 +18,9 @@ const Stack = createNativeStackNavigator();
 
 
 export default App = ({ navigation }) => {
-    const [initializing, setInitializing] = useState(true);
-    const [user, setUser] = useState();
-
-    // Handle user state changes
-    function onAuthStateChanged(user) {
-        setUser(user);
-        if (initializing) setInitializing(false);
-    }
-
-    useEffect(() => {
-        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-        return subscriber; // unsubscribe on unmount
-    }, []);
-
-    if (initializing) return null;
     return (
         <NavigationContainer>
-            {user ? <Home_navigation/> : <AuthStacks/>}
+            {auth ? <Home_navigation/> : <AuthStacks/>}
         </NavigationContainer>)
 }
 
