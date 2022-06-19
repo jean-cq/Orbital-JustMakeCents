@@ -13,8 +13,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import { authentication } from '../lib/firebase.js';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import auth from '@react-native-firebase/auth';
 
 import Home_navigation from '../navigation/Home_navigation.js';
 
@@ -86,33 +85,27 @@ export default Login_page = () => {
         }
     }
     
-    const [isSignedIn, setIsSignedIn] = useState(false);
-
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
   
-
-
-    const SignInUser = () => {
-        signInWithEmailAndPassword(authentication, email, password)
-        .then((re)=>{
-            setIsSignedIn(true);
-            navigation.navigate(Home_navigation);
-        })
-        .catch((re)=>{
-            console.log(re);
-        })
-    }
-
     useEffect(() => {
-        const unsubscribe = authentication.onAuthStateChanged(user => {
-            if (isSignedIn) {
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            if (user) {
                 navigation.navigate(Home_navigation)
             }
         })
         return unsubscribe
     }, [])
+
+    const handleLogin = () => {
+        auth
+        .signInWithEmailAndPassword(email, password)
+        .then(userCredentials => {
+            const user = userCredentials.user;
+        })
+        .catch(error => alert(error.message))
+    }
 /*    const handleLogin = async (type, email, password) => {
         setLoading(type)
         const { error, user } =
@@ -202,7 +195,7 @@ export default Login_page = () => {
                 </View>
             
             <View style={styles.fixToText}>
-                <Flatbutton text='Log In' onPress={SignInUser} />
+                <Flatbutton text='Log In' onPress={handleLogin} />
             </View>
             
         </SafeAreaView>
