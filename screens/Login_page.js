@@ -101,7 +101,7 @@ export default Login_page = () => {
             navigation.navigate(Home_navigation);
         })
         .catch((re)=>{
-            console.log(re);
+            Alert.alert("Incorrect password");
         })
     }
 
