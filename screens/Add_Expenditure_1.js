@@ -20,8 +20,6 @@ import VirtualKeyboard from 'react-native-virtual-keyboard';
 import { ref, set } from "firebase/database";
 import { db } from '../lib/firebase.js';
 
-import { getAuth } from "firebase/auth";
-
 export default Add_Expenditure_1 = () => {
     const [choice, setChoice] = useState('');
     const [chosen, setChosen] = useState('');
@@ -70,9 +68,6 @@ export default Add_Expenditure_1 = () => {
     yellow:#f5c900
     Tan: #cdad7a*/
 
-    const auth = getAuth();
-    const user = auth.currentUser;
-    const userId = user.uid;
 
     const create = () => {
         if ((num[0] ===  '0' && num[1] !== '.') || (NumAftDot[1] && (NumAftDot[1].length > 2 || NumAftDot.length > 2))) {
@@ -83,14 +78,9 @@ export default Add_Expenditure_1 = () => {
         }
         else {
         const unique_ref = new Date().valueOf(); /* unique code generated using time*/
-        set(ref(db, 'expenditure/' + user.uid + '/' + unique_ref), {
+        set(ref(db, 'expenditure/' + unique_ref), {
             note: note,
-            amount: num.valueOf(),
-            id: "2",
-            status: true,
-            category: "Traffic", 
-            name: "default",
-            income: false,
+            num: num.valueOf(),
           }).then(() => {
               // Data saved successfully!
               alert('data submitted');

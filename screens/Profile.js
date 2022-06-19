@@ -21,7 +21,7 @@ export default Profile = () => {
     const handleSignOut = () => {
         auth.signOut()
         .then(() => {
-            navigation.replace("Starting_page")
+            navigation.navigate("Starting_page")
         })
         .catch(error => alert(error.message))
     }
