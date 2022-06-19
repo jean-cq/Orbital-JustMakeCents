@@ -16,7 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';
 import PageControl from 'react-native-page-control';
 import PagerView from 'react-native-pager-view';
-import { auth } from '../lib/firebase.js';
+import auth from '@react-native-firebase/auth';
 
 
 export default Profile = () => {
@@ -31,10 +31,9 @@ export default Profile = () => {
 
 
     const handleSignOut = () => {
-        auth.signOut()
-        .then(() => {
-            navigation.replace("Starting_page")
-        })
+        auth()
+        .signOut()
+        .then(() => navigation.navigate('Starting_page'))
         .catch(error => alert(error.message))
     }
     const viewPagerSelectCurrent = (tag) => {

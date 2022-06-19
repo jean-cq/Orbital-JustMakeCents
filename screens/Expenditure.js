@@ -15,9 +15,8 @@ import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import DatePicker from 'react-native-modern-datepicker';
 
-import { getDatabase, ref, onValue} from "firebase/database";
 import { db, auth } from '../lib/firebase.js';
-import { getAuth } from "firebase/auth";
+import { getAuth } from "@react-native-firebase/auth";
 
 const Stack = createNativeStackNavigator();
 
@@ -64,25 +63,6 @@ export default Expenditure = () => {
         loadAllExpenditure();
 
     },[]);
-
-    const user = auth.currentUser;
-    const userId = user.uid;
-    
-    const expenditureRef = ref(db, 'expenditure/' + user.uid + '/');
-
-        onValue(expenditureRef, (snapshot) => {
-            snapshot.forEach((entry) => {
-                const amount = entry.val().amount;
-                const category = entry.val().category;
-                const id = entry.val().id;
-                const income = entry.val().income;
-                const name = entry.val().name;
-                const status = entry.val().status;
-                const note = entry.val().note;
-                const newData = entry.val()
-            })
-    });
-
     
 
     return (

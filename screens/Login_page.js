@@ -13,7 +13,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import { auth } from '../lib/firebase.js';
+import auth from '@react-native-firebase/auth';
 
 import Home_navigation from '../navigation/Home_navigation.js';
 

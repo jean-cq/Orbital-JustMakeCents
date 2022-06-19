@@ -11,9 +11,7 @@ import { supabase } from './lib/supabase';
 import {supabaseClient} from './lib/supabase.ts';
 
 import auth from '@react-native-firebase/auth';
-import {AuthContext} from '../lib/AuthProvider.js';
 
-import Providers from './navigation';
 
 
 
@@ -21,13 +19,14 @@ const Stack = createNativeStackNavigator();
 
 
 export default App = ({ navigation }) => {
-    const {user, setUser} = useContext(AuthContext);
     const [initializing, setInitializing] = useState(true);
+    const [user, setUser] = useState();
 
-    const onAuthStateChanged = (user) => {
+    // Handle user state changes
+    function onAuthStateChanged(user) {
         setUser(user);
         if (initializing) setInitializing(false);
-    };
+    }
 
     useEffect(() => {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
