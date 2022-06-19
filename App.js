@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from './lib/supabase';
 import {supabaseClient} from './lib/supabase.ts';
 
-import {auth} from 'firebase/auth';
+import  {auth}  from 'firebase/auth';
 
 
 

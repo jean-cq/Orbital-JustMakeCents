@@ -11,19 +11,24 @@ import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import { auth } from '../lib/firebase.js';
 
+import { authentication } from "../lib/firebase.js";
+import { signOut } from 'firebase/auth';
 
 export default Profile = () => {
     const [loading, setLoading] = useState(true);
     const navigation = useNavigation();
+    const [isSignedIn, setIsSignedIn] = useState(false);
 
-    const handleSignOut = () => {
-        auth.signOut()
-        .then(() => {
+    const SignOutUser = () => {
+        signOut(authentication)
+        .then((re)=>{
+            setIsSignedIn(false);
             navigation.navigate("Starting_page")
         })
-        .catch(error => alert(error.message))
+        .catch((re)=>{
+            console.log(re)
+        })
     }
     
 
@@ -31,7 +36,7 @@ export default Profile = () => {
         <SafeAreaView>
 
                 <View>
-                    <TouchableOpacity onPress={handleSignOut}>
+                    <TouchableOpacity onPress={SignOutUser}>
 
                         <View style={styles.button}>
                            

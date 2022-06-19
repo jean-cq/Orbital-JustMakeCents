@@ -12,8 +12,8 @@ import { useState } from 'react';
 import { useTheme } from '@react-navigation/native';
 import { supabase } from '../lib/supabase';
 import { useNavigation } from '@react-navigation/native';
-import { auth } from '../lib/firebase.js';
-
+import { authentication } from '../lib/firebase.js';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const Stack = createNativeStackNavigator();
 export default Register_page = () => {
@@ -25,13 +25,14 @@ export default Register_page = () => {
     //const { colors } = useTheme();
     //const { params } = useRoute();
 
-    const handleSignUp = () => {
-        auth
-            .createUserWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-            })
-            .catch(error => alert(error.message))
+    const RegisterUser = () => {
+        createUserWithEmailAndPassword(authentication, email, password)
+        .then((re)=>{
+            console.log(re);
+        })
+        .catch((re)=>{
+            console.log(re);
+        })
     }
 
 /*    const handleLogin = async (type, email, password) => {
@@ -149,7 +150,7 @@ export default Register_page = () => {
                 </TouchableOpacity>
             </View>
             <View style={styles.fixToText}>
-                <Flatbutton text='Register' onPress={handleSignUp} />
+                <Flatbutton text='Register' onPress={RegisterUser} />
             </View>
            
         </SafeAreaView>
