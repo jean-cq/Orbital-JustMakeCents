@@ -16,7 +16,8 @@ import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';
 import PageControl from 'react-native-page-control';
 import PagerView from 'react-native-pager-view';
-import auth from '@react-native-firebase/auth';
+import { authentication } from "../lib/firebase.js";
+import { signOut } from "firebase/auth";
 
 
 export default Profile = () => {
@@ -28,13 +29,18 @@ export default Profile = () => {
     ]);
     const [current, setCurrent] = useState(0)
     const navigation = useNavigation();
+    const [isSignedIn, setIsSignedIn] = useState(false);
 
 
-    const handleSignOut = () => {
-        auth()
-        .signOut()
-        .then(() => navigation.navigate('Starting_page'))
-        .catch(error => alert(error.message))
+    const SignOutUser = () => {
+        signOut(authentication)
+        .then((re)=>{
+            setIsSignedIn(false);
+            navigation.navigate("Starting_page")
+        })
+        .catch((re)=>{
+            console.log(re)
+        })
     }
     const viewPagerSelectCurrent = (tag) => {
         setCurrent(+tag.nativeEvent.position);
@@ -256,7 +262,7 @@ export default Profile = () => {
            
             {/*button for sign out*/}
             <View style={{ marginTop: 10 }}>
-                    <TouchableOpacity onPress={handleSignOut}>
+                    <TouchableOpacity onPress={SignOutUser}>
 
                         <View style={styles.button}>
                            

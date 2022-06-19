@@ -16,6 +16,8 @@ import Catebutton from '../components/Catebutton.js';
 import SimpleSelectButton from '../node_modules/react-native-simple-select-button/index.js';
 import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
 import VirtualKeyboard from 'react-native-virtual-keyboard';
+import { authentication, db } from '../lib/firebase.js';
+import { ref, set } from "firebase/database";
 
 
 export default Add_Expenditure_1 = () => {
@@ -63,9 +65,33 @@ export default Add_Expenditure_1 = () => {
     yellow:#f5c900
     Tan: #cdad7a*/
 
-    const auth = getAuth();
-    const user = auth.currentUser;
-    const userId = user.uid;
+    const userId = authentication.currentUser.uid;
+
+    const create = () => {
+        if ((num[0] ===  '0' && num[1] !== '.') || 
+        (NumAftDot[1] && (NumAftDot[1].length > 2 || 
+            NumAftDot.length > 2))) {
+                Alert.alert('Invalid amount keyed in.')
+            }
+        else if ((note == "") || (num == "")) {
+            Alert.alert('Note or amount cannot be empty.')
+        }
+        else {
+            const unique_ref = new Date().valueOf();
+            set(ref(db, "expenditure/" + userId + "/" + unique_ref), {
+                note: note,
+                amount: +num,
+                id: "2",
+                status:true,
+                category: "Traffic",
+                name: "default",
+                income:false,
+            }).then(() => {
+                alert('data submitted');
+            }).catch((error) => {
+                alert(error)
+            })
+    }}
 
     let NumAftDot = num.split('.')
 
@@ -143,7 +169,7 @@ export default Add_Expenditure_1 = () => {
                 <View style={{ flex: 1, justifyContent: 'space-between' }}>
                     <Catebutton text='Date' onPress={() => Alert.alert("This is date.")} />
                     <Catebutton text='Card' onPress={() => Alert.alert("This is card.")} />
-                    <Catebutton text='Enter' onPress={() => Alert.alert("This is enter.")} />
+                    <Catebutton text='Enter' onPress={create} />
                 </View>
                 <View style={{ flex: 5 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

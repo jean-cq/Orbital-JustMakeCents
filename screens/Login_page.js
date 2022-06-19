@@ -13,7 +13,8 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
+import { authentication } from "../lib/firebase.js";
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import Home_navigation from '../navigation/Home_navigation.js';
 
@@ -85,12 +86,25 @@ export default Login_page = () => {
         }
     }
     
+    const [isSignedIn, setIsSignedIn] = useState(false);
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+
+    const SignInUser = () => {
+        signInWithEmailAndPassword(authentication, email, password)
+        .then((re)=>{
+            setIsSignedIn(true);
+            navigation.navigate(Home_navigation);
+        })
+        .catch((re)=>{
+            Alert.alert("Incorrect password");
+        })
+    }
   
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
+        const unsubscribe = authentication.onAuthStateChanged(user => {
             if (user) {
                 navigation.navigate(Home_navigation)
             }
@@ -195,7 +209,7 @@ export default Login_page = () => {
                 </View>
             
             <View style={styles.fixToText}>
-                <Flatbutton text='Log In' onPress={handleLogin} />
+                <Flatbutton text='Log In' onPress={SignInUser} />
             </View>
             
         </SafeAreaView>

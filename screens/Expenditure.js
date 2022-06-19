@@ -15,8 +15,7 @@ import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import DatePicker from 'react-native-modern-datepicker';
 
-import { db, auth } from '../lib/firebase.js';
-import { getAuth } from "@react-native-firebase/auth";
+import { db, authentication } from '../lib/firebase.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -126,7 +125,7 @@ export default Expenditure = () => {
             <FlatList
                 style={{  }}
                 showsVerticalScrollIndicator={true}
-                data={ expenditureRef }
+                data={ ExpenditureData }
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
