@@ -17,8 +17,6 @@ import SimpleSelectButton from '../node_modules/react-native-simple-select-butto
 import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
 import VirtualKeyboard from 'react-native-virtual-keyboard';
 
-import { ref, set } from "firebase/database";
-import { db } from '../lib/firebase.js';
 
 export default Add_Expenditure_1 = () => {
     const [choice, setChoice] = useState('');
@@ -59,36 +57,15 @@ export default Add_Expenditure_1 = () => {
         setNum(newNum);
     }
 
-    const CheckNum = (Text) => {
-        
-
-    }
+    
 
     /*orange: #f96300
     yellow:#f5c900
     Tan: #cdad7a*/
 
-
-    const create = () => {
-        if ((num[0] ===  '0' && num[1] !== '.') || (NumAftDot[1] && (NumAftDot[1].length > 2 || NumAftDot.length > 2))) {
-            Alert.alert('Invalid amount keyed in.')
-          }
-        else if ((note == "") || (num == "")){
-            Alert.alert('Note or amount cannot be empty.')
-        }
-        else {
-        const unique_ref = new Date().valueOf(); /* unique code generated using time*/
-        set(ref(db, 'expenditure/' + unique_ref), {
-            note: note,
-            num: num.valueOf(),
-          }).then(() => {
-              // Data saved successfully!
-              alert('data submitted');
-          }).catch((error) => {
-              // The write failed ..
-              alert(error)
-          })
-    }}
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const userId = user.uid;
 
     let NumAftDot = num.split('.')
 
@@ -166,7 +143,7 @@ export default Add_Expenditure_1 = () => {
                 <View style={{ flex: 1, justifyContent: 'space-between' }}>
                     <Catebutton text='Date' onPress={() => Alert.alert("This is date.")} />
                     <Catebutton text='Card' onPress={() => Alert.alert("This is card.")} />
-                    <Catebutton text='Enter' onPress={create} />
+                    <Catebutton text='Enter' onPress={() => Alert.alert("This is enter.")} />
                 </View>
                 <View style={{ flex: 5 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

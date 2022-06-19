@@ -7,16 +7,19 @@ import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
+import Svg, { Circle, Rect } from 'react-native-svg';
+import DatePicker from 'react-native-modern-datepicker';
 
-import { getDatabase, ref, onValue} from "firebase/database";
-import { db } from '../lib/firebase.js';
+import { db, auth } from '../lib/firebase.js';
+import { getAuth } from "@react-native-firebase/auth";
 
 const Stack = createNativeStackNavigator();
+
 
 export default Expenditure = () => {
     const navigation = useNavigation();
@@ -28,6 +31,19 @@ export default Expenditure = () => {
     ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
+    const [date, setDate] = useState('Select');
+    const [show, setShow] = useState(false);
+
+    const showPicker = useCallback((value) => setShow(value), []);
+    const onValueChange = useCallback(
+        (newDate) => {
+            const selectedDate = newDate || date;
+
+            showPicker(false);
+            setDate(selectedDate);
+        },
+        [date, showPicker],
+    );
 
     const deleteItem = id => {
         setItems(previousItems => {
@@ -46,24 +62,71 @@ export default Expenditure = () => {
     useEffect(() => {
         loadAllExpenditure();
 
-    },[])
+    },[]);
+    
 
     return (
         <View>
             <View style={styles.container}>
-            <TouchableOpacity onPress={() => Alert.alert('this is wallet')}>
+                <TouchableOpacity onPress={() => navigation.navigate ('Wallet')}>
                 <View style={styles.button1}>
                         <Text style={styles.buttontext1} > Wallet </Text>
                 </View>
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'column' }}>
-                    <Text style={{marginLeft: 25, fontSize: 16}}>Budget</Text>
-                    
+                    <Text style={{ marginLeft: 50, fontSize: 16, fontWeight:'bold' }}>Budget</Text>
+
+                    <TouchableOpacity style={{ marginLeft: 50}} onPress={() => navigation.navigate('Budget')}>
+
+                        <Svg width='300' height= '30'>
+                            <Rect
+                                x="0"
+                                y="10"
+                                width="225"
+                                height="15"
+                                fill= '#3C3056'
+                                strokeWidth="3"
+                                
+                            />
+                            <Rect
+                                x="0"
+                                y="10"
+                                width={0.75 * 225}
+                                height="15"
+                                fill ='yellow'
+                                strokeWidth="3"
+                                
+                            />
+                           
+                        </Svg>
+
+                    </TouchableOpacity>
+                    <Text style={{ textAlign: 'right', marginRight: 70,fontSize: 10 }}>75%</Text>
                     </View>
+                    
+            </View>
+            { /* date*/}
+            <View style={{ margin: 20}}>
+                
+                <TouchableOpacity style={styles.picker} onPress={() => showPicker(true)}>
+                    <Text style={{ color: 'C4C4C4', fontWeight:'bold' }}>Date: {date}</Text>
+            </TouchableOpacity>
+                {show && (
+                    < DatePicker
+                      
+                    mode="monthYear"
+                    selectorStartingYear={2000}
+                    onMonthYearChange={onValueChange}
+                />
+
+                )}
+            </View>
+            <View style={{ height: 1, backgroundColor:'black' }}>
             </View>
             <FlatList
+                style={{  }}
                 showsVerticalScrollIndicator={true}
-                data={ ExpenditureData }
+                data={ expenditureRef }
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
@@ -104,7 +167,8 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor:'#C4C4C4',
         flexDirection: 'row',
-         padding: 20
+        padding: 20,
+        
     },
     button1: {
         borderRadius: 20,
@@ -112,6 +176,15 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: 'yellow',
       
+    },
+    picker: {
+        borderRadius: 20,
+        paddingVertical: 14,
+        paddingHorizontal: 10,
+        borderColor: '#C4C4C4',
+        borderWidth: 2,
+        justifyContent: 'flex-start'
+
     },
 
     buttontext1: {
