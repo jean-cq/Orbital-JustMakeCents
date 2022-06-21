@@ -2,7 +2,7 @@ import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
 import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, ListItem } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
-//import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
+import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
 import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
@@ -18,9 +18,9 @@ import Svg, { Circle, Rect } from 'react-native-svg';
 export default Wallet = () => {
     const navigation = useNavigation();
     const [items, setItems] = useState([
-        { id: '0', Type: 'Type', Name: 'Name', DueDate: 'Due Date',  Expenses: 'Expenses', Income: 'Income', Balance: 'Balance' },
-        { id: '1', Type: 'Cash', Name: 'Cash', DueDate:null, Expenses: '13.50', Income:'20.00',  Balance:'6.50' },
-        { id: '2', Type: 'Credit Card', Name: 'Visa', DueDate: '13 May',Expenses: '40.00', Income: '250.50',  Balance: '160.50' },
+        
+        { id: '0', Type: 'Cash', Name: 'Cash', DueDate:null, Expenses: '13.50', Income:'20.00',  Balance:'6.50' },
+        { id: '1', Type: 'Credit Card', Name: 'Visa', DueDate: '13 May',Expenses: '40.00', Income: '250.50',  Balance: '160.50' },
         ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
@@ -91,13 +91,38 @@ export default Wallet = () => {
             </TouchableOpacity>
             <View style={{ height: 1, backgroundColor:'#C4C4C4' }}>
             </View >
+            
+            <View style={{ flexDirection: 'row', padding: 20 }}>
+                <Text style={{ marginRight: 35 }}> </Text>
+                <Text style={{ flex: 2 }}>Type</Text>
+
+                <Text style={{ flex: 2 }}>Name</Text>
+
+                <Text style={{ flex: 3 }}>Due Date</Text>
+                <Text style={{ flex: 3, textAlign: 'right' }}>Expenses</Text>
+
+                <Text style={{ flex: 3, textAlign: 'right' }}>Income</Text>
+
+                <Text style={{ flex: 3, textAlign: 'right' }}>Balance</Text>
+
+            </View>
+            <View style={{ height: 1, backgroundColor: 'grey' }}>
+            </View>
             <FlatList
                 showsVerticalScrollIndicator={true}
                 data={items}
                 //ExpenditureData
+                deleteItem={deleteItem}
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20 }}>
+                            <MaterialIcons
+                                name='remove-circle'
+                                size={20}
+                                color='firebrick'
+                                onPress={() => deleteItem(item.id)}
+                                style={{ marginRight:20}}
+                            />
                             <Text style={{ flex: 2 }}>{item.Type}</Text>
 
                             <Text style={{ flex: 2 }}>{item.Name}</Text>

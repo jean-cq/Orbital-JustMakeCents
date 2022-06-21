@@ -85,7 +85,7 @@ export default Budget = () => {
         
             <FlatList
                 showsVerticalScrollIndicator={true}
-                data={ExpenditureData}
+                data={items}
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >

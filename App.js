@@ -21,10 +21,10 @@ const Stack = createNativeStackNavigator();
 export default App = ({ navigation }) => {
     return (
         <NavigationContainer>
-            {auth ? <Home_navigation/> : <AuthStacks/>}
+            <Home_navigation/>
         </NavigationContainer>)
 }
-
+//{auth ? <Home_navigation/> : <AuthStacks/>}
 
 const styles = StyleSheet.create({
     container: {
