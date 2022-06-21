@@ -19,11 +19,13 @@
     export default B_month= () => {
         const navigation = useNavigation();
         const [items, setItems] = useState([
-            { id: '0', category: 'recreation', amount: '50' },
-            { id: '1', Category: 'recreation', amount: '50' },
-            { id: '2', Category: 'recreation', amount: '50' },
-            { id: '3', Category: 'recreation', amount: '50' },
-            { id: '4', Category: 'recreation', amount: '50' },
+            { id: '0', category: 'Recreation', amount: '50' },
+            { id: '1', category: 'Diet', amount: '260' },
+            { id: '2', category: 'Education', amount: '260' },
+            { id: '3', category: 'Medical', amount: '40' },
+            { id: '4', category: 'Traffic', amount: '30' },
+            { id: '5', category: 'Beautify', amount: null },
+            { id: '6', category: 'Others', amount: null }
         ]);
         const [inputValue, setInputValue] = useState('');
         const [ExpenditureData, setExpenditureData] = useState([]);
@@ -51,23 +53,23 @@
             <View>
                 <View style={styles.container}>
 
-                    <Text style={{ marginLeft: 50, fontSize: 16, fontWeight: 'bold' }}>Budget</Text>
+                    <Text style={{ marginLeft: 20, fontSize: 16, fontWeight: 'bold' }}>Budget used : $150</Text>
 
 
-                    <Svg width='300' height='30'>
+                    <Svg width='500' height='40'>
                         <Rect
-                            x="0"
-                            y="10"
-                            width="225"
+                            x="40"
+                            y="20"
+                            width="300"
                             height="15"
                             fill='#3C3056'
                             strokeWidth="3"
 
                         />
                         <Rect
-                            x="0"
-                            y="10"
-                            width={0.75 * 225}
+                            x="40"
+                            y="20"
+                            width={0.75 * 300}
                             height="15"
                             fill='yellow'
                             strokeWidth="3"
@@ -77,11 +79,13 @@
                     </Svg>
 
 
-                    <Text style={{ textAlign: 'right', marginRight: 70, fontSize: 10 }}>75%</Text>
+                    <Text style={{ textAlign: 'right', marginRight: 20, fontSize: 10 }}>75%</Text>
                 </View>
                 
                 {/*Flatlist*/}
-
+                <View style={{ backgroundColor: '#C4C4C4', padding: 10 }}>
+                    <Text style={{ textAlign: 'left', fontSize: 18, marginLeft: 7 }}>Category Budget</Text>
+                </View>
 
                 <FlatList
                     showsVerticalScrollIndicator={true}
@@ -124,7 +128,7 @@
     const styles = StyleSheet.create({
 
         container: {
-            backgroundColor: '#C4C4C4',
+            backgroundColor: '#EDE9FB',
             flexDirection: 'column',
             padding: 20
         },

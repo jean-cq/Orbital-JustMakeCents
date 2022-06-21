@@ -159,7 +159,7 @@ export default Profile = () => {
                 />
 
             {/*button for badges*/}
-            <View style={{marginTop: 10, flexDirection: 'column', padding: 10, borderRadius: 20}}>
+            <View style={{flexDirection: 'column', padding: 10, borderRadius: 20}}>
                 <TouchableOpacity onPress={() => Alert.alert("This is Badge.")}>
 
 

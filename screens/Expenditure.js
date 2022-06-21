@@ -164,7 +164,7 @@ export default Expenditure = () => {
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor:'#C4C4C4',
+        backgroundColor:'#EDE9FB',
         flexDirection: 'row',
         padding: 20,
         

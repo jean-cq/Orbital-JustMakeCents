@@ -1,23 +1,32 @@
-// JavaScript source code
-import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
-import Flatbutton from '../components/Flatbutton.js';
-import DefaultImage from '../assets/starting_page.png';
-import Login_page from '../screens/Login_page.js';
-import Register_page from '../screens/Register_page.js';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, ListItem } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Flatbutton from '../components/Flatbutton.js';
+import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
+import Feather from '../node_modules/@expo/vector-icons/Feather.js';
+import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
+import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
+import { useTheme } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
+import { supabase } from '../lib/supabase';
+import { Input } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
+import { Progress } from '../node_modules/react-native-progress/Bar';
+import Svg, { Circle, Rect } from 'react-native-svg';
+import BudgetStacks from '../navigation/BudgetStack.js';
 
 
 export default A_week = () => {
 
     const navigation = useNavigation();
     const [items, setItems] = useState([
-        { id: '0', category: 'recreation', amount: '50' },
-        { id: '1', Category: 'recreation', amount: '50' },
-        { id: '2', Category: 'recreation', amount: '50' },
-        { id: '3', Category: 'recreation', amount: '50' },
-        { id: '4', Category: 'recreation', amount: '50' },
+        { id: '0', category: 'Recreation', amount: '50' },
+        { id: '1', category: 'Diet', amount: '260' },
+        { id: '2', category: 'Education', amount: '260' },
+        { id: '3', category: 'Medical', amount: '40' },
+        { id: '4', category: 'Traffic', amount: '30' },
+        { id: '5', category: 'Beautify', amount: null },
+        { id: '6', category: 'Others', amount: null },
     ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
@@ -40,28 +49,40 @@ export default A_week = () => {
         loadAllExpenditure();
 
     }, [])
+    const newamount = () => {
 
+        return (
+            <TextInput
+                keyboardType='numeric'
+                placeholder="Amount"
+                placeholderTextColor="grey"
+                marginHorizontal={10}
+                style={styles.textInput}
+                onChangeText={(text) => setItem.amount(text)}
+                />
+            )
+    }
     return (
         <View>
             <View style={styles.container}>
 
-                <Text style={{ marginLeft: 50, fontSize: 16, fontWeight: 'bold' }}>Budget</Text>
+                <Text style={{ marginLeft: 20, fontSize: 16, fontWeight: 'bold' }}>Budget used : $150</Text>
 
 
-                <Svg width='300' height='30'>
+                <Svg width='500' height='40'>
                     <Rect
-                        x="0"
-                        y="10"
-                        width="225"
+                        x="40"
+                        y="20"
+                        width="300"
                         height="15"
                         fill='#3C3056'
                         strokeWidth="3"
 
                     />
                     <Rect
-                        x="0"
-                        y="10"
-                        width={0.75 * 225}
+                        x="40"
+                        y="20"
+                        width={0.75 * 300}
                         height="15"
                         fill='yellow'
                         strokeWidth="3"
@@ -71,9 +92,12 @@ export default A_week = () => {
                 </Svg>
 
 
-                <Text style={{ textAlign: 'right', marginRight: 70, fontSize: 10 }}>75%</Text>
+                <Text style={{ textAlign: 'right', marginRight: 20, fontSize: 10 }}>75%</Text>
             </View>
 
+            <View style={{ backgroundColor: '#C4C4C4', padding: 10 }}>
+                <Text style={{ textAlign: 'left', fontSize: 18, marginLeft: 7 }}>Category Budget</Text>
+        </View>
             {/*Flatlist*/}
 
 
@@ -84,13 +108,21 @@ export default A_week = () => {
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-                            <Text style={{ flex: 1 }}>{item.status}</Text>
+                            
 
                             <Text style={{ flex: 2 }}>{item.category}</Text>
 
-                            <Text style={{ flex: 2 }}> {item.name} </Text>
-                            <Text style={{ flex: 1, textAlign: 'right' }}> {item.income ? '+' : '-'}{item.amount} </Text>
-                            <Text style={{ flex: 3, textAlign: 'right', marginRight: 10 }}> {item.note} </Text>
+                            {item.amount === null
+                                ? <TouchableOpacity onPress={() => newamount} style={{ flex: 1, flexDirection: 'row' }}>
+                                    <Text style={{ flex: 2, textAlign: 'right'}}>not set</Text>
+                                    <MaterialIcons
+                                        name="keyboard-arrow-right"
+                                        color={'black'}
+                                        size={20}
+                                        flex={1} />
+                                </TouchableOpacity>
+                                : <Text style={{ flex: 1, textAlign: 'right' }}>{item.amount}</Text>}
+                            
                         </View>
                         <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
@@ -118,7 +150,7 @@ export default A_week = () => {
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor: '#C4C4C4',
+        backgroundColor: '#EDE9FB',
         flexDirection: 'column',
         padding: 20
     },

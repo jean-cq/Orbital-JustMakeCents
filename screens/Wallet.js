@@ -7,7 +7,7 @@ import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
@@ -24,11 +24,14 @@ export default Wallet = () => {
         ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
+    const [show, setShow] = useState(false)
 
     const deleteItem = id => {
-        setItems(previousItems => {
-            return previousItems.filter(item => item.id !== id);
-        });
+        show === tru
+          ? setItems(previousItems => {
+                return previousItems.filter(item => item.id !== id);
+            })
+            : 'false'
     };
     const status_change = () => {
         setItems(item => item.status = !item.status)
@@ -43,6 +46,7 @@ export default Wallet = () => {
         loadAllExpenditure();
 
     }, [])
+    const showPicker = useCallback((value) => setShow(value), []);
 
     return (
         <View style={{flexDirection:'column'}}>
@@ -84,7 +88,7 @@ export default Wallet = () => {
             </View>
             { /*Edit*/}
             
-                <TouchableOpacity onPress={() => Alert.alert('This is edit.')}>
+            <TouchableOpacity onPress={() => showPicker(false)}>
                     <View style={styles.editbutton} >
                         <Text>Edit</Text>
                     </View>
@@ -112,7 +116,7 @@ export default Wallet = () => {
                 showsVerticalScrollIndicator={true}
                 data={items}
                 //ExpenditureData
-                deleteItem={deleteItem}
+                deleteItem={false}
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20 }}>
@@ -161,7 +165,7 @@ export default Wallet = () => {
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor: '#C4C4C4',
+        backgroundColor: '#EDE9FB',
         flexDirection: 'column',
         padding: 20,
         justifyContent:'center'
