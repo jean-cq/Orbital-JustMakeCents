@@ -98,8 +98,9 @@ export default Login_page = () => {
             setIsSignedIn(true);
             navigation.navigate(Home_navigation);
         })
-        .catch((re)=>{
-            Alert.alert("Incorrect password");
+            .catch((re) => {
+                console.log(re);
+            Alert.alert("Incorrect email or password");
         })
     }
   

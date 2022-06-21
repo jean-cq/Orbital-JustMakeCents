@@ -14,6 +14,7 @@ import { supabase } from '../lib/supabase';
 import { useNavigation } from '@react-navigation/native';
 import { authentication } from "../lib/firebase.js";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import Login_page from './Login_page.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -30,6 +31,7 @@ export default Register_page = () => {
         createUserWithEmailAndPassword(authentication, email, password)
         .then((re)=>{
             console.log(re)
+            navigation.navigate(Login_page);
         })
         .catch((re)=>{
             console.log(re)
