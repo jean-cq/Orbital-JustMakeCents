@@ -162,9 +162,7 @@ export default Expenditure = () => {
                       
                     </View>
                 )}
-                keyExtractor={
-                    (item) => item.id
-                }
+                
       />
                  <View style={styles.buttonposition}>
             </View>   
