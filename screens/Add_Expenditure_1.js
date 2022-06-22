@@ -83,9 +83,9 @@ export default Add_Expenditure_1 = () => {
                 amount: +num,
                 id: "2",
                 status:true,
-                category: "Traffic",
+                category: choice,
                 name: "default",
-                income:false,
+                income:chosen,
             }).then(() => {
                 alert('data submitted');
             }).catch((error) => {

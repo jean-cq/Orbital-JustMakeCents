@@ -7,7 +7,7 @@ import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
-import { useEffect, useState, useCallback } from 'react';
+import { React, useEffect, useState, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +16,11 @@ import Svg, { Circle, Rect } from 'react-native-svg';
 import DatePicker from 'react-native-modern-datepicker';
 
 import { db, authentication } from '../lib/firebase.js';
+import { ActivityIndicator } from 'react-native';
+import {database} from 'firebase/database';
+import { FirebaseError } from 'firebase/app';
+import { ref, set, onValue } from "firebase/database";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +37,11 @@ export default Expenditure = () => {
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [date, setDate] = useState('Select');
     const [show, setShow] = useState(false);
+
+    const [loading, setLoading] = useState(true); // Set loading to true on component mount
+    const [users, setUsers] = useState([]); // Initial empty array of users
+
+    
 
     const showPicker = useCallback((value) => setShow(value), []);
     const onValueChange = useCallback(
@@ -62,6 +72,14 @@ export default Expenditure = () => {
         loadAllExpenditure();
 
     },[]);
+
+    const userId = authentication.currentUser.uid;
+
+    const expenditureRef = ref(db, "expenditure/" + userId);
+    onValue(expenditureRef, (snapshot) => {
+        const retrieved = snapshot.val();
+        setExpenditureData(retrieved);
+    })
     
 
     return (
@@ -126,6 +144,7 @@ export default Expenditure = () => {
                 style={{  }}
                 showsVerticalScrollIndicator={true}
                 data={ ExpenditureData }
+                keyExtractor={(item)=>item.key}
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
