@@ -79,13 +79,11 @@ export default Expenditure = () => {
 
     onValue(ref(datas, "expenditure/" + userId), (snapshot) => {
         const retrieved = snapshot.val();
-        const allKey = Object.keys(retrieved);
-        let i = 0;
-        while ( i < (allKey.length)) {
-            setExpenditureData(retrieved[allKey[i]]);
-            console.log(retrieved[allKey[i]]);
-            i = i + 1;
-        }
+        const allValues = Object.values(retrieved);
+        setExpenditureData(allValues);
+        },
+        {
+            onlyOnce: true
         });
 
     return (
