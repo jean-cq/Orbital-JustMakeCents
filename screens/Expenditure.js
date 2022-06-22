@@ -19,7 +19,7 @@ import { db, authentication } from '../lib/firebase.js';
 import { ActivityIndicator } from 'react-native';
 import {database} from 'firebase/database';
 import { FirebaseError } from 'firebase/app';
-import { ref, set, onValue } from "firebase/database";
+import { ref, set, onValue, getDatabase } from "firebase/database";
 
 
 const Stack = createNativeStackNavigator();
@@ -63,7 +63,7 @@ export default Expenditure = () => {
         setItems(item => item.status = !item.status)
     }
 
-    const loadAllExpenditure = async () => {
+ /*   const loadAllExpenditure = async () => {
 
         const { Expenditure, error } = await supabase.getAllExpenditure();
         setExpenditureData(Expenditure)
@@ -71,16 +71,22 @@ export default Expenditure = () => {
     useEffect(() => {
         loadAllExpenditure();
 
-    },[]);
+    },[]); */
 
     const userId = authentication.currentUser.uid;
 
-    const expenditureRef = ref(db, "expenditure/" + userId);
-    onValue(expenditureRef, (snapshot) => {
+    const datas = getDatabase(); 
+
+    onValue(ref(datas, "expenditure/" + userId), (snapshot) => {
         const retrieved = snapshot.val();
-        setExpenditureData(retrieved);
-    })
-    
+        const allKey = Object.keys(retrieved);
+        let i = 0;
+        while ( i < (allKey.length)) {
+            setExpenditureData(retrieved[allKey[i]]);
+            console.log(retrieved[allKey[i]]);
+            i = i + 1;
+        }
+        });
 
     return (
         <View>

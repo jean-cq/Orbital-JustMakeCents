@@ -76,6 +76,9 @@ export default Add_Expenditure_1 = () => {
         else if ((note == "") || (num == "")) {
             Alert.alert('Note or amount cannot be empty.')
         }
+        else if ((choice == "") || (chosen == "")) {
+            Alert.alert("Categories cannot be empty.")
+        }
         else {
             const unique_ref = new Date().valueOf();
             set(ref(db, "expenditure/" + userId + "/" + unique_ref), {
