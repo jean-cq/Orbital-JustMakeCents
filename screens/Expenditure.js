@@ -1,5 +1,5 @@
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, ListItem } from 'react-native';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, ListItem, ScrollView } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 //import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
@@ -153,16 +153,16 @@ export default Expenditure = () => {
                 <Text style={{ flex: 2, textAlign: 'right' }}>Amount</Text>
                 <Text style={{ flex: 3, textAlign: 'right', marginRight: 10 }}>Note</Text>
             </View>
-            <View style={{ height: 1, backgroundColor: 'grey' }}>
+            <View style={{ height: 1, backgroundColor: 'grey' }}>    
             </View>
             <FlatList
-                style={{  }}
+                scrollEnabled={true}
                 showsVerticalScrollIndicator={true}
                 data={ ExpenditureData }
                 keyExtractor={(item)=>item.key}
                 //ExpenditureData
                 renderItem={({ item }) => (
-                    <View >
+                    <View>
                         <View style={{ flexDirection: 'row', padding: 20 }}>
                             <Text style={{ flex: 1.5 }}>{item.status}</Text>
 
@@ -174,12 +174,12 @@ export default Expenditure = () => {
                         </View>
                         <View style={{ height: 1, backgroundColor:'grey' }}> 
                         </View>
-                      
                     </View>
                 )}
                 
       />
                  <View style={styles.buttonposition}>
+                    
             </View>   
         </View>
         
