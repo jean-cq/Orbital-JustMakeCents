@@ -30,7 +30,7 @@ export default Add_Expenditure_1 = () => {
     const button_list = [
         { label: "Expenditure   ", value: "1" },
         { label: "Income   ", value: "2" },
-        { label: "Lendin   ", value: "3" },
+        { label: "Lending   ", value: "3" },
         { label: "Borrowing   ", value: "4" },
     ];
     const icon_list = [

@@ -28,10 +28,10 @@ const Stack = createNativeStackNavigator();
 export default Expenditure = () => {
     const navigation = useNavigation();
     const [items, setItems] = useState([
-        { id: '1', status: false, category: 'Beverage', name: 'Milk', income: false, amount: 5.00, note: null },
-        { id: '2', status: false, category: 'Food', name: 'Chocolate', income: false, amount: 5.00, note: 'haha' },
-        { id: '3', status: true, category: 'beauty', name: 'lipstick', income: false, amount: 25.00, note: 'lolll' },
-        { id: '4', status: true, category: 'others', name: 'scholarship', income: true, amount: 300.00, note : 'qkym'},
+        { id: '0', status: false, category: 'Beverage', name: 'Milk', income: false, amount: 5.00, note: null },
+        { id: '1', status: false, category: 'Food', name: 'Chocolate', income: false, amount: 5.00, note: 'haha' },
+        { id: '2', status: true, category: 'beauty', name: 'lipstick', income: false, amount: 25.00, note: 'lolll' },
+        { id: '3', status: true, category: 'others', name: 'scholarship', income: true, amount: 300.00, note : 'qkym'},
     ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
@@ -144,6 +144,17 @@ export default Expenditure = () => {
             </View>
             <View style={{ height: 1, backgroundColor:'black' }}>
             </View>
+            <View style={{ flexDirection: 'row', padding: 20 }}>
+                <Text style={{ flex: 1 }}>Status</Text>
+
+                <Text style={{ flex: 2 }}>Category</Text>
+
+                <Text style={{ flex: 2 }}>Name</Text>
+                <Text style={{ flex: 1, textAlign: 'right' }}>Amount</Text>
+                <Text style={{ flex: 3, textAlign: 'right', marginRight: 10 }}>Note</Text>
+            </View>
+            <View style={{ height: 1, backgroundColor: 'grey' }}>
+            </View>
             <FlatList
                 style={{  }}
                 showsVerticalScrollIndicator={true}
@@ -153,7 +164,7 @@ export default Expenditure = () => {
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-                            <Text style={{ flex: 1 }}>{item.note}</Text>
+                            <Text style={{ flex: 1 }}>{item.status}</Text>
 
                             <Text style={{ flex: 2 }}>{item.category}</Text>
 
