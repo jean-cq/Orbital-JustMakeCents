@@ -2,7 +2,7 @@ import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
 import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, ListItem } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
-//import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
+import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
 import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
@@ -14,37 +14,39 @@ import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import BudgetStacks from '../navigation/BudgetStack.js';
-export default A_year = () => {
 
 
-        const navigation = useNavigation();
-        const [items, setItems] = useState([
-            { id: '0', category: 'Recreation', amount: '50' },
-            { id: '1', category: 'Diet', amount: '260' },
-            { id: '2', category: 'Education', amount: '260' },
-            { id: '3', category: 'Medical', amount: '40' },
-            { id: '4', category: 'Traffic', amount: '30' },
-            { id: '5', category: 'Beautify', amount: null },
-            { id: '6', category: 'Others', amount: null }
-        ]);
-        const [inputValue, setInputValue] = useState('');
-        const [ExpenditureData, setExpenditureData] = useState([]);
+export default  B_year = () => {
 
-        const deleteItem = id => {
-            setItems(previousItems => {
-                return previousItems.filter(item => item.id !== id);
-            });
-        };
-        const status_change = () => {
-            setItems(item => item.status = !item.status)
-        }
+    const navigation = useNavigation();
+    const [modalVisible, setModalVisible] = useState(false);
+    const [items, setItems] = useState([
+        { id: '0', category: 'Recreation', amount: '50' },
+        { id: '1', category: 'Diet', amount: '260' },
+        { id: '2', category: 'Education', amount: '260' },
+        { id: '3', category: 'Medical', amount: '40' },
+        { id: '4', category: 'Traffic', amount: '30' },
+        { id: '5', category: 'Beautify', amount: null },
+        { id: '6', category: 'Others', amount: null },
+    ]);
+    const [inputValue, setInputValue] = useState('');
+    const [ExpenditureData, setExpenditureData] = useState([]);
 
-        const loadAllExpenditure = async () => {
+    const deleteItem = id => {
+        setItems(previousItems => {
+            return previousItems.filter(item => item.id !== id);
+        });
+    };
+    const status_change = () => {
+        setItems(item => item.status = !item.status)
+    }
 
-            const { Expenditure, error } = await supabase.getAllExpenditure();
-            setExpenditureData(Expenditure)
-        }
-        useEffect(() => {
+    const loadAllExpenditure = async () => {
+
+        const { Expenditure, error } = await supabase.getAllExpenditure();
+        setExpenditureData(Expenditure)
+    }
+    useEffect(() => {
         loadAllExpenditure();
 
     }, [])
@@ -85,7 +87,6 @@ export default A_year = () => {
             <View style={{ backgroundColor: '#C4C4C4', padding: 10 }}>
                 <Text style={{ textAlign: 'left', fontSize: 18, marginLeft: 7 }}>Category Budget</Text>
             </View>
-
             {/*Flatlist*/}
 
 
@@ -95,14 +96,53 @@ export default A_year = () => {
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
+
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => {
+                                Alert.alert("Modal has been closed.");
+                                setModalVisible(!modalVisible);
+                            }}
+                        >
+                            <View style={styles.centeredView}>
+                                <View style={styles.modalView}>
+                                    <Text style={styles.modalText}>Budget for {item.category}</Text>
+                                    <TextInput
+                                        placeholder="Amount"
+                                        placeholderTextColor="grey"
+                                        marginHorizontal={10}
+                                        style={styles.textInput}
+                                        keyboardType='numeric'
+                                        value={note}
+                                        onChangeText={(text) => setItem.amount(text)} />
+                                    <TouchableOpacity
+                                        style={styles.button1}
+                                        onPress={() => setModalVisible(!modalVisible)}
+                                    >
+                                        <Text style={styles.buttontext1}>Submit</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </Modal>
+
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-                            <Text style={{ flex: 1 }}>{item.status}</Text>
+
 
                             <Text style={{ flex: 2 }}>{item.category}</Text>
 
-                            <Text style={{ flex: 2 }}> {item.name} </Text>
-                            <Text style={{ flex: 1, textAlign: 'right' }}> {item.income ? '+' : '-'}{item.amount} </Text>
-                            <Text style={{ flex: 3, textAlign: 'right', marginRight: 10 }}> {item.note} </Text>
+                            {item.amount === null
+                                ? <TouchableOpacity onPress={() => newamount} style={{ flex: 1, flexDirection: 'row' }}>
+                                    <Text style={{ flex: 2, textAlign: 'right' }}>not set</Text>
+                                    <MaterialIcons
+                                        name="keyboard-arrow-right"
+                                        color={'black'}
+                                        size={20}
+                                        flex={1} />
+                                </TouchableOpacity>
+                                : <Text style={{ flex: 1, textAlign: 'right' }}>{item.amount}</Text>}
+
                         </View>
                         <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
@@ -130,7 +170,7 @@ export default A_year = () => {
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor: '##EDE9FB',
+        backgroundColor: '#EDE9FB',
         flexDirection: 'column',
         padding: 20
     },
@@ -138,7 +178,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         paddingVertical: 14,
         paddingHorizontal: 10,
-        backgroundColor: 'yellow',
+        backgroundColor: 'grey',
 
     },
 
@@ -154,10 +194,32 @@ const styles = StyleSheet.create({
         marginTop: 500
 
     },
-
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    }, modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+    }
 
 
 
 
 })
-

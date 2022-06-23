@@ -16,9 +16,10 @@ import Svg, { Circle, Rect } from 'react-native-svg';
 import BudgetStacks from '../navigation/BudgetStack.js';
 
 
-export default A_week = () => {
+export default B_week = () => {
 
     const navigation = useNavigation();
+    const [modalVisible, setModalVisible] = useState(false);
     const [items, setItems] = useState([
         { id: '0', category: 'Recreation', amount: '50' },
         { id: '1', category: 'Diet', amount: '260' },
@@ -49,19 +50,7 @@ export default A_week = () => {
         loadAllExpenditure();
 
     }, [])
-    const newamount = () => {
-
-        return (
-            <TextInput
-                keyboardType='numeric'
-                placeholder="Amount"
-                placeholderTextColor="grey"
-                marginHorizontal={10}
-                style={styles.textInput}
-                onChangeText={(text) => setItem.amount(text)}
-                />
-            )
-    }
+    
     return (
         <View>
             <View style={styles.container}>
@@ -100,13 +89,44 @@ export default A_week = () => {
         </View>
             {/*Flatlist*/}
 
-
+           
             <FlatList
                 showsVerticalScrollIndicator={true}
                 data={items}
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
+
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => {
+                                Alert.alert("Modal has been closed.");
+                                setModalVisible(!modalVisible);
+                            }}
+                        >
+                            <View style={styles.centeredView}>
+                                <View style={styles.modalView}>
+                                    <Text style={styles.modalText}>Budget for {item.category}</Text>
+                                    <TextInput
+                                        placeholder="Amount"
+                                        placeholderTextColor="grey"
+                                        marginHorizontal={10}
+                                        style={styles.textInput}
+                                        keyboardType='numeric'
+                                        value={note}
+                                        onChangeText={(text) => setItem.amount(text)} />
+                                    <TouchableOpacity
+                                        style={styles.button1}
+                                        onPress={() => setModalVisible(!modalVisible)}
+                                    >
+                                        <Text style={styles.buttontext1}>Submit</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </Modal>
+
                         <View style={{ flexDirection: 'row', padding: 20 }}>
                             
 
@@ -158,7 +178,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         paddingVertical: 14,
         paddingHorizontal: 10,
-        backgroundColor: 'yellow',
+        backgroundColor: 'grey',
 
     },
 
@@ -174,7 +194,30 @@ const styles = StyleSheet.create({
         marginTop: 500
 
     },
-
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    }, modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+    }
 
 
 
