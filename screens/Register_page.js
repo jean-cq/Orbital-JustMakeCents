@@ -142,7 +142,7 @@ export default Register_page = () => {
                 />
 
             </View>
-            <View style={styles.icons}>
+            {/*<View style={styles.icons}>
                 <TouchableOpacity onPress={() => handleTwitterLogin('LOGIN')}>
                     <AntDesign
                         name="twitter"
@@ -151,7 +151,7 @@ export default Register_page = () => {
 
                     />
                 </TouchableOpacity>
-            </View>
+        </View> */}
             <View style={styles.fixToText}>
                 <Flatbutton text='Register' onPress={RegisterUser} />
             </View>
