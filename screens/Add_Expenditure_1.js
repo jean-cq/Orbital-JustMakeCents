@@ -18,6 +18,7 @@ import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
 import VirtualKeyboard from 'react-native-virtual-keyboard';
 import { authentication, db } from '../lib/firebase.js';
 import { ref, set } from "firebase/database";
+import { doc, setDoc, collection, addDoc } from "firebase/firestore"; 
 
 
 export default Add_Expenditure_1 = () => {
@@ -81,7 +82,7 @@ export default Add_Expenditure_1 = () => {
         }
         else {
             const unique_ref = new Date().valueOf();
-            set(ref(db, "expenditure/" + userId + "/" + unique_ref), {
+            addDoc(collection(db, "expenditure/" + userId + "/" + unique_ref), {
                 note: note,
                 amount: +num,
                 id: "2",
