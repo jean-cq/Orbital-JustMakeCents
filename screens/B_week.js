@@ -1,5 +1,5 @@
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, ListItem } from 'react-native';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, Modal, ListItem } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
@@ -13,13 +13,14 @@ import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
-import BudgetStacks from '../navigation/BudgetStack.js';
+
 
 
 export default B_week = () => {
 
     const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
+    const [rem, setRem] = useState('');
     const [items, setItems] = useState([
         { id: '0', category: 'Recreation', amount: '50' },
         { id: '1', category: 'Diet', amount: '260' },
@@ -32,6 +33,14 @@ export default B_week = () => {
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
 
+    const updateFieldChanged = index => e => {
+        console.log('index: ' + index);
+        console.log('property name: ' + e.target.name);
+        let newArr = [...items]; // copying the old datas array
+        newArr[index] = e.amount; // replace e.target.value with whatever you want to change it to
+
+        setItems(newArr);
+    }
     const deleteItem = id => {
         setItems(previousItems => {
             return previousItems.filter(item => item.id !== id);
@@ -50,7 +59,7 @@ export default B_week = () => {
         loadAllExpenditure();
 
     }, [])
-    
+
     return (
         <View>
             <View style={styles.container}>
@@ -86,10 +95,10 @@ export default B_week = () => {
 
             <View style={{ backgroundColor: '#C4C4C4', padding: 10 }}>
                 <Text style={{ textAlign: 'left', fontSize: 18, marginLeft: 7 }}>Category Budget</Text>
-        </View>
+            </View>
             {/*Flatlist*/}
 
-           
+
             <FlatList
                 showsVerticalScrollIndicator={true}
                 data={items}
@@ -97,52 +106,26 @@ export default B_week = () => {
                 renderItem={({ item }) => (
                     <View >
 
-                        <Modal
-                            animationType="fade"
-                            transparent={true}
-                            visible={modalVisible}
-                            onRequestClose={() => {
-                                Alert.alert("Modal has been closed.");
-                                setModalVisible(!modalVisible);
-                            }}
-                        >
-                            <View style={styles.centeredView}>
-                                <View style={styles.modalView}>
-                                    <Text style={styles.modalText}>Budget for {item.category}</Text>
-                                    <TextInput
-                                        placeholder="Amount"
-                                        placeholderTextColor="grey"
-                                        marginHorizontal={10}
-                                        style={styles.textInput}
-                                        keyboardType='numeric'
-                                        value={note}
-                                        onChangeText={(text) => setItem.amount(text)} />
-                                    <TouchableOpacity
-                                        style={styles.button1}
-                                        onPress={() => setModalVisible(!modalVisible)}
-                                    >
-                                        <Text style={styles.buttontext1}>Submit</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </Modal>
-
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-                            
+
 
                             <Text style={{ flex: 2 }}>{item.category}</Text>
 
-                            {item.amount === null
-                                ? <TouchableOpacity onPress={() => newamount} style={{ flex: 1, flexDirection: 'row' }}>
-                                    <Text style={{ flex: 2, textAlign: 'right'}}>not set</Text>
-                                    <MaterialIcons
-                                        name="keyboard-arrow-right"
-                                        color={'black'}
-                                        size={20}
-                                        flex={1} />
-                                </TouchableOpacity>
-                                : <Text style={{ flex: 1, textAlign: 'right' }}>{item.amount}</Text>}
-                            
+                            <TouchableOpacity onPress={() => {
+                                setRem(item.id)
+                                setModalVisible(true);
+                            }} style={{ flex: 1, flexDirection: 'row' }}>
+                                {item.amount === null
+                                    ? <Text style={{ flex: 2, textAlign: 'right' }}>not set</Text>
+
+
+                                    : <Text style={{ flex: 1, textAlign: 'right' }}>{item.amount}</Text>}
+                                <MaterialIcons
+                                    name="keyboard-arrow-right"
+                                    color={'black'}
+                                    size={20}
+                                    flex={1} />
+                            </TouchableOpacity>
                         </View>
                         <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
@@ -153,6 +136,39 @@ export default B_week = () => {
                     (item) => item.id
                 }
             />
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>Budget for {items[rem].category}</Text>
+                        <TextInput
+                            placeholder="Amount"
+                            placeholderTextColor="grey"
+                            marginHorizontal={10}
+                            style={styles.textInput}
+                            keyboardType='numeric'
+                            value={items.amount}
+                            onChangeText={(text) => setItems(items.map(item =>
+                                item.id === rem
+                                    ? { ...item, amount: text }
+                                    : item
+                            ))} />
+                        <TouchableOpacity
+                            style={styles.button1}
+                            onPress={() => setModalVisible(!modalVisible)}
+                        >
+                            <Text style={styles.buttontext1}>Submit</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
             <View style={styles.buttonposition}>
             </View>
         </View>
@@ -176,15 +192,16 @@ const styles = StyleSheet.create({
     },
     button1: {
         borderRadius: 20,
-        paddingVertical: 14,
+        paddingVertical: 7,
         paddingHorizontal: 10,
         backgroundColor: 'grey',
-
+        marginTop: 35
     },
 
     buttontext1: {
+
         color: 'black',
-        fontSize: 18,
+        fontSize: 13,
         textAlign: 'center'
     },
     buttonposition: {
@@ -204,7 +221,8 @@ const styles = StyleSheet.create({
         margin: 20,
         backgroundColor: "white",
         borderRadius: 20,
-        padding: 35,
+        padding: 50,
+
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
@@ -217,6 +235,16 @@ const styles = StyleSheet.create({
     }, modalText: {
         marginBottom: 15,
         textAlign: "center"
+
+
+
+    },
+    textInput: {
+        height: 40,
+        margin: 12,
+        borderBottomColor: '#C4C4C4',
+        borderBottomWidth: 2,
+        padding: 10
     }
 
 
