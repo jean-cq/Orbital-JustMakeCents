@@ -145,12 +145,12 @@ export default Expenditure = () => {
             <View style={{ height: 1, backgroundColor:'black' }}>
             </View>
             <View style={{ flexDirection: 'row', padding: 20 }}>
-                <Text style={{ flex: 1 }}>Status</Text>
+                <Text style={{ flex: 1.5 }}>Status</Text>
 
                 <Text style={{ flex: 2 }}>Category</Text>
 
                 <Text style={{ flex: 2 }}>Name</Text>
-                <Text style={{ flex: 1, textAlign: 'right' }}>Amount</Text>
+                <Text style={{ flex: 2, textAlign: 'right' }}>Amount</Text>
                 <Text style={{ flex: 3, textAlign: 'right', marginRight: 10 }}>Note</Text>
             </View>
             <View style={{ height: 1, backgroundColor: 'grey' }}>
@@ -164,12 +164,12 @@ export default Expenditure = () => {
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-                            <Text style={{ flex: 1 }}>{item.status}</Text>
+                            <Text style={{ flex: 1.5 }}>{item.status}</Text>
 
                             <Text style={{ flex: 2 }}>{item.category}</Text>
 
                             <Text style={{ flex: 2 }}> {item.name} </Text>
-                            <Text style={{ flex: 1, textAlign: 'right' }}> {item.income ? '+' : '-'}{item.amount} </Text>
+                            <Text style={{ flex: 2, textAlign: 'right' }}> {item.income ? '+' : '-'}{item.amount} </Text>
                             <Text style={{ flex: 3, textAlign: 'right', marginRight: 10 }}> {item.note} </Text>
                         </View>
                         <View style={{ height: 1, backgroundColor:'grey' }}> 
