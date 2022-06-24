@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import DatePicker from 'react-native-modern-datepicker';
-
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { db, authentication } from '../lib/firebase.js';
 import { ActivityIndicator } from 'react-native';
 import {database} from 'firebase/database';
