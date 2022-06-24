@@ -164,7 +164,20 @@ export default Expenditure = () => {
                 renderItem={({ item }) => (
                     <View>
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-                            <Text style={{ flex: 1.5 }}>{item.status}</Text>
+                            <BouncyCheckbox
+                                style={{ marginTop: 16, textAlign: 'center' }}
+                                disableText={true}
+                                disableBuiltInState
+                                isChecked={item.status}
+                                onPress={(value) => {
+                                    setItems(items.map(itemm =>
+                                        itemm.id === item.id
+                                            ? { ...item, status: !value }
+                                            : itemm))
+                                }}
+
+                                style={{ flex: 1.5 }}
+                            />
 
                             <Text style={{ flex: 2 }}>{item.category}</Text>
 
