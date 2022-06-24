@@ -20,6 +20,7 @@ import { ActivityIndicator } from 'react-native';
 import {database} from 'firebase/database';
 import { FirebaseError } from 'firebase/app';
 import { ref, set, onValue, getDatabase } from "firebase/database";
+import { doc, getDoc, getDocs, collection, query, where } from "firebase/firestore";
 
 
 const Stack = createNativeStackNavigator();
@@ -75,16 +76,14 @@ export default Expenditure = () => {
 
     const userId = authentication.currentUser.uid;
 
-    const datas = getDatabase(); 
-
-    onValue(ref(datas, "expenditure/" + userId), (snapshot) => {
-        const retrieved = snapshot.val();
-        const allValues = Object.values(retrieved);
-        setExpenditureData(allValues);
-        },
-        {
-            onlyOnce: true
-        });
+    const datas = getDatabase();
+    
+    const expRef = query(collection(db, "expenditure/" + userId + "/add_expenditure"), where("category", "==", "1"));
+    getDocs(expRef)
+        .then(
+            (snapshot) => {
+                setExpenditureData(snapshot.docs.data)
+            })
 
     return (
         <View>
