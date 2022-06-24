@@ -18,20 +18,19 @@ import Svg, { Circle, Rect } from 'react-native-svg';
 export default Wallet = () => {
     const navigation = useNavigation();
     const [items, setItems] = useState([
-        
-        { id: '0', Type: 'Cash', Name: 'Cash', DueDate:null, Expenses: '13.50', Income:'20.00',  Balance:'6.50' },
-        { id: '1', Type: 'Credit Card', Name: 'Visa', DueDate: '13 May',Expenses: '40.00', Income: '250.50',  Balance: '160.50' },
-        ]);
+
+        { id: '0', Type: 'Cash', Name: 'Cash', DueDate: null, Expenses: '13.50', Income: '20.00', Balance: '6.50' },
+        { id: '1', Type: 'Credit Card', Name: 'Visa', DueDate: '13 May', Expenses: '40.00', Income: '250.50', Balance: '160.50' },
+    ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [show, setShow] = useState(false)
 
     const deleteItem = id => {
-        show === tru
-          ? setItems(previousItems => {
-                return previousItems.filter(item => item.id !== id);
-            })
-            : 'false'
+        setItems(previousItems => {
+            return previousItems.filter(item => item.id !== id);
+        })
+
     };
     const status_change = () => {
         setItems(item => item.status = !item.status)
@@ -46,12 +45,11 @@ export default Wallet = () => {
         loadAllExpenditure();
 
     }, [])
-    const showPicker = useCallback((value) => setShow(value), []);
 
     return (
-        <View style={{flexDirection:'column'}}>
-        { /*Budget*/ }
-           
+        <View style={{ flexDirection: 'column' }}>
+            { /*Budget*/}
+
             < View style={styles.container} >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                     <Text style={{ marginLeft: 50, fontSize: 16, fontWeight: 'bold' }}>Budget</Text>
@@ -80,24 +78,38 @@ export default Wallet = () => {
 
                         </Svg>
 
-                </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
                 <View >
                     <Text style={{ textAlign: 'right', marginRight: 40, fontSize: 10 }}>75%</Text>
                 </View >
             </View>
             { /*Edit*/}
-            
-            <TouchableOpacity onPress={() => showPicker(false)}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <TouchableOpacity onPress={() => setShow(!show)}>
                     <View style={styles.editbutton} >
                         <Text>Edit</Text>
                     </View>
-            </TouchableOpacity>
-            <View style={{ height: 1, backgroundColor:'#C4C4C4' }}>
+                </TouchableOpacity>
+                {show === true
+                    ? <AntDesign
+                        name='pluscircle'
+                        size={25}
+                        color='orange'
+                        onPress={() => Alert.alert('this is add')}
+                        style={{ marginRight: 35, marginTop: 10 }}
+                    />
+
+
+                    : null}
+            </View>
+            <View style={{ height: 1, backgroundColor: '#C4C4C4' }}>
             </View >
-            
+
             <View style={{ flexDirection: 'row', padding: 20 }}>
-                <Text style={{ marginRight: 35 }}> </Text>
+                {show === true
+                    ? <Text style={{ flex: 2 }}> </Text>
+                    : null}
                 <Text style={{ flex: 2 }}>Type</Text>
 
                 <Text style={{ flex: 2 }}>Name</Text>
@@ -116,17 +128,18 @@ export default Wallet = () => {
                 showsVerticalScrollIndicator={true}
                 data={items}
                 //ExpenditureData
-                deleteItem={false}
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-                            <MaterialIcons
-                                name='remove-circle'
-                                size={20}
-                                color='firebrick'
-                                onPress={() => deleteItem(item.id)}
-                                style={{ marginRight:20}}
-                            />
+                            {show === true
+                                ? < MaterialIcons
+                                    name='remove-circle'
+                                    size={20}
+                                    color='firebrick'
+                                    onPress={() => deleteItem(item.id)}
+                                    style={{ flex: 2 }}
+                                />
+                                : null}
                             <Text style={{ flex: 2 }}>{item.Type}</Text>
 
                             <Text style={{ flex: 2 }}>{item.Name}</Text>
@@ -137,7 +150,7 @@ export default Wallet = () => {
                             <Text style={{ flex: 3, textAlign: 'right' }}> {item.Income} </Text>
 
                             <Text style={{ flex: 3, textAlign: 'right' }}> {(item.Income > item.Expenses) ? '+' : '-'}{item.Balance} </Text>
-                           
+
                         </View>
                         <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
@@ -168,7 +181,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#EDE9FB',
         flexDirection: 'column',
         padding: 20,
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     button1: {
         borderRadius: 20,
@@ -193,13 +206,12 @@ const styles = StyleSheet.create({
     editbutton: {
         borderRadius: 20,
         paddingVertical: 5,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         marginLeft: 20,
-        marginRight: 325,
         marginVertical: 10,
-        
+
         backgroundColor: 'orange',
-       
+
 
     },
 

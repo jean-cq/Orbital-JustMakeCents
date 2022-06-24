@@ -9,14 +9,14 @@ import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { Input } from 'react-native-elements';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 
 
 
-export default B_lending = () => {
+export default B_borrowing = () => {
 
     const navigation = useNavigation();
 
@@ -58,10 +58,10 @@ export default B_lending = () => {
             <View style={{ background: '#C4C4C4', flexDirection: 'row', padding: 20 }}>
                 <Text style={{ flex: 1 }}>Status</Text>
 
-                <Text style={{ flex: 2 }}>Who</Text>
+                <Text style={{ flex: 2, textAlign: 'center' }}>Who</Text>
 
-                <Text style={{ flex: 2 }}>Category</Text>
-                <Text style={{ flex: 1, textAlign: 'right' }}>Amount</Text>
+                <Text style={{ flex: 2, textAlign: 'center' }}>Category</Text>
+                <Text style={{ flex: 2, textAlign: 'right' }}>Amount</Text>
 
             </View>
             <View style={{ height: 1, backgroundColor: 'grey' }}>
@@ -71,16 +71,31 @@ export default B_lending = () => {
                 data={items}
                 keyExtractor={(item) => item.key}
                 //ExpenditureData
-                renderItem={({ item }) => (
-                    <View style={{
-                        backgroundColor: item.status === true ? '#C4C4C4': 'white' }}>
-                        <View style={{ flexDirection: 'row', padding: 20 }}>
-                            <Text style={{ flex: 1 }}>{item.status}</Text>
+                renderItem={({ item, index }) => (
+                    <View >
+                        <View style={{ flexDirection: 'row', padding: 20, backgroundColor: item.status === true ? '#C4C4C4' : 'white' }}>
+                            <BouncyCheckbox
+                                style={{ marginTop: 16, textAlign: 'center' }}
+                                disableText={true}
+                                disableBuiltInState
+                                isChecked={item.status}
+                                onPress={(value) => {
+                                    setItems(items.map(itemm =>
+                                        itemm.id === item.id
+                                            ? { ...item, status: !value }
+                                            : itemm))
 
-                            <Text style={{ flex: 2 }}>{item.who}</Text>
 
-                            <Text style={{ flex: 2 }}> {item.category} </Text>
-                            <Text style={{ flex: 1, textAlign: 'right' }}>{item.amount} </Text>
+                                }}
+
+                                style={{ flex: 1 }}
+                            />
+
+
+                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.who}</Text>
+
+                            <Text style={{ flex: 2, textAlign: 'center' }}> {item.category} </Text>
+                            <Text style={{ flex: 2, textAlign: 'right' }}>{item.amount} </Text>
 
                         </View>
                         <View style={{ height: 1, backgroundColor: 'grey' }}>
