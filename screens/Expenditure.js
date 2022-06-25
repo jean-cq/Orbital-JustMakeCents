@@ -78,7 +78,7 @@ export default Expenditure = () => {
 
     const datas = getDatabase();
     
-    const expRef = query(collection(db, "expenditure/" + userId + "/add_expenditure"), where("category", "==", "1"));
+    const expRef = query(collection(db, "expenditure/" + userId + "/add_expenditure"));
 
 
     useEffect(() => {
@@ -159,12 +159,12 @@ export default Expenditure = () => {
             </View>
             <View style={{ flexDirection: 'row', padding: 20 }}>
                 <Text style={{ flex: 1.5 }}>Status</Text>
+                <Text style={{ flex: 2, textAlign: 'center'}}>Date</Text>
+                <Text style={{ flex: 2, textAlign: 'center'}}>Category</Text>
+                <Text style={{ flex: 2, textAlign: 'center'}}>Method</Text>
 
-                <Text style={{ flex: 2 }}>Category</Text>
-
-                <Text style={{ flex: 2 }}>Name</Text>
                 <Text style={{ flex: 2, textAlign: 'right' }}>Amount</Text>
-                <Text style={{ flex: 3, textAlign: 'right', marginRight: 10 }}>Note</Text>
+                <Text style={{ flex: 3, textAlign: 'right'}}>Note</Text>
             </View>
             <View style={{ height: 1, backgroundColor: 'grey' }}>    
             </View>
@@ -176,9 +176,9 @@ export default Expenditure = () => {
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View>
-                        <View style={{ flexDirection: 'row', padding: 20 }}>
+                        <View style={{ flexDirection: 'row', padding: 20}}>
                             <BouncyCheckbox
-                                style={{ marginTop: 16, textAlign: 'center' }}
+                                style={{ flex: 1.5 }}
                                 disableText={true}
                                 disableBuiltInState
                                 isChecked={item.status}
@@ -189,14 +189,12 @@ export default Expenditure = () => {
                                             : itemm))
                                 }}
 
-                                style={{ flex: 1.5 }}
                             />
-
-                            <Text style={{ flex: 2 }}>{item.category}</Text>
-
-                            <Text style={{ flex: 2 }}> {item.name} </Text>
+                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.date}</Text>
+                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.category}</Text>
+                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.card}</Text>
                             <Text style={{ flex: 2, textAlign: 'right' }}> {item.income ? '+' : '-'}{item.amount} </Text>
-                            <Text style={{ flex: 3, textAlign: 'right', marginRight: 10 }}> {item.note} </Text>
+                            <Text style={{ flex: 3, textAlign: 'right'}}> {item.note} </Text>
                         </View>
                         <View style={{ height: 1, backgroundColor:'grey' }}> 
                         </View>

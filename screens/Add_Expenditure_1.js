@@ -82,14 +82,13 @@ export default Add_Expenditure_1 = () => {
         }
         else {
             const unique_ref = new Date().valueOf();
-            setDoc(doc(db, "expenditure/" + userId), {
+            setDoc(doc(db, "expenditure/" + userId + "/add_expenditure/" + unique_ref), {
                 note: note,
                 amount: +num,
                 id: "2",
                 status:true,
-                category: choice,
-                name: "default",
-                income:chosen,
+                category: chosen,
+                income:choice,
             }).then(() => {
                 alert('data submitted');
             }).catch((error) => {
@@ -119,10 +118,10 @@ export default Add_Expenditure_1 = () => {
                         ({ item }) =>
                             <SimpleSelectButton
                                 onPress={() => {
-                                    setChoice(item.value);
+                                    setChoice(item.label);
                                     return Alert.alert('hiii, ' + item.label + '.')
                                 }}
-                                isChecked={choice === item.value}
+                                isChecked={choice === item.label}
                                 text={item.label}
                                 textSize={14}
                                 buttonDefaultColor="yellow"
@@ -151,10 +150,10 @@ export default Add_Expenditure_1 = () => {
                         ({ item }) =>
                             <SimpleSelectIcon
                                 onPress={() => {
-                                    setChosen(item.value);
+                                    setChosen(item.label);
                                     return Alert.alert('hiii, ' + item.label + '.')
                                 }}
-                                isChecked={chosen === item.value}
+                                isChecked={chosen === item.label}
                                 text={item.label}
                                 textSize={20}
                                 buttonDefaultColor={item.value % 2 === 0 ? "#f5c900" : "yellow"}
