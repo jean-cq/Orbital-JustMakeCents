@@ -175,7 +175,6 @@ export default Expenditure = () => {
                 <Text style={{ flex: 1.5 }}>Status</Text>
                 <Text style={{ flex: 2, textAlign: 'center'}}>Date</Text>
                 <Text style={{ flex: 2, textAlign: 'center'}}>Category</Text>
-                <Text style={{ flex: 2, textAlign: 'center'}}>Method</Text>
 
                 <Text style={{ flex: 2, textAlign: 'right' }}>Amount</Text>
                 <Text style={{ flex: 3, textAlign: 'right'}}>Note</Text>
@@ -204,9 +203,8 @@ export default Expenditure = () => {
                                 }}
 
                             />
-                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.date}</Text>
+                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.displaydate}</Text>
                             <Text style={{ flex: 2, textAlign: 'center' }}>{item.category}</Text>
-                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.card}</Text>
                             <Text style={{ flex: 2, textAlign: 'right' }}> {item.income ? '+' : '-'}{item.amount} </Text>
                             <Text style={{ flex: 3, textAlign: 'right'}}> {item.note} </Text>
                         </View>

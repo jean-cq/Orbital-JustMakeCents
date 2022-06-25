@@ -95,7 +95,7 @@ export default Add_Expenditure_1 = () => {
                 category: chosen,
                 income:choice,
                 date: date,
-                displaydate: setDisplaydate(moment(date).format("Do MMM"))
+                displaydate: moment(date).format("Do MMM")
             }).then(() => {
                 alert('data submitted');
             }).catch((error) => {
@@ -104,6 +104,7 @@ export default Add_Expenditure_1 = () => {
     }}
 
     let NumAftDot = num.split('.')
+    
 
     return (
 
