@@ -94,6 +94,7 @@ export default Add_Expenditure_1 = () => {
                 category: chosen,
                 income:choice,
                 date: date,
+                displaydate: setDate(date.slice(5))
             }).then(() => {
                 alert('data submitted');
             }).catch((error) => {
