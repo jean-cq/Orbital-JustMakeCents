@@ -85,6 +85,9 @@ export default Add_Expenditure_1 = () => {
         else if ((choice == "") || (chosen == "")) {
             Alert.alert("Categories cannot be empty.")
         }
+        else if (date == null) {
+            Alert.alert("Date cannot be empty.")
+        }
         else {
             const unique_ref = new Date().valueOf();
             setDoc(doc(db, "expenditure/" + userId + "/add_expenditure/" + unique_ref), {
@@ -96,7 +99,8 @@ export default Add_Expenditure_1 = () => {
                 date: date,
                 displaydate: moment(date).format("Do MMM"),
                 income: choice == "Income   " ? true : false,
-                expenditure: choice == "Expenditure   " || "Income   " ? true : false,
+                bigcat: choice,
+                expenditure: (choice === "Expenditure   " || "Income   ") ? true : false,
             }).then(() => {
                 alert('data submitted');
             }).catch((error) => {
@@ -128,7 +132,6 @@ export default Add_Expenditure_1 = () => {
                             <SimpleSelectButton
                                 onPress={() => {
                                     setChoice(item.label);
-                                    return Alert.alert('hiii, ' + item.label + '.')
                                 }}
                                 isChecked={choice === item.label}
                                 text={item.label}
@@ -160,7 +163,6 @@ export default Add_Expenditure_1 = () => {
                             <SimpleSelectIcon
                                 onPress={() => {
                                     setChosen(item.label);
-                                    return Alert.alert('hiii, ' + item.label + '.')
                                 }}
                                 isChecked={chosen === item.label}
                                 text={item.label}
