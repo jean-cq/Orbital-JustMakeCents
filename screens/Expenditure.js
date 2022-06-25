@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import DatePicker from 'react-native-modern-datepicker';
-
+import MonthPickerModal from '../screens/MonthPickerModal.js'
 
 
 export default Expenditure = () => {
@@ -102,19 +102,8 @@ export default Expenditure = () => {
             </View>
             { /* date*/}
             <View style={{ margin: 20}}>
-                
-                <TouchableOpacity style={styles.picker} onPress={() => showPicker(true)}>
-                    <Text style={{ color: 'C4C4C4', fontWeight:'bold' }}>Date: {date}</Text>
-            </TouchableOpacity>
-                {show && (
-                    < DatePicker
-                      
-                    mode="monthYear"
-                    selectorStartingYear={2000}
-                    onMonthYearChange={onValueChange}
-                />
 
-                )}
+                <MonthPickerModal/>
             </View>
             <View style={{ height: 1, backgroundColor:'black' }}>
             </View>

@@ -16,6 +16,7 @@ import Catebutton from '../components/Catebutton.js';
 import SimpleSelectButton from '../node_modules/react-native-simple-select-button/index.js';
 import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
 import VirtualKeyboard from 'react-native-virtual-keyboard';
+import DatePickerModal from '../screens/DatePickerModal.js'
 
 export default Add_Expenditure_1 = () => {
     const [choice, setChoice] = useState('');
@@ -136,13 +137,13 @@ export default Add_Expenditure_1 = () => {
             </View>
             <View style={styles.keyboardContainer}>
                 <View style={{ flex: 1, justifyContent: 'space-between' }}>
-                    <Catebutton text='Date' onPress={() => Alert.alert("This is date.")} />
+                    <DatePickerModal />
                     <Catebutton text='Card' onPress={() => Alert.alert("This is card.")} />
                     <Catebutton text='Enter' onPress={()=> (num[0] ===  '0' && num[1] !== '.') || 
                     (NumAftDot[1] && (NumAftDot[1].length > 2 || 
                       NumAftDot.length > 2)) ? Alert.alert('gg') : Alert.alert('haha')} />
                 </View>
-                <View style={{ flex: 5 }}>
+                <View style={{ flex: 4 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <TextInput
                             placeholder="Note"
