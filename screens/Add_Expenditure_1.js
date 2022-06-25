@@ -93,9 +93,10 @@ export default Add_Expenditure_1 = () => {
                 id: "2",
                 status:true,
                 category: chosen,
-                income:choice,
                 date: date,
-                displaydate: moment(date).format("Do MMM")
+                displaydate: moment(date).format("Do MMM"),
+                income: choice == "Income   " ? true : false,
+                expenditure: choice == "Expenditure   " || "Income   " ? true : false,
             }).then(() => {
                 alert('data submitted');
             }).catch((error) => {

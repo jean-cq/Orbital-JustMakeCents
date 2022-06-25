@@ -50,6 +50,7 @@ export default B_borrowing = () => {
         loadAllExpenditure();
 
     }, [])
+    
 
     return (
         <View>
