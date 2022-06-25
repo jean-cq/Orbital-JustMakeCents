@@ -18,7 +18,8 @@ import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
 import VirtualKeyboard from 'react-native-virtual-keyboard';
 import { authentication, db } from '../lib/firebase.js';
 import { ref, set } from "firebase/database";
-import { doc, setDoc, collection, addDoc } from "firebase/firestore"; 
+import { doc, setDoc, collection, addDoc } from "firebase/firestore";
+import DatePickerModal from '../components/DatePickerModal.js';
 
 
 export default Add_Expenditure_1 = () => {
@@ -170,7 +171,7 @@ export default Add_Expenditure_1 = () => {
             </View>
             <View style={styles.keyboardContainer}>
                 <View style={{ flex: 1, justifyContent: 'space-between' }}>
-                    <Catebutton text='Date' onPress={() => Alert.alert("This is date.")} />
+                    <DatePickerModal />
                     <Catebutton text='Card' onPress={() => Alert.alert("This is card.")} />
                     <Catebutton text='Enter' onPress={create} />
                 </View>

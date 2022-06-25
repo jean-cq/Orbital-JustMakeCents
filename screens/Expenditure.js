@@ -21,6 +21,7 @@ import {database} from 'firebase/database';
 import { FirebaseError } from 'firebase/app';
 import { ref, set, onValue, getDatabase } from "firebase/database";
 import { doc, getDoc, getDocs, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
+import MonthPickerModal from '../components/MonthPickerModal.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -143,19 +144,10 @@ export default Expenditure = () => {
             </View>
             { /* date*/}
             <View style={{ margin: 20}}>
-                
-                <TouchableOpacity style={styles.picker} onPress={() => showPicker(true)}>
-                    <Text style={{ color: 'C4C4C4', fontWeight:'bold' }}>Date: {date}</Text>
-            </TouchableOpacity>
-                {show && (
-                    < DatePicker
-                      
-                    mode="monthYear"
-                    selectorStartingYear={2000}
-                    onMonthYearChange={onValueChange}
-                />
 
-                )}
+                <MonthPickerModal />
+
+                
             </View>
             <View style={{ height: 1, backgroundColor:'black' }}>
             </View>
