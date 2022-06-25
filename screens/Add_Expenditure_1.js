@@ -30,6 +30,7 @@ export default Add_Expenditure_1 = () => {
     const [note, setNote] = useState('');
     const [isOpen, toggleOpen] = useState(false);
     const [date, setDate] = useState(null);
+    const [displaydate, setDisplaydate] = useState(null);
 
     const button_list = [
         { label: "Expenditure   ", value: "1" },
@@ -94,7 +95,7 @@ export default Add_Expenditure_1 = () => {
                 category: chosen,
                 income:choice,
                 date: date,
-                displaydate: setDate(date.slice(5))
+                displaydate: setDisplaydate(moment(date).format("Do MMM"))
             }).then(() => {
                 alert('data submitted');
             }).catch((error) => {
@@ -179,7 +180,7 @@ export default Add_Expenditure_1 = () => {
                     <View>
                         <TouchableOpacity onPress={() => toggleOpen(true)} style={styles.input}>
                             <Text style={styles.inputText}>
-                                {date ? moment(date).format("MMM Do YY") : '  Date'}
+                                {date ? moment(date).format("Do MMM YY") : '  Date'}
                             </Text>
                         </TouchableOpacity>
 
