@@ -93,6 +93,7 @@ export default Add_Expenditure_1 = () => {
                 status:true,
                 category: chosen,
                 income:choice,
+                date: date,
             }).then(() => {
                 alert('data submitted');
             }).catch((error) => {
@@ -210,7 +211,7 @@ export default Add_Expenditure_1 = () => {
                     <Catebutton text='Card' onPress={() => Alert.alert("This is card.")} />
                     <Catebutton text='Enter' onPress={create} />
                 </View>
-                <View style={{ flex: 5 }}>
+                <View style={{ flex: 4 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <TextInput
                             placeholder="Note"

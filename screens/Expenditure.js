@@ -93,7 +93,6 @@ export default Expenditure = () => {
 
 
     
-    
 
     return (
         <View>
@@ -155,7 +154,7 @@ export default Expenditure = () => {
                         <View style={styles.contentContainer}>
                             <View style={styles.content}>
                                 <MonthPicker
-                                    selectedDate={value || new Date()}
+                                    selectedDate={month || new Date()}
                                     onMonthChange={setMonth}
                                 />
                                 <TouchableOpacity
