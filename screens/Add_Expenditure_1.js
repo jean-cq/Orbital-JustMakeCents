@@ -1,6 +1,6 @@
 // JavaScript source code
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, ListItem, Dimensions } from 'react-native';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Modal, Text, View, FlatList, ListItem, Dimensions } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 //import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
@@ -19,7 +19,8 @@ import VirtualKeyboard from 'react-native-virtual-keyboard';
 import { authentication, db } from '../lib/firebase.js';
 import { ref, set } from "firebase/database";
 import { doc, setDoc, collection, addDoc } from "firebase/firestore";
-import DatePickerModal from '../components/DatePickerModal.js';
+import moment from 'moment';
+import DatePicker from 'react-native-modern-datepicker';
 
 
 export default Add_Expenditure_1 = () => {
@@ -27,6 +28,8 @@ export default Add_Expenditure_1 = () => {
     const [chosen, setChosen] = useState('');
     const [num, setNum] = useState('');
     const [note, setNote] = useState('');
+    const [isOpen, toggleOpen] = useState(false);
+    const [date, setDate] = useState(null);
 
     const button_list = [
         { label: "Expenditure   ", value: "1" },
@@ -171,7 +174,39 @@ export default Add_Expenditure_1 = () => {
             </View>
             <View style={styles.keyboardContainer}>
                 <View style={{ flex: 1, justifyContent: 'space-between' }}>
-                    <DatePickerModal />
+                    <View>
+                        <TouchableOpacity onPress={() => toggleOpen(true)} style={styles.input}>
+                            <Text style={styles.inputText}>
+                                {date ? moment(date).format("MMM Do YY") : '  Date'}
+                            </Text>
+                        </TouchableOpacity>
+
+                        <Modal
+                            transparent
+                            animationType="fade"
+                            visible={isOpen}
+                            onRequestClose={() => {
+                                Alert.alert('Modal has been closed.');
+                            }}>
+                            <View style={styles.contentContainer}>
+                                <View style={styles.content}>
+
+                                    <DatePicker
+
+                                        mode="calendar"
+                                        onSelectedChange={setDate}
+
+                                    />
+
+                                    <TouchableOpacity
+                                        style={styles.confirmButton}
+                                        onPress={() => toggleOpen(false)}>
+                                        <Text>Confirm</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </Modal>
+                    </View>
                     <Catebutton text='Card' onPress={() => Alert.alert("This is card.")} />
                     <Catebutton text='Enter' onPress={create} />
                 </View>
@@ -215,7 +250,45 @@ const styles = StyleSheet.create({
     textInput: {
         fontSize: 23,
         marginLeft:64
-    }
+    },
+    input: {
+        backgroundColor: 'orange',
+        paddingVertical: 5,
+        paddingHorizontal: 8,
+
+        borderRadius: 10,
+        marginLeft: 18,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    inputText: {
+        fontSize: 13,
+
+        textAlign: 'center',
+        justifyContent: 'center',
+        color: 'white'
+    },
+    contentContainer: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: '100%',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    content: {
+        backgroundColor: '#fff',
+        marginHorizontal: 20,
+        marginVertical: 70,
+    },
+    confirmButton: {
+        borderWidth: 0.5,
+        padding: 15,
+        margin: 10,
+        borderRadius: 5,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 /*
     return (

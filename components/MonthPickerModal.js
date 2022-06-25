@@ -49,3 +49,50 @@ function MonthPickerModal() {
         </View>
     );
 }
+
+
+
+export default React.memo(MonthPickerModal);
+
+const styles = StyleSheet.create({
+    container: {
+
+    },
+    input: {
+        backgroundColor: 'white',
+        paddingVertical: 8,
+        paddingHorizontal: 25,
+        borderWidth: 0.5,
+        borderRadius: 5,
+        width: '32%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    inputText: {
+        fontSize: 16,
+        fontWeight: '500',
+        textAlign: 'center',
+        justifyContent: 'center',
+    },
+    contentContainer: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: '100%',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    content: {
+        backgroundColor: '#fff',
+        marginHorizontal: 20,
+        marginVertical: 70,
+    },
+    confirmButton: {
+        borderWidth: 0.5,
+        padding: 15,
+        margin: 10,
+        borderRadius: 5,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+});

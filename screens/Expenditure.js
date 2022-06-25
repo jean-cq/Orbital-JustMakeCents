@@ -1,5 +1,5 @@
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, ListItem, ScrollView } from 'react-native';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, Modal, ListItem, ScrollView } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 //import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
@@ -21,7 +21,8 @@ import {database} from 'firebase/database';
 import { FirebaseError } from 'firebase/app';
 import { ref, set, onValue, getDatabase } from "firebase/database";
 import { doc, getDoc, getDocs, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
-import MonthPickerModal from '../components/MonthPickerModal.js';
+import moment from 'moment';
+import MonthPicker from 'react-native-month-picker';
 
 
 const Stack = createNativeStackNavigator();
@@ -37,24 +38,16 @@ export default Expenditure = () => {
     ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
-    const [date, setDate] = useState('Select');
-    const [show, setShow] = useState(false);
 
+    const [show, setShow] = useState(false);
+    const [isOpen, toggleOpen] = useState(false);
+    const [month, setMonth] = useState(null);
     const [loading, setLoading] = useState(true); // Set loading to true on component mount
     const [users, setUsers] = useState([]); // Initial empty array of users
 
     
 
-    const showPicker = useCallback((value) => setShow(value), []);
-    const onValueChange = useCallback(
-        (newDate) => {
-            const selectedDate = newDate || date;
-
-            showPicker(false);
-            setDate(selectedDate);
-        },
-        [date, showPicker],
-    );
+   
 
     const deleteItem = id => {
         setItems(previousItems => {
@@ -145,7 +138,35 @@ export default Expenditure = () => {
             { /* date*/}
             <View style={{ margin: 20}}>
 
-                <MonthPickerModal />
+                <View>
+                    <TouchableOpacity onPress={() => toggleOpen(true)} style={styles.input}>
+                        <Text style={styles.inputText}>
+                            {month ? moment(month).format('MM/YYYY') : '   Date'}
+                        </Text>
+                    </TouchableOpacity>
+
+                    <Modal
+                        transparent
+                        animationType="fade"
+                        visible={isOpen}
+                        onRequestClose={() => {
+                            Alert.alert('Modal has been closed.');
+                        }}>
+                        <View style={styles.contentContainer}>
+                            <View style={styles.content}>
+                                <MonthPicker
+                                    selectedDate={value || new Date()}
+                                    onMonthChange={setMonth}
+                                />
+                                <TouchableOpacity
+                                    style={styles.confirmButton}
+                                    onPress={() => toggleOpen(false)}>
+                                    <Text>Confirm</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
+                </View>
 
                 
             </View>
@@ -218,6 +239,43 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 20,
         
+    }, 
+    input: {
+        backgroundColor: 'white',
+        paddingVertical: 8,
+        paddingHorizontal: 25,
+        borderWidth: 0.5,
+        borderRadius: 5,
+        width: '32%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    inputText: {
+        fontSize: 16,
+        fontWeight: '500',
+        textAlign: 'center',
+        justifyContent: 'center',
+    },
+    contentContainer: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: '100%',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    content: {
+        backgroundColor: '#fff',
+        marginHorizontal: 20,
+        marginVertical: 70,
+    },
+    confirmButton: {
+        borderWidth: 0.5,
+        padding: 15,
+        margin: 10,
+        borderRadius: 5,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     button1: {
         borderRadius: 20,
@@ -225,15 +283,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: 'yellow',
       
-    },
-    picker: {
-        borderRadius: 20,
-        paddingVertical: 14,
-        paddingHorizontal: 10,
-        borderColor: '#C4C4C4',
-        borderWidth: 2,
-        justifyContent: 'flex-start'
-
     },
 
     buttontext1: {
