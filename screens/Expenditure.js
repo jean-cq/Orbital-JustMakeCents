@@ -20,7 +20,7 @@ import { ActivityIndicator } from 'react-native';
 import {database} from 'firebase/database';
 import { FirebaseError } from 'firebase/app';
 import { ref, set, onValue, getDatabase } from "firebase/database";
-import { doc, getDoc, getDocs, collection, query, where } from "firebase/firestore";
+import { doc, getDoc, getDocs, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 
 
 const Stack = createNativeStackNavigator();
@@ -80,21 +80,20 @@ export default Expenditure = () => {
     
     const expRef = query(collection(db, "expenditure/" + userId + "/add_expenditure"));
 
-
     useEffect(() => {
         const getData = async () => {
-            const querySnapshot = await getDocs(expRef);
-            const expList = [];
-            querySnapshot.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                console.log(doc.id, " => ", doc.data());
-                expList.push(doc.data());
+            const querySnapshot = await onSnapshot(expRef, (refSnapshot) => {
+                const expList = [];
+                refSnapshot.forEach((doc) => {
+                    expList.push(doc.data());
                 });
             setExpenditureData(expList);
+            console.log(expList);
+            });
         };
         getData();
     }, []);
-    
+
 
     
     
