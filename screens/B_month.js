@@ -147,7 +147,7 @@ export default B_month = () => {
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Budget for {items[rem].category}</Text>
+                        <Text style={styles.modalText}></Text>
                         <TextInput
                             placeholder="Amount"
                             placeholderTextColor="grey"

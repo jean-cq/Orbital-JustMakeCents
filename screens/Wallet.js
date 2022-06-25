@@ -2,12 +2,12 @@ import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
 import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, ListItem } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
-//import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
+import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
 import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
@@ -18,17 +18,19 @@ import Svg, { Circle, Rect } from 'react-native-svg';
 export default Wallet = () => {
     const navigation = useNavigation();
     const [items, setItems] = useState([
-        { id: '0', Type: 'Type', Name: 'Name', DueDate: 'Due Date',  Expenses: 'Expenses', Income: 'Income', Balance: 'Balance' },
-        { id: '1', Type: 'Cash', Name: 'Cash', DueDate:null, Expenses: '13.50', Income:'20.00',  Balance:'6.50' },
-        { id: '2', Type: 'Credit Card', Name: 'Visa', DueDate: '13 May',Expenses: '40.00', Income: '250.50',  Balance: '160.50' },
-        ]);
+
+        { id: '0', Type: 'Cash', Name: 'Cash', DueDate: null, Expenses: '13.50', Income: '20.00', Balance: '6.50' },
+        { id: '1', Type: 'Credit Card', Name: 'Visa', DueDate: '13 May', Expenses: '40.00', Income: '250.50', Balance: '160.50' },
+    ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
+    const [show, setShow] = useState(false)
 
     const deleteItem = id => {
         setItems(previousItems => {
             return previousItems.filter(item => item.id !== id);
-        });
+        })
+
     };
     const status_change = () => {
         setItems(item => item.status = !item.status)
@@ -45,9 +47,9 @@ export default Wallet = () => {
     }, [])
 
     return (
-        <View style={{flexDirection:'column'}}>
-        { /*Budget*/ }
-           
+        <View style={{ flexDirection: 'column' }}>
+            { /*Budget*/}
+
             < View style={styles.container} >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                     <Text style={{ marginLeft: 50, fontSize: 16, fontWeight: 'bold' }}>Budget</Text>
@@ -76,21 +78,52 @@ export default Wallet = () => {
 
                         </Svg>
 
-                </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
                 <View >
                     <Text style={{ textAlign: 'right', marginRight: 40, fontSize: 10 }}>75%</Text>
                 </View >
             </View>
             { /*Edit*/}
-            
-                <TouchableOpacity onPress={() => Alert.alert('This is edit.')}>
-                    <View style={styles.editbutton} >
-                        <Text>Edit</Text>
-                    </View>
-            </TouchableOpacity>
-            <View style={{ height: 1, backgroundColor:'#C4C4C4' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <TouchableOpacity onPress={() => setShow(!show)}>
+                <View style={styles.editbutton} >
+                    <Text>Edit</Text>
+                </View>
+                </TouchableOpacity>
+                {show === true
+                    ? <AntDesign
+                        name='pluscircle'
+                        size={25}
+                        color='orange'
+                        onPress={() => Alert.alert('this is add')}
+                        style={{ marginRight:35, marginTop: 10 }}
+                            />
+                   
+                    
+                    : null}
+            </View>
+            <View style={{ height: 1, backgroundColor: '#C4C4C4' }}>
             </View >
+
+            <View style={{ flexDirection: 'row', padding: 20 }}>
+                {show === true
+                    ? <Text style={{ flex: 2 }}> </Text>
+                    : null}
+                <Text style={{ flex: 2 }}>Type</Text>
+
+                <Text style={{ flex: 2 }}>Name</Text>
+
+                <Text style={{ flex: 3 }}>Due Date</Text>
+                <Text style={{ flex: 3, textAlign: 'right' }}>Expenses</Text>
+
+                <Text style={{ flex: 3, textAlign: 'right' }}>Income</Text>
+
+                <Text style={{ flex: 3, textAlign: 'right' }}>Balance</Text>
+
+            </View>
+            <View style={{ height: 1, backgroundColor: 'grey' }}>
+            </View>
             <FlatList
                 showsVerticalScrollIndicator={true}
                 data={items}
@@ -98,6 +131,15 @@ export default Wallet = () => {
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20 }}>
+                            {show === true
+                                ? < MaterialIcons
+                                    name='remove-circle'
+                                    size={20}
+                                    color='firebrick'
+                                    onPress={() => deleteItem(item.id)}
+                                    style={{ flex: 2 }}
+                                />
+                                : null}
                             <Text style={{ flex: 2 }}>{item.Type}</Text>
 
                             <Text style={{ flex: 2 }}>{item.Name}</Text>
@@ -108,7 +150,7 @@ export default Wallet = () => {
                             <Text style={{ flex: 3, textAlign: 'right' }}> {item.Income} </Text>
 
                             <Text style={{ flex: 3, textAlign: 'right' }}> {(item.Income > item.Expenses) ? '+' : '-'}{item.Balance} </Text>
-                           
+
                         </View>
                         <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
@@ -136,10 +178,10 @@ export default Wallet = () => {
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor: '#C4C4C4',
+        backgroundColor: '#EDE9FB',
         flexDirection: 'column',
         padding: 20,
-        justifyContent:'center'
+        justifyContent: 'center'
     },
     button1: {
         borderRadius: 20,
@@ -164,13 +206,12 @@ const styles = StyleSheet.create({
     editbutton: {
         borderRadius: 20,
         paddingVertical: 5,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         marginLeft: 20,
-        marginRight: 325,
         marginVertical: 10,
-        
+
         backgroundColor: 'orange',
-       
+
 
     },
 
