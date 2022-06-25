@@ -13,6 +13,8 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
+import { db, authentication } from '../lib/firebase.js';
+import { doc, getDoc, getDocs, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 
 
 
@@ -30,7 +32,7 @@ export default B_borrowing = () => {
         { id: '6', status: true, who: 'Matsuni', category: 'Others', amount: '20' },
     ]);
 
-    const [ExpenditureData, setExpenditureData] = useState([]);
+    const [BorrowingData, setBorrowingData] = useState([]);
 
     const deleteItem = id => {
         setItems(previousItems => {
@@ -49,7 +51,25 @@ export default B_borrowing = () => {
     useEffect(() => {
         loadAllExpenditure();
 
-    }, [])
+    }, []);
+
+    const userId = authentication.currentUser.uid;
+    
+    const lendRef = query(collection(db, "expenditure/" + userId + "/add_expenditure"), where("bigcat", "==", "Lending   "));
+
+    useEffect(() => {
+        const getData = async () => {
+            const querySnapshot = await onSnapshot(lendRef, (refSnapshot) => {
+                const lenList = [];
+                refSnapshot.forEach((doc) => {
+                    lenList.push(doc.data());
+                });
+                setBorrowingData(lenList);
+                console.log(BorrowingData)
+            });
+        };
+        getData();
+    }, []);
     
 
     return (
@@ -68,15 +88,16 @@ export default B_borrowing = () => {
             <View style={{ height: 1, backgroundColor: 'grey' }}>
             </View>
             <FlatList
+                scrollEnabled={true}
                 showsVerticalScrollIndicator={true}
-                data={items}
+                data={BorrowingData}
                 keyExtractor={(item) => item.key}
                 //ExpenditureData
                 renderItem={({ item, index }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20, backgroundColor: item.status === true ? '#C4C4C4' : 'white' }}>
                             <BouncyCheckbox
-                                style={{ marginTop: 16, textAlign: 'center' }}
+                                style={{ marginTop: 16, textAlign: 'center', flex: 1 }}
                                 disableText={true}
                                 disableBuiltInState
                                 isChecked={item.status}
@@ -88,12 +109,11 @@ export default B_borrowing = () => {
 
 
                                 }}
-
                                 style={{ flex: 1 }}
                             />
 
 
-                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.who}</Text>
+                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.note}</Text>
 
                             <Text style={{ flex: 2, textAlign: 'center' }}> {item.category} </Text>
                             <Text style={{ flex: 2, textAlign: 'right' }}>{item.amount} </Text>
