@@ -79,11 +79,25 @@ export default Expenditure = () => {
     const datas = getDatabase();
     
     const expRef = query(collection(db, "expenditure/" + userId + "/add_expenditure"), where("category", "==", "1"));
-    getDocs(expRef)
-        .then(
-            (snapshot) => {
-                setExpenditureData(snapshot.docs.data)
-            })
+
+
+    useEffect(() => {
+        const getData = async () => {
+            const querySnapshot = await getDocs(expRef);
+            const expList = [];
+            querySnapshot.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data());
+                expList.push(doc.data());
+                });
+            setExpenditureData(expList);
+        };
+        getData();
+    }, []);
+    
+
+    
+    
 
     return (
         <View>

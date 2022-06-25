@@ -82,7 +82,7 @@ export default Add_Expenditure_1 = () => {
         }
         else {
             const unique_ref = new Date().valueOf();
-            setDoc(doc(db, "expenditure/" + userId + "/add_expenditure/" + unique_ref), {
+            setDoc(doc(db, "expenditure/" + userId), {
                 note: note,
                 amount: +num,
                 id: "2",
