@@ -55,7 +55,7 @@ export default B_borrowing = () => {
 
     const userId = authentication.currentUser.uid;
     
-    const lendRef = query(collection(db, "expenditure/" + userId + "/add_expenditure"), where("bigcat", "==", "Lending   "));
+    const lendRef = query(collection(db, "expenditure/" + userId + "/add_expenditure"), where("bigcat", "==", "Borrowing   "));
 
     useEffect(() => {
         const getData = async () => {

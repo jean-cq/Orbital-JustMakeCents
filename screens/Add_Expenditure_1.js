@@ -94,7 +94,7 @@ export default Add_Expenditure_1 = () => {
                 note: note,
                 amount: +num,
                 id: "2",
-                status:true,
+                status:choice == "Borrowing   " ? false : true,
                 category: chosen,
                 date: date,
                 displaydate: moment(date).format("Do MMM"),

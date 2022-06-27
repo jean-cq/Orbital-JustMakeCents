@@ -31,10 +31,11 @@ export default Register_page = () => {
         createUserWithEmailAndPassword(authentication, email, password)
         .then((re)=>{
             console.log(re)
-            navigation.navigate(Login_page);
+            navigation.navigate("Login_page");
         })
         .catch((re)=>{
             console.log(re)
+            navigation.navigate("Login_page")
         })
     }
 
