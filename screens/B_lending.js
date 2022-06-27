@@ -13,7 +13,8 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
-
+import { db, authentication } from '../lib/firebase.js';
+import { doc, getDoc, getDocs, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 
 
 export default B_lending = () => {
@@ -30,7 +31,7 @@ export default B_lending = () => {
         { id: '6', status: true, who: 'Matsuni', category: 'Others', amount: '20' },
     ]);
 
-    const [ExpenditureData, setExpenditureData] = useState([]);
+    const [LenData, setLenData] = useState([]);
 
     const deleteItem = id => {
         setItems(previousItems => {
@@ -51,6 +52,24 @@ export default B_lending = () => {
 
     }, [])
 
+    const userId = authentication.currentUser.uid;
+    
+    const lendRef = query(collection(db, "expenditure/" + userId + "/add_expenditure"), where("bigcat", "==", "Lending   "));
+
+    useEffect(() => {
+        const getData = async () => {
+            const querySnapshot = await onSnapshot(lendRef, (refSnapshot) => {
+                const lenList = [];
+                refSnapshot.forEach((doc) => {
+                    lenList.push(doc.data());
+                });
+                setLenData(lenList);
+                console.log(LenData)
+            });
+        };
+        getData();
+    }, []);
+
     return (
         <View>
 
@@ -68,7 +87,7 @@ export default B_lending = () => {
             </View>
             <FlatList
                 showsVerticalScrollIndicator={true}
-                data={items}
+                data={LenData}
                 keyExtractor={(item) => item.key}
                 //ExpenditureData
                 renderItem={({ item, index }) => (
@@ -92,7 +111,7 @@ export default B_lending = () => {
                             />
 
 
-                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.who}</Text>
+                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.note}</Text>
 
                             <Text style={{ flex: 2, textAlign: 'center' }}> {item.category} </Text>
                             <Text style={{ flex: 2, textAlign: 'right' }}>{item.amount} </Text>
