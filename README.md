@@ -57,6 +57,8 @@ The mobile application provides a money manager interface for students to keep t
     - Remind users of returning the money to friends and banks
 5. Profile
     - Settings and badge collection
+6. Login
+    - Forget Password
 
 ## ❓Addressing concerns raised in Milestone 1
 - Incentives consistently motivate users
