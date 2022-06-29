@@ -72,7 +72,7 @@ export default Expenditure = () => {
 
     const datas = getDatabase();
     
-    const expRef = query(collection(db, "expenditure/" + userId + "/add_expenditure"), where("bigcat", "in", ["Expenditure   ", "Income   "]));
+    const expRef = query(collection(db, "users/" + userId + "/expenditure"), where("bigcat", "in", ["Expenditure   ", "Income   "]));
 
     useEffect(() => {
         const getData = async () => {

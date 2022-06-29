@@ -46,8 +46,7 @@ export default Add_Expenditure_1 = () => {
         { label: "Diet", value: "5", icon: "cutlery" },
         { label: "Education", value: "6", icon: "book" },
         { label: "Necessity", value: "7", icon: "plug" },
-        { label: "Others", value: "8", icon: "question" },
-        { label: "Add", value: "999", icon: "plus" }
+        { label: "Others", value: "8", icon: "question" }
     ]
 
     const ItemDivider = () => {
@@ -90,7 +89,7 @@ export default Add_Expenditure_1 = () => {
         }
         else {
             const unique_ref = new Date().valueOf();
-            setDoc(doc(db, "expenditure/" + userId + "/add_expenditure/" + unique_ref), {
+            setDoc(doc(db, "users/" + userId + "/expenditure/" + unique_ref), {
                 note: note,
                 amount: +num,
                 id: "2",
