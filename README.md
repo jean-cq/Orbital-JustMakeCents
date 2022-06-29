@@ -82,6 +82,7 @@ The mobile application provides a money manager interface for students to keep t
 - Different locations, unable to physically meet up → Google Meet & Github
 - Minor difficulties: navigation problem, use of hooks and components, UI layout implemented by jsx and many random errors…
 - Lesson learnt: make full use of online resources including npmjs, youtube and stackoverflow and documentations of tech stacks 
+- Both of us do not have any prior experience in application development and database implementation
 
 ## 📚Tech Stack
 - React Native
