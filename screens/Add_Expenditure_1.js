@@ -13,14 +13,15 @@ import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';
-import SimpleSelectButton from '../node_modules/react-native-simple-select-button/index.js';
+import SimpleSelectButton from '../components/SimpleSelectButton.js';
 import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
-import VirtualKeyboard from 'react-native-virtual-keyboard';
+import VirtualKeyboard from '../components/src/VirtualKeyboard.js';
 import { authentication, db } from '../lib/firebase.js';
 import { ref, set } from "firebase/database";
 import { doc, setDoc, collection, addDoc } from "firebase/firestore";
 import moment from 'moment';
 import DatePicker from 'react-native-modern-datepicker';
+import CardModal from '../components/CardModal.js';
 
 
 export default Add_Expenditure_1 = () => {
@@ -31,12 +32,21 @@ export default Add_Expenditure_1 = () => {
     const [isOpen, toggleOpen] = useState(false);
     const [date, setDate] = useState(null);
     const [displaydate, setDisplaydate] = useState(null);
+    const [isModalVisible, setisModalVisible] = useState(false);
+    const [card, setCard] = useState( [
+        'cash', 'visa','master'
+]);
+    const [selectedPayment, setSelectedPayment] = useState('Card');
+
+    const WIDTH = Dimensions.get('window').width;
+    const HEIGHT = Dimensions.get('window').height;
+
 
     const button_list = [
-        { label: "Expenditure   ", value: "1" },
-        { label: "Income   ", value: "2" },
-        { label: "Lending   ", value: "3" },
-        { label: "Borrowing   ", value: "4" },
+        { label: "Expenditure", value: "1" },
+        { label: "Income", value: "2" },
+        { label: "Lending", value: "3" },
+        { label: "Borrowing", value: "4" },
     ];
     const icon_list = [
         { label: "Traffic", value: "1", icon: "car" },
@@ -64,7 +74,14 @@ export default Add_Expenditure_1 = () => {
         setNum(newNum);
     }
 
+    const changeModalVisibility = (bool) =>{
+        setisModalVisible(bool)
+
+    }
     
+    const setData = (data) => {
+        setSelectedPayment(data)
+    }
 
     /*orange: #f96300
     yellow:#f5c900
@@ -111,13 +128,15 @@ export default Add_Expenditure_1 = () => {
     
 
     return (
+        
 
         <View style={styles.container}>
             <StatusBar style="auto" />
             <View style={{
                 marginVertical: 20,
-                width: 400,
-                height: 50,
+                width: WIDTH * 0.9,
+                height: HEIGHT * 0.1,
+                alignItems:'center',
                 justifyContent: 'center',
             }}>
                 <FlatList
@@ -145,10 +164,13 @@ export default Add_Expenditure_1 = () => {
             </View>
             <View style={{ height: 3, backgroundColor: '#EEE9BF', width: '100%' }}>
             </View>
+            
 
             <View style={{
                 marginTop: 1,
-                width: (Dimensions.get('screen').width - 65),
+                width: (WIDTH *0.9 ),
+                height: HEIGHT * 0.5,
+
                 justifyContent: 'center',
             }}>
                 <FlatList
@@ -192,7 +214,7 @@ export default Add_Expenditure_1 = () => {
                             animationType="fade"
                             visible={isOpen}
                             onRequestClose={() => {
-                                Alert.alert('Modal has been closed.');
+                            null
                             }}>
                             <View style={styles.contentContainer}>
                                 <View style={styles.content}>
@@ -213,7 +235,19 @@ export default Add_Expenditure_1 = () => {
                             </View>
                         </Modal>
                     </View>
-                    <Catebutton text='Card' onPress={() => Alert.alert("This is card.")} />
+                    <Catebutton text={selectedPayment} onPress={() => changeModalVisibility(true)} />
+                    <Modal
+                        transparent={true}
+                        animationType = 'fade'
+                        visible = {isModalVisible}
+                        onRequestClose = {() => changeModalVisibility(false)}
+                        >
+                            <CardModal
+                            changeModalVisibility = {changeModalVisibility}
+                            data = {card}
+                            setData = {setData}
+                            />
+                    </Modal>
                     <Catebutton text='Enter' onPress={create} />
                 </View>
                 <View style={{ flex: 4 }}>
@@ -234,6 +268,7 @@ export default Add_Expenditure_1 = () => {
             </View>
 
         </View>
+        
     );
 }
 

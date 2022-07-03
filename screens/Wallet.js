@@ -1,5 +1,5 @@
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, ListItem } from 'react-native';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Modal, Text, View, FlatList, ListItem } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
@@ -25,6 +25,7 @@ export default Wallet = () => {
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [show, setShow] = useState(false)
+    const [add, setAdd] = useState(false)
 
     const deleteItem = id => {
         setItems(previousItems => {
@@ -35,6 +36,12 @@ export default Wallet = () => {
     const status_change = () => {
         setItems(item => item.status = !item.status)
     }
+    const addItem = (text) => {
+        setItems([
+          ...items,
+          {id: Math.random().toString(), Type: {text}, Name: {text}, DueDate: null, Expenses: '0.00', Income: '0.00', Balance: '0.00' },
+        ]);
+      };
 
     const loadAllExpenditure = async () => {
 
@@ -91,12 +98,48 @@ export default Wallet = () => {
                         <Text>Edit</Text>
                     </View>
                 </TouchableOpacity>
+                <Modal
+                            transparent
+                            animationType="fade"
+                            visible={add}
+                            onRequestClose={() => {
+                            setAdd(!add)
+                            }}>
+                            <View style={styles.contentContainer}>
+                                <View style={styles.content}>
+
+                                <TextInput
+                            placeholder="New Payment Method"
+                            placeholderTextColor="grey"
+                            marginHorizontal={10}
+                            style={styles.textInput}                            
+                            onChangeText={(text) => addItem(text)} />
+                            <TextInput
+                            placeholder="DueDate"
+                            placeholderTextColor="grey"
+                            marginHorizontal={10}
+                            style={styles.textInput}
+                            value ={items.DueDate}                    
+                            onChangeText={(text) => setItems(items.map((item, index) =>
+                                index === items.length
+                                    ? { ...item, DueDate: text }
+                                    : item
+                            ))} />
+
+                                    <TouchableOpacity
+                                        style={styles.confirmButton}
+                                        onPress={() => toggleOpen(false)}>
+                                        <Text>Confirm</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </Modal>
                 {show === true
                     ? <AntDesign
                         name='pluscircle'
                         size={25}
                         color='orange'
-                        onPress={() => Alert.alert('this is add')}
+                        onPress={() => setAdd(true)}
                         style={{ marginRight: 35, marginTop: 10 }}
                     />
 
@@ -131,14 +174,16 @@ export default Wallet = () => {
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-                            {show === true
-                                ? < MaterialIcons
+                            {(show === true)  
+                                ? (item.Income - item.Expenses === 0)
+                                    ?< MaterialIcons
                                     name='remove-circle'
                                     size={20}
                                     color='firebrick'
                                     onPress={() => deleteItem(item.id)}
                                     style={{ flex: 2 }}
                                 />
+                                    : <View style={{ flex: 2 }}></View>
                                 : null}
                             <Text style={{ flex: 2 }}>{item.Type}</Text>
 
@@ -214,6 +259,24 @@ const styles = StyleSheet.create({
 
 
     },
+    contentContainer: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: '100%',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    content: {
+        backgroundColor: '#fff',
+        marginHorizontal: 20,
+        marginVertical: 70,
+    },
+    textInput: {
+        height: 40,
+        margin: 12,
+        borderBottomColor: '#C4C4C4',
+        borderBottomWidth: 2,
+        padding: 10
+    }
 
 
 
