@@ -16,7 +16,6 @@ import { useNavigation } from '@react-navigation/native';
 import { authentication } from "../lib/firebase.js";
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-import Home_navigation from '../navigation/Home_navigation.js';
 
 export default Login_page = () => {
     const navigation = useNavigation();
@@ -96,7 +95,7 @@ export default Login_page = () => {
         signInWithEmailAndPassword(authentication, email, password)
         .then((re)=>{
             setIsSignedIn(true);
-            navigation.navigate(Home_navigation);
+            navigation.navigate('Home_navigation');
         })
             .catch((re) => {
                 console.log(re);
@@ -107,7 +106,7 @@ export default Login_page = () => {
     useEffect(() => {
         const unsubscribe = authentication.onAuthStateChanged(user => {
             if (user) {
-                navigation.navigate(Home_navigation)
+                navigation.navigate('Home_navigation')
             }
         })
         return unsubscribe
@@ -208,6 +207,10 @@ export default Login_page = () => {
                     onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
                 />
                 </View>
+                
+            <Text style = {styles.forgetpassword}
+            onPress={() => navigation.navigate('ForgetPassword')}>
+                Forget your password?</Text>
             
             <View style={styles.fixToText}>
                 <Flatbutton text='Log In' onPress={SignInUser} />
@@ -256,6 +259,13 @@ const styles = StyleSheet.create({
     text_footer: {
         color: '#05375a',
         fontSize: 18
+    },
+    forgetpassword:{
+        marginVertical:10,
+        marginHorizontal:20,
+        textDecorationLine:'underline',
+        fontSize: 12
+
     }/*, icons: {
         marginTop:20,
         marginLeft:300

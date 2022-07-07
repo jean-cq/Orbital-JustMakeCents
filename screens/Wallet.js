@@ -19,8 +19,8 @@ export default Wallet = () => {
     const navigation = useNavigation();
     const [items, setItems] = useState([
 
-        { id: '0', Type: 'Cash', Name: 'Cash', DueDate: null, Expenses: '13.50', Income: '20.00', Balance: '6.50' },
-        { id: '1', Type: 'Credit Card', Name: 'Visa', DueDate: '13 May', Expenses: '40.00', Income: '250.50', Balance: '160.50' },
+        { id: '0', Name: 'Cash', DueDate: null, Expenses: '13.50', Income: '20.00', Balance: '6.50' },
+        { id: '1',  Name: 'Visa', DueDate: '13 May', Expenses: '40.00', Income: '250.50', Balance: '160.50' },
     ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
@@ -37,10 +37,10 @@ export default Wallet = () => {
         setItems(item => item.status = !item.status)
     }
     const addItem = (text) => {
-        setItems([
-          ...items,
-          {id: Math.random().toString(), Type: {text}, Name: {text}, DueDate: null, Expenses: '0.00', Income: '0.00', Balance: '0.00' },
-        ]);
+        setItems(items.push(
+            {id: (Math.random()*10+ 2).toString(),  Name: {text}, DueDate: null, Expenses: '0.00', Income: '0.00', Balance: '0.00' }
+          
+    ))
       };
 
     const loadAllExpenditure = async () => {
@@ -121,15 +121,15 @@ export default Wallet = () => {
                             style={styles.textInput}
                             value ={items.DueDate}                    
                             onChangeText={(text) => setItems(items.map((item, index) =>
-                                index === items.length
+                                index === (items.length)
                                     ? { ...item, DueDate: text }
                                     : item
                             ))} />
 
                                     <TouchableOpacity
-                                        style={styles.confirmButton}
-                                        onPress={() => toggleOpen(false)}>
-                                        <Text>Confirm</Text>
+                                        style={styles.button1}
+                                        onPress={() => setAdd(false)}>
+                                        <Text style={styles.buttontext1}>Confirm</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -153,7 +153,7 @@ export default Wallet = () => {
                 {show === true
                     ? <Text style={{ flex: 2 }}> </Text>
                     : null}
-                <Text style={{ flex: 2 }}>Type</Text>
+               
 
                 <Text style={{ flex: 2 }}>Name</Text>
 
@@ -185,7 +185,7 @@ export default Wallet = () => {
                                 />
                                     : <View style={{ flex: 2 }}></View>
                                 : null}
-                            <Text style={{ flex: 2 }}>{item.Type}</Text>
+                           
 
                             <Text style={{ flex: 2 }}>{item.Name}</Text>
 
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     button1: {
-        borderRadius: 20,
+        
         paddingVertical: 14,
         paddingHorizontal: 10,
         backgroundColor: 'yellow',

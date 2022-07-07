@@ -9,6 +9,7 @@ import Register_page from '../screens/Register_page.js';
 import { useState, useEffect } from 'react';
 import Books from '../screens/Books.js'
 import Home_navigation from './Home_navigation.js';
+import ForgetPassword from '../screens/ForgetPassword.js';
 
 
 const Stack = createNativeStackNavigator();
@@ -35,9 +36,13 @@ export default AuthStacks = () => {
                 <Stack.Screen name="Login_page" component={Login_page} options={{
                     title: 'Log In'
                 }} />
+                <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{
+                    title: 'Forget Password?'
+                }} />
                 <Stack.Screen name="Register_page" component={Register_page} options={{
                     title: 'Register'
                 }} />
+                
 
             <Stack.Screen options={{headerShown: false}} name="Home_navigation" component={Home_navigation} />
             </Stack.Navigator>
