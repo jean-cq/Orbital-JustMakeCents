@@ -14,7 +14,7 @@ import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { authentication } from "../lib/firebase.js";
-import { sendPasswordResetEmail} from 'firebase/auth';
+import { sendPasswordResetEmail, getAuth} from 'firebase/auth';
 import { usePasswordReset } from '../lib/usePasswordReset.js';
 import Home_navigation from '../navigation/Home_navigation.js';
 import Login_page from './Login_page.js';
@@ -25,9 +25,25 @@ export default ForgetPassword = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
 
     const [email, setEmail] = useState('')
+    const actionCodeSettings = {
+        url: 'https://my-first-project-29287.firebaseapp.com/__/auth/action?mode=action&oobCode=code',
+        //This domain must be verified in your Firebase Console
+        // 'Authentication -> Templates -> Password reset -> Edit Template -> Customize domain'
+      /*
+        handleCodeInApp: undefined,
+        iOS: {
+          bundleId: undefined,
+        },
+        android: {
+          packageName: undefined,
+          installApp: undefined,
+          minimumVersion: undefined,
+        },
+        dynamicLinkDomain: undefined,*/
+      };
 
-    const handleePasswordReset = async(values) => {
-        await sendPasswordResetEmail(values)
+    const handlePasswordReset = async (email) => {
+        await sendPasswordResetEmail(authentication, email, actionCodeSettings)
         .then(()=>{
             Alert.alert("Email sent");
             navigation.goBack();
@@ -69,7 +85,7 @@ export default ForgetPassword = () => {
             
             
             <View style={styles.fixToText}>
-                <Flatbutton text='Send Email' onPress={handleePasswordReset} />
+                <Flatbutton text='Send Email' onPress={() => handlePasswordReset(email)} />
             </View>
             
         </SafeAreaView>
