@@ -14,8 +14,31 @@ import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import ExpenditureStacks from '../navigation/ExpenditureStacks.js';
 import Svg, { Circle, Rect } from 'react-native-svg';
+import { db, authentication } from '../lib/firebase.js';
+import { doc, getDoc, getDocs, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc } from "firebase/firestore";
+import { ref, set, onValue, getDatabase } from "firebase/database";
 
 export default Wallet = () => {
+
+    const userId = authentication.currentUser.uid;
+    const walletRef = query(collection(db, "users/" + userId + "/payment"));
+    useEffect(() => {
+        const getData = async () => {
+            const querySnapshot = await onSnapshot(walletRef, (refSnapshot) => {
+                const walletList = [];
+                refSnapshot.forEach((doc) => {
+                    walletList.push(doc.data());
+                });
+                walletList.push({})
+                walletList.push({})
+                walletList.push({})
+                walletList.push({})
+            setExpenditureData(walletList);
+            });
+        };
+        getData();
+    }, []);
+
     const navigation = useNavigation();
     const [items, setItems] = useState([
 
@@ -26,6 +49,7 @@ export default Wallet = () => {
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [show, setShow] = useState(false)
     const [add, setAdd] = useState(false)
+    const [due, setDue] = useState('');
 
     const deleteItem = id => {
         setItems(previousItems => {
@@ -52,6 +76,24 @@ export default Wallet = () => {
         loadAllExpenditure();
 
     }, [])
+
+    const create = () => {
+        if (name == "" || due == "") {
+            Alert.alert("Invalid input")
+        } else {
+        setDoc(doc(db, "users/" + userId + "/payment/" + name), {
+            Name: name,
+            DueDate: due,
+            Expenses: 0,
+            Income: 0,
+            Balance: 0,
+        }).then(() => {
+            alert('data submitted');
+        }).catch((error) => {
+            alert(error)
+        })
+    }
+}
 
     return (
         <View style={{ flexDirection: 'column' }}>
@@ -112,23 +154,20 @@ export default Wallet = () => {
                             placeholder="New Payment Method"
                             placeholderTextColor="grey"
                             marginHorizontal={10}
-                            style={styles.textInput}                            
-                            onChangeText={(text) => addItem(text)} />
+                            style={styles.textInput}  
+                            value={name}                          
+                            onChangeText={(text) => setName(text)} />
                             <TextInput
                             placeholder="DueDate"
                             placeholderTextColor="grey"
                             marginHorizontal={10}
                             style={styles.textInput}
-                            value ={items.DueDate}                    
-                            onChangeText={(text) => setItems(items.map((item, index) =>
-                                index === (items.length)
-                                    ? { ...item, DueDate: text }
-                                    : item
-                            ))} />
+                            value ={due}                    
+                            onChangeText={(text) => setDue(text)} />
 
                                     <TouchableOpacity
                                         style={styles.button1}
-                                        onPress={() => setAdd(false)}>
+                                        onPress={create}>
                                         <Text style={styles.buttontext1}>Confirm</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -169,7 +208,7 @@ export default Wallet = () => {
             </View>
             <FlatList
                 showsVerticalScrollIndicator={true}
-                data={items}
+                data={ExpenditureData}
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
@@ -194,7 +233,7 @@ export default Wallet = () => {
 
                             <Text style={{ flex: 3, textAlign: 'right' }}> {item.Income} </Text>
 
-                            <Text style={{ flex: 3, textAlign: 'right' }}> {(item.Income > item.Expenses) ? '+' : '-'}{item.Balance} </Text>
+                            <Text style={{ flex: 3, textAlign: 'right' }}> {(item.Income >= item.Expenses) ? '+' : '-'}{item.Balance} </Text>
 
                         </View>
                         <View style={{ height: 1, backgroundColor: 'grey' }}>

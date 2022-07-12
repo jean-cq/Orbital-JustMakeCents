@@ -31,7 +31,8 @@ export default Add_Expenditure_1 = () => {
     const [note, setNote] = useState('');
     const [isOpen, toggleOpen] = useState(false);
     const [date, setDate] = useState(null);
-    const [displaydate, setDisplaydate] = useState(null);
+    const [displaydate, 
+        Displaydate] = useState(null);
     const [isModalVisible, setisModalVisible] = useState(false);
     const [card, setCard] = useState( [
         'cash', 'visa','master'
