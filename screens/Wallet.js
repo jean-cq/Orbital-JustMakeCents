@@ -49,6 +49,7 @@ export default Wallet = () => {
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [show, setShow] = useState(false)
     const [add, setAdd] = useState(false)
+    const [name, setName] = useState('');
     const [due, setDue] = useState('');
 
     const deleteItem = id => {
