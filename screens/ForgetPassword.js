@@ -14,7 +14,7 @@ import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { authentication } from "../lib/firebase.js";
-import { sendPasswordResetEmail, getAuth} from 'firebase/auth';
+import { sendPasswordResetEmail} from 'firebase/auth';
 import { usePasswordReset } from '../lib/usePasswordReset.js';
 import Home_navigation from '../navigation/Home_navigation.js';
 import Login_page from './Login_page.js';
@@ -22,9 +22,8 @@ import Login_page from './Login_page.js';
 export default ForgetPassword = () => {
     const navigation = useNavigation();
     const { colors } = useTheme();
-    const [isSignedIn, setIsSignedIn] = useState(false);
-
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('');
+    
     const actionCodeSettings = {
         url: 'https://my-first-project-29287.firebaseapp.com/__/auth/action?mode=action&oobCode=code',
         //This domain must be verified in your Firebase Console

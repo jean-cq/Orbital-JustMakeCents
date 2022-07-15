@@ -14,7 +14,8 @@ import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { authentication } from "../lib/firebase.js";
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithCredential } from 'firebase/auth';
+
 
 
 export default Login_page = () => {
@@ -87,9 +88,23 @@ export default Login_page = () => {
     
     const [isSignedIn, setIsSignedIn] = useState(false);
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [loading, setLoading] = useState(false)
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+   /* const SignInWithGoogle = async() => {
+        const provider = new GoogleAuthProvider();
+        const { idToken } = await GoogleSignin.signIn();
+        // Create a Google credential with the token
+    const googleCredential = provider.credential(idToken);
+
+    // Sign-in the user with the credential
+    return signInWithCredential(googleCredential);
+        
+    }
+    
+*/
+  
 
     const SignInUser = () => {
         signInWithEmailAndPassword(authentication, email, password)
@@ -211,7 +226,18 @@ export default Login_page = () => {
             <Text style = {styles.forgetpassword}
             onPress={() => navigation.navigate('ForgetPassword')}>
                 Forget your password?</Text>
-            
+                <View style={styles.icons}>
+            {/* 
+            <TouchableOpacity onPress={SignInWithGoogle}>
+            <AntDesign
+                name="google"
+                color={colors.text}
+                size={20}
+
+                />
+            </TouchableOpacity>
+            */}
+            </View>
             <View style={styles.fixToText}>
                 <Flatbutton text='Log In' onPress={SignInUser} />
             </View>
@@ -261,20 +287,23 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     forgetpassword:{
+        flexDirection: 'row',
         marginVertical:10,
         marginHorizontal:20,
         textDecorationLine:'underline',
-        fontSize: 12
+        fontSize: 12,
+        
+       
 
-    }/*, icons: {
-        marginTop:20,
-        marginLeft:300
-    }
-     icons: {
-        flexDirection: 'row',
-        alignItems:'flex-end'
+    }, icons: {
+     alignContent: 'flex-end',
+     justifyContent:'flex-end',
+     paddingLeft:300
+     
+        
+        
 
-        <View style={styles.icons}>
+       /* <View style={styles.icons}>
             <TouchableOpacity onPress={() => handleGoogleLogin('LOGIN')}>
             <AntDesign
                 name="google"
@@ -283,8 +312,8 @@ const styles = StyleSheet.create({
 
                 />
             </TouchableOpacity>
-            </View>
-    } */
+            </View>*/
+    } 
 
 });
 /*   {data.secureTextEntry ?
