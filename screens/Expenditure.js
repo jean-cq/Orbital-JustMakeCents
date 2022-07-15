@@ -195,10 +195,10 @@ export default Expenditure = () => {
                                 disableText={true}
                                 disableBuiltInState
                                 isChecked={item.status}
-                                onPress={(value) => {
+                                onPress={() => {
                                     setItems(items.map(itemm =>
                                         itemm.id === item.id
-                                            ? { ...item, status: !value }
+                                            ? { ...item, status: !itemm.status }
                                             : itemm))
                                 }}
 
