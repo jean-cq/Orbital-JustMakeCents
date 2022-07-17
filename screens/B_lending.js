@@ -14,8 +14,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import { db, authentication } from '../lib/firebase.js';
-import { doc, getDoc, getDocs, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
-
+import { doc, getDoc,setDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
+import { stringify } from '@firebase/util';
 
 export default B_lending = () => {
 
@@ -69,7 +69,8 @@ export default B_lending = () => {
         };
         getData();
     }, []);
-
+    
+    
     return (
         <View>
 
@@ -90,19 +91,22 @@ export default B_lending = () => {
                 data={LenData}
                 keyExtractor={(item) => item.key}
                 //ExpenditureData
-                renderItem={({ item, index }) => (
+                renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 25, backgroundColor: item.status === true ? '#C4C4C4' : 'white' }}>
+                        
                         <BouncyCheckbox
                                 tyle={{ textAlign: 'center', flex: 1 }}
                                 disableText={true}
                                 disableBuiltInState
                                 isChecked={item.status}
-                                onPress={(value) => {
-                                    setItems(items.map(itemm =>
-                                        itemm.id === item.id
-                                            ? { ...item, status: !item.status }
-                                            : itemm))
+                                onPress={async() => {
+                            
+                                    const statusref = doc(db, "users/" + userId + "/expenditure/" + item.id);    
+                                    const matches = await getDoc(statusref);                            
+                                     await updateDoc(statusref, {
+                                                status: !item.status
+                                              })
 
 
                                 }}

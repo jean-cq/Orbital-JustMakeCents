@@ -99,11 +99,13 @@ export default B_borrowing = () => {
                                 disableText={true}
                                 disableBuiltInState
                                 isChecked={item.status}
-                                onPress={(value) => {
-                                    setItems(items.map(itemm =>
-                                        itemm.id === item.id
-                                            ? { ...item, status: !item.status }
-                                            : itemm))
+                                onPress={async() => {
+                            
+                                    const statusref = doc(db, "users/" + userId + "/borrowing/" + item.id);    
+                                    const matches = await getDoc(statusref);                            
+                                     await updateDoc(statusref, {
+                                                status: !item.status
+                                              })
 
 
                                 }}

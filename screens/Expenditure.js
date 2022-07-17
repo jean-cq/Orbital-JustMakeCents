@@ -20,7 +20,7 @@ import { ActivityIndicator } from 'react-native';
 import {database} from 'firebase/database';
 import { FirebaseError } from 'firebase/app';
 import { ref, set, onValue, getDatabase } from "firebase/database";
-import { doc, getDoc, getDocs, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
+import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 import moment from 'moment';
 import MonthPicker from 'react-native-month-picker';
 
@@ -192,11 +192,15 @@ export default Expenditure = () => {
                                 disableText={true}
                                 disableBuiltInState
                                 isChecked={item.status}
-                                onPress={() => {
-                                    setItems(items.map(itemm =>
-                                        itemm.id === item.id
-                                            ? { ...item, status: !item.status }
-                                            : itemm))
+                                onPress={async() => {
+                            
+                                    const statusref = doc(db, "users/" + userId + "/expenditure/" + item.id);    
+                                    const matches = await getDoc(statusref);                            
+                                     await updateDoc(statusref, {
+                                                status: !item.status
+                                              })
+
+
                                 }}
 
                             />
