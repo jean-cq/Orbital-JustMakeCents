@@ -77,7 +77,7 @@ export default Expenditure = () => {
     
     useEffect(() => {
         const getData = async() => {
-            const querySnapshot =  onSnapshot(expRef, (refSnapshot) => {
+            const querySnapshot = onSnapshot(expRef, (refSnapshot) => {
                 const expList = [];
                 refSnapshot.forEach((doc) => {
                     expList.push(doc.data());

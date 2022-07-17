@@ -54,11 +54,11 @@ export default B_lending = () => {
 
     const userId = authentication.currentUser.uid;
     
-    const lendRef = query(collection(db, "expenditure/" + userId + "/add_expenditure"), where("bigcat", "==", "Lending"));
+    const lendRef = query(collection(db, "users/" + userId + "/expenditure"), where("bigcat", "==", "Lending"));
 
     useEffect(() => {
         const getData = async () => {
-            const querySnapshot =  onSnapshot(lendRef, (refSnapshot) => {
+            onSnapshot(lendRef, (refSnapshot) => {
                 const lenList = [];
                 refSnapshot.forEach((doc) => {
                     lenList.push(doc.data());
