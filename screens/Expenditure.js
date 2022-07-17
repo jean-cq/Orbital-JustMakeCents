@@ -72,7 +72,7 @@ export default Expenditure = () => {
 
     const datas = getDatabase();
     
-    const expRef = query(collection(db, "users/" + userId + "/expenditure"), where("bigcat", "in", ["Expenditure   ", "Income   "]));
+    const expRef = query(collection(db, "users/" + userId + "/expenditure"), where("bigcat", "in", ["Expenditure", "Income"]));
 
     
     useEffect(() => {
@@ -82,12 +82,8 @@ export default Expenditure = () => {
                 refSnapshot.forEach((doc) => {
                     expList.push(doc.data());
                 });
-                expList.push({})
-                expList.push({})
-                expList.push({})
-                expList.push({})
             setExpenditureData(expList);
-            });
+            })
         };
         getData();
     }, []);
