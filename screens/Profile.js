@@ -18,6 +18,7 @@ import PageControl from 'react-native-page-control';
 import PagerView from 'react-native-pager-view';
 import { authentication } from "../lib/firebase.js";
 import { signOut } from "firebase/auth";
+import ProfileStacks from '../navigation/ProfileStacks.js';
 
 
 export default Profile = () => {
@@ -51,7 +52,7 @@ export default Profile = () => {
             <ScrollView>
             {/*avatar*/}
             <View style={{ flexDirection: 'column', marginTop: 10, marginRight: 10 }}>
-            <Catebutton text= "Edit your profile" onPress={() => Alert.alert("This is Edit your profile.")} />
+            <Catebutton text= "Edit your profile" onPress={() => navigation.navigate('Profile_edit')} />
                 <Ionicons
                     name="ios-person-circle"
                     color={'black'}

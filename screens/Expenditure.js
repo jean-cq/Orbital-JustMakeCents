@@ -74,9 +74,10 @@ export default Expenditure = () => {
     
     const expRef = query(collection(db, "users/" + userId + "/expenditure"), where("bigcat", "in", ["Expenditure   ", "Income   "]));
 
+    
     useEffect(() => {
-        const getData = async () => {
-            const querySnapshot = await onSnapshot(expRef, (refSnapshot) => {
+        const getData = async() => {
+            const querySnapshot =  onSnapshot(expRef, (refSnapshot) => {
                 const expList = [];
                 refSnapshot.forEach((doc) => {
                     expList.push(doc.data());
@@ -184,7 +185,7 @@ export default Expenditure = () => {
             <FlatList
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={true}
-                data={ ExpenditureData }
+                data={ ExpenditureData}
                 keyExtractor={(item)=>item.key}
                 //ExpenditureData
                 renderItem={({ item }) => (

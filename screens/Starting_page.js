@@ -1,6 +1,6 @@
 // JavaScript source code
 import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
+import { Alert, Button, Image, StyleSheet, SafeAreaView, Dimensions, Text, View } from 'react-native';
 import Flatbutton from '../components/Flatbutton.js';
 import DefaultImage from '../assets/starting_page.png';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
@@ -8,7 +8,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 //import Navigator from './Navigation/HomeStack.js'
-
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 const DEFAULT_IMAGE = Image.resolveAssetSource(DefaultImage).uri;
 
 const Separator = () => (
@@ -47,8 +48,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start'
     }, image: {
-        width: 500,
-        height:700,
+        width: WIDTH,
+        height:HEIGHT * 0.8,
         justifyContent: "flex-start"
     }, fixToText: {
         flexDirection: 'row',

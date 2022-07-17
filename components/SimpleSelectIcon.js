@@ -23,7 +23,7 @@ const SimpleSelectIcon = ({
         <View style={{ flexDirection: 'column' }}>
         <TouchableOpacity
             {...props}
-            style={{ paddingVertical: 20, paddingHorizontal: 5, justifyContent: 'space-evenly'}}
+            style={{ paddingVertical: 10, paddingHorizontal: 13, justifyContent: 'space-evenly'}}
         >
 
             <View

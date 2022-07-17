@@ -23,6 +23,8 @@ import moment from 'moment';
 import DatePicker from 'react-native-modern-datepicker';
 import CardModal from '../components/CardModal.js';
 
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 export default Add_Expenditure_1 = () => {
     const [choice, setChoice] = useState('');
@@ -39,8 +41,6 @@ export default Add_Expenditure_1 = () => {
 ]);
     const [selectedPayment, setSelectedPayment] = useState('Card');
 
-    const WIDTH = Dimensions.get('window').width;
-    const HEIGHT = Dimensions.get('window').height;
 
 
     const button_list = [
@@ -134,8 +134,7 @@ export default Add_Expenditure_1 = () => {
         <View style={styles.container}>
             <StatusBar style="auto" />
             <View style={{
-                marginVertical: 20,
-                width: WIDTH * 0.9,
+                width: WIDTH,
                 height: HEIGHT * 0.1,
                 alignItems:'center',
                 justifyContent: 'center',
@@ -169,9 +168,9 @@ export default Add_Expenditure_1 = () => {
 
             <View style={{
                 marginTop: 1,
-                width: (WIDTH *0.9 ),
+                width: WIDTH * 0.9,
                 height: HEIGHT * 0.5,
-
+                alignContent:'center',
                 justifyContent: 'center',
             }}>
                 <FlatList
@@ -188,14 +187,14 @@ export default Add_Expenditure_1 = () => {
                                 }}
                                 isChecked={chosen === item.label}
                                 text={item.label}
-                                textSize={20}
+                                textSize={15}
                                 buttonDefaultColor={item.value % 2 === 0 ? "#f5c900" : "yellow"}
                                 buttonSelectedColor="#cdad7a"
                                 textDefaultColor="black"
                                 textSelectedColor="white"
                                 iconName={item.icon}
                                 iconColor="white"
-                                iconSize={30}
+                                iconSize={20}
                                 ItemSeparatorComponent={ItemDivider}
                             />
                     }
@@ -283,7 +282,7 @@ const styles = StyleSheet.create({
         marginLeft: 1
     },
     keyboardContainer: {
-    marginTop: 460,
+    marginTop: (HEIGHT * 0.47),
         flexDirection: 'row',
         position: 'absolute',
         backgroundColor: '#D1CFD7',

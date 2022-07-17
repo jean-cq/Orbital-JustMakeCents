@@ -20,7 +20,7 @@ const SimpleSelectButton = ({
     return (
       <TouchableOpacity
         {...props}
-        style={{ paddingVertical: 10, paddingHorizontal : 5, justifyContent: 'space-evenly' }}
+        style={{paddingHorizontal : 5, justifyContent: 'space-evenly' }}
         >
 
         <View 
@@ -49,8 +49,9 @@ const SimpleSelectButton = ({
 
 const styles = StyleSheet.create({
     button_item: {
-        padding: 8,
-        marginVertical: 5,
+        paddingHorizontal: 10,
+        paddingVertical:5,
+        marginVertical:5,
         borderRadius: 5,
         textAlign: 'center'
     },

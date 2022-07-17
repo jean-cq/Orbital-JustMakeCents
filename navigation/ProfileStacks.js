@@ -9,7 +9,7 @@ import Add_Expenditure_1 from '../screens/Add_Expenditure_1.js';
 import { useState, useEffect } from 'react';
 import Profile from '../screens/Profile.js';
 import Starting_page from '../screens/Starting_page.js';
-
+import Profile_edit from '../screens/Profile_edit.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,13 +30,11 @@ export default ProfileStacks = () => {
             >
                 <Stack.Screen name="Profile" component={Profile} options={{
                 title: "Profile",
-                headerShown: false
+               
                 }}
             />
-
-            <Stack.Screen name="Starting_page" component={Starting_page} options={{
-                title: "Starting_page",
-                headerShown: false
+                <Stack.Screen name="Profile_edit" component={Profile_edit} options={{
+                title: "Profile Editing"
                 
             }}
             />

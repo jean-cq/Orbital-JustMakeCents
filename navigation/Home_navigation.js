@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from '../screens/Profile.js';
-
+import ProfileStacks from './ProfileStacks.js';
 import Ionicons from '../node_modules/@expo/vector-icons/Ionicons.js';
 import MaterialCommunityIcons from '../node_modules/@expo/vector-icons/MaterialCommunityIcons.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js'
@@ -87,7 +87,7 @@ function ShoppingListScreen() {
               />
             );
           }
-            else if (route.name === 'LendingAndBorrowing') {
+            else if (route.name === 'Lending & Borrowing') {
               return (
                 <MaterialCommunityIcons
                 name={
@@ -122,8 +122,10 @@ function ShoppingListScreen() {
                 headerShown: false
             }}/>
           <Tab.Screen name="New Entry" component={Add_Expenditure_1}/>
-          <Tab.Screen name="LendingAndBorrowing" component={LendingStacks}/>
-          <Tab.Screen name="Profile" component={Profile}/>
+          <Tab.Screen name="Lending & Borrowing" component={LendingStacks}/>
+          <Tab.Screen name="Profile" component={ProfileStacks} options={{
+                headerShown: false}}
+                />
         </Tab.Navigator>
     
     );
