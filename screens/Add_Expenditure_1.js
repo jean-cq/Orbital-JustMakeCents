@@ -8,7 +8,7 @@ import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
@@ -18,7 +18,7 @@ import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
 import VirtualKeyboard from '../components/src/VirtualKeyboard.js';
 import { authentication, db } from '../lib/firebase.js';
 import { ref, set } from "firebase/database";
-import { doc, setDoc, collection, addDoc } from "firebase/firestore";
+import { doc, setDoc, collection, addDoc, query } from "firebase/firestore";
 import moment from 'moment';
 import DatePicker from 'react-native-modern-datepicker';
 import CardModal from '../components/CardModal.js';
@@ -40,6 +40,7 @@ export default Add_Expenditure_1 = () => {
         'cash', 'visa','master'
 ]);
     const [selectedPayment, setSelectedPayment] = useState('Card');
+    const [ExpenditureData, setExpenditureData] = useState([]);
 
 
 
@@ -89,6 +90,24 @@ export default Add_Expenditure_1 = () => {
     Tan: #cdad7a*/
 
     const userId = authentication.currentUser.uid;
+
+    const walletRef = query(collection(db, "users/" + userId + "/payment"));
+    useEffect(() => {
+        const getData = async () => {
+            const querySnapshot = await onSnapshot(walletRef, (refSnapshot) => {
+                const walletList = [];
+                refSnapshot.forEach((doc) => {
+                    walletList.push(doc.data());
+                });
+                walletList.push({})
+                walletList.push({})
+                walletList.push({})
+                walletList.push({})
+            setExpenditureData(walletList);
+            });
+        };
+        getData();
+    }, []);
 
     const create = () => {
         if ((num[0] ===  '0' && num[1] !== '.') || 
@@ -244,7 +263,7 @@ export default Add_Expenditure_1 = () => {
                         >
                             <CardModal
                             changeModalVisibility = {changeModalVisibility}
-                            data = {card}
+                            data = {ExpenditureData}
                             setData = {setData}
                             />
                     </Modal>

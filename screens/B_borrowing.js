@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import { db, authentication } from '../lib/firebase.js';
-import { doc, getDoc, getDocs, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
+import { doc, getDoc, getDocs, collection, query, where, onSnapshot, QueryDocumentSnapshot, updateDoc } from "firebase/firestore";
 
 
 
@@ -101,7 +101,7 @@ export default B_borrowing = () => {
                                 isChecked={item.status}
                                 onPress={async() => {
                             
-                                    const statusref = doc(db, "users/" + userId + "/borrowing/" + item.id);    
+                                    const statusref = doc(db, "users/" + userId + "/expenditure/" + item.id);    
                                     const matches = await getDoc(statusref);                            
                                      await updateDoc(statusref, {
                                                 status: !item.status
