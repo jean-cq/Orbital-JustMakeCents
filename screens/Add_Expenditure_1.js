@@ -129,7 +129,7 @@ export default Add_Expenditure_1 = () => {
             setDoc(doc(db, "users/" + userId + "/expenditure/" + unique_ref), {
                 note: note,
                 amount: +num,
-                id: stringify(unique_ref),
+                id: unique_ref.toString(),
                 status:choice == "Borrowing   " ? false : true,
                 category: chosen,
                 date: date,
