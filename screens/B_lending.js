@@ -22,13 +22,13 @@ export default B_lending = () => {
     const navigation = useNavigation();
 
     const [items, setItems] = useState([
-        { id: '0', status: false, who: 'Alex', category: 'Recreation', amount: '50' },
-        { id: '1', status: false, who: 'Alex', category: 'Diet', amount: '260' },
-        { id: '2', status: false, who: 'Mary', category: 'Education', amount: '260' },
-        { id: '3', status: false, who: 'Jean', category: 'Medical', amount: '40' },
-        { id: '4', status: true, who: 'Jake', category: 'Traffic', amount: '30' },
-        { id: '5', status: true, who: 'Amy', category: 'Beautify', amount: '20' },
-        { id: '6', status: true, who: 'Matsuni', category: 'Others', amount: '20' },
+        { id: '0', status: false, note: 'Alex', category: 'Recreation', amount: '50' },
+        { id: '1', status: false, note: 'Alex', category: 'Diet', amount: '260' },
+        { id: '2', status: false, note: 'Mary', category: 'Education', amount: '260' },
+        { id: '3', status: false, note: 'Jean', category: 'Medical', amount: '40' },
+        { id: '4', status: true, note: 'Jake', category: 'Traffic', amount: '30' },
+        { id: '5', status: true, note: 'Amy', category: 'Beautify', amount: '20' },
+        { id: '6', status: true, note: 'Matsuni', category: 'Others', amount: '20' },
     ]);
 
     const [LenData, setLenData] = useState([]);
@@ -58,7 +58,7 @@ export default B_lending = () => {
 
     useEffect(() => {
         const getData = async () => {
-            const querySnapshot = await onSnapshot(lendRef, (refSnapshot) => {
+            const querySnapshot =  onSnapshot(lendRef, (refSnapshot) => {
                 const lenList = [];
                 refSnapshot.forEach((doc) => {
                     lenList.push(doc.data());
@@ -74,7 +74,7 @@ export default B_lending = () => {
         <View>
 
 
-            <View style={{ background: '#C4C4C4', flexDirection: 'row', padding: 20 }}>
+            <View style={{ background: '#C4C4C4', flexDirection: 'row', padding: 15 }}>
                 <Text style={{ flex: 1 }}>Status</Text>
 
                 <Text style={{ flex: 2, textAlign: 'center' }}>Who</Text>
@@ -92,28 +92,27 @@ export default B_lending = () => {
                 //ExpenditureData
                 renderItem={({ item, index }) => (
                     <View >
-                        <View style={{ flexDirection: 'row', padding: 20, backgroundColor: item.status === true ? '#C4C4C4' : 'white' }}>
-                            <BouncyCheckbox
-                                style={{ marginTop: 16, textAlign: 'center' }}
+                        <View style={{ flexDirection: 'row', padding: 25, backgroundColor: item.status === true ? '#C4C4C4' : 'white' }}>
+                        <BouncyCheckbox
+                                tyle={{ textAlign: 'center', flex: 1 }}
                                 disableText={true}
                                 disableBuiltInState
                                 isChecked={item.status}
                                 onPress={(value) => {
                                     setItems(items.map(itemm =>
                                         itemm.id === item.id
-                                            ? { ...item, status: !value }
+                                            ? { ...item, status: !item.status }
                                             : itemm))
 
 
                                 }}
 
-                                style={{ flex: 1 }}
+                             
                             />
 
 
-                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.note}</Text>
-
-                            <Text style={{ flex: 2, textAlign: 'center' }}> {item.category} </Text>
+                            <Text style={{ flex: 3, textAlign: 'center' }}>{item.note}</Text>                        
+                            <Text style={{ flex: 3, textAlign: 'center' }}> {item.category} </Text>
                             <Text style={{ flex: 2, textAlign: 'right' }}>{item.amount} </Text>
 
                         </View>

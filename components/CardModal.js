@@ -43,7 +43,7 @@ export default CardModal = (props) =>{
 
 const styles = StyleSheet.create({
     container:{
-        
+        marginTop: HEIGHT * 0.4,
         alignItems: 'center',
         justifyContent: 'center'
 

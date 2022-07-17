@@ -195,7 +195,7 @@ export default Expenditure = () => {
                                 onPress={() => {
                                     setItems(items.map(itemm =>
                                         itemm.id === item.id
-                                            ? { ...item, status: !itemm.status }
+                                            ? { ...item, status: !item.status }
                                             : itemm))
                                 }}
 

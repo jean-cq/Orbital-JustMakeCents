@@ -23,13 +23,13 @@ export default B_borrowing = () => {
     const navigation = useNavigation();
 
     const [items, setItems] = useState([
-        { id: '0', status: false, who: 'Alex', category: 'Recreation', amount: '50' },
-        { id: '1', status: false, who: 'Alex', category: 'Diet', amount: '260' },
-        { id: '2', status: false, who: 'Mary', category: 'Education', amount: '260' },
-        { id: '3', status: false, who: 'Jean', category: 'Medical', amount: '40' },
-        { id: '4', status: true, who: 'Jake', category: 'Traffic', amount: '30' },
-        { id: '5', status: true, who: 'Amy', category: 'Beautify', amount: '20' },
-        { id: '6', status: true, who: 'Matsuni', category: 'Others', amount: '20' },
+        { id: '0', status: false, note: 'Alex', category: 'Recreation', amount: '50' },
+        { id: '1', status: false, note: 'Alex', category: 'Diet', amount: '260' },
+        { id: '2', status: false, note: 'Mary', category: 'Education', amount: '260' },
+        { id: '3', status: false, note: 'Jean', category: 'Medical', amount: '40' },
+        { id: '4', status: true, note: 'Jake', category: 'Traffic', amount: '30' },
+        { id: '5', status: true, note: 'Amy', category: 'Beautify', amount: '20' },
+        { id: '6', status: true, note: 'Matsuni', category: 'Others', amount: '20' },
     ]);
 
     const [BorrowingData, setBorrowingData] = useState([]);
@@ -96,25 +96,24 @@ export default B_borrowing = () => {
                 renderItem={({ item, index }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20, backgroundColor: item.status === true ? '#C4C4C4' : 'white' }}>
-                            <BouncyCheckbox
-                                style={{ marginTop: 16, textAlign: 'center', flex: 1 }}
+                        <BouncyCheckbox
+                                style={{ textAlign: 'center', flex: 1 }}
                                 disableText={true}
                                 disableBuiltInState
                                 isChecked={item.status}
                                 onPress={(value) => {
                                     setItems(items.map(itemm =>
                                         itemm.id === item.id
-                                            ? { ...item, status: !value }
+                                            ? { ...item, status: !item.status }
                                             : itemm))
 
 
                                 }}
-                                style={{ flex: 1 }}
+                        
                             />
 
 
-                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.note}</Text>
-
+                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.note}</Text>                        
                             <Text style={{ flex: 2, textAlign: 'center' }}> {item.category} </Text>
                             <Text style={{ flex: 2, textAlign: 'right' }}>{item.amount} </Text>
 
