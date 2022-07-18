@@ -13,6 +13,9 @@ import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
+import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
+import { db, authentication } from '../lib/firebase.js';
+import { ref, set, onValue, getDatabase } from "firebase/database";
 
 
 
@@ -59,6 +62,22 @@ export default B_week = () => {
         loadAllExpenditure();
 
     }, [])
+
+    const userId = authentication.currentUser.uid;
+
+    /* const create = (item) => { updateDoc(doc(db, "users/" + userId + "/week/" + item.category), {
+        amount: item.amount,
+    }).then(() => {
+        alert('data submitted');
+    }).catch((error) => {
+        setDoc(doc(db, "users/" + userId + "/week/" + item.category), {
+            category: item.category,
+            amount: item.amount,
+        })
+    })
+    setModalVisible(!modalVisible)
+} */
+
 
     return (
         <View>
