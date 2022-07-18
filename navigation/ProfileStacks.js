@@ -34,7 +34,7 @@ export default ProfileStacks = () => {
                 }}
             />
                 <Stack.Screen name="Profile_edit" component={Profile_edit} options={{
-                title: "Profile Editing"
+                title: "My Profile"
                 
             }}
             />
