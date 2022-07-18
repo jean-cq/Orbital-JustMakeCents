@@ -1,6 +1,6 @@
 // JavaScript source code
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Modal, Text, View, FlatList, ListItem, Dimensions } from 'react-native';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Modal, Text, View, FlatList, ListItem, Dimensions, ScrollView } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 //import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
@@ -98,12 +98,13 @@ export default Add_Expenditure_1 = () => {
                 const walletList = [];
                 refSnapshot.forEach((doc) => {
                     walletList.push(doc.data().name);
-                });
+                });                
             setExpenditureData(walletList);
             });
         };
         getData();
     }, []);
+    console.log(ExpenditureData);
 
     const create = () => {
         if ((num[0] ===  '0' && num[1] !== '.') || 
@@ -129,8 +130,8 @@ export default Add_Expenditure_1 = () => {
                 status:choice == "Borrowing   " ? false : true,
                 category: chosen,
                 date: date,
-                displaydate: moment(date).format("Do MMM"),
                 month: moment(date).format('YYYY/MM'),
+                displaydate: moment(date).format("Do MMM"),
                 income: choice == "Income   " ? true : false,
                 bigcat: choice,
                 expenditure: (choice === "Expenditure" || "Income") ? true : false,
@@ -145,7 +146,6 @@ export default Add_Expenditure_1 = () => {
     
 
     return (
-        
 
         <View style={styles.container}>
             <StatusBar style="auto" />
@@ -284,7 +284,7 @@ export default Add_Expenditure_1 = () => {
             </View>
 
         </View>
-        
+    
     );
 }
 

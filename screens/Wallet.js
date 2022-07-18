@@ -24,15 +24,12 @@ export default Wallet = () => {
     const walletRef = query(collection(db, "users/" + userId + "/payment"));
     useEffect(() => {
         const getData = async () => {
-            const querySnapshot = await onSnapshot(walletRef, (refSnapshot) => {
+            const querySnapshot = onSnapshot(walletRef, (refSnapshot) => {
                 const walletList = [];
                 refSnapshot.forEach((doc) => {
                     walletList.push(doc.data());
                 });
-                walletList.push({})
-                walletList.push({})
-                walletList.push({})
-                walletList.push({})
+            
             setExpenditureData(walletList);
             });
         };
@@ -58,6 +55,7 @@ export default Wallet = () => {
         })
 
     };
+
     const status_change = () => {
         setItems(item => item.status = !item.status)
     }
@@ -68,15 +66,6 @@ export default Wallet = () => {
     ))
       };
 
-    const loadAllExpenditure = async () => {
-
-        const { Expenditure, error } = await supabase.getAllExpenditure();
-        setExpenditureData(Expenditure)
-    }
-    useEffect(() => {
-        loadAllExpenditure();
-
-    }, [])
 
     const create = () => {
         if (name == "" || due == "") {
@@ -221,7 +210,7 @@ export default Wallet = () => {
                                     name='remove-circle'
                                     size={20}
                                     color='firebrick'
-                                    onPress={async() => await deleteDoc(doc(db, "users/" + userId + "/payment/" + item.name))}
+                                    onPress={async() => await deleteDoc(doc(db, "users/" + userId + "/payment/" + item.Name))}
                                     style={{ flex: 2 }}
                                 />
                                     : <View style={{ flex: 2 }}></View>
