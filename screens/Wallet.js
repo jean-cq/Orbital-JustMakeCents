@@ -15,7 +15,7 @@ import { Progress } from '../node_modules/react-native-progress/Bar';
 import ExpenditureStacks from '../navigation/ExpenditureStacks.js';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import { db, authentication } from '../lib/firebase.js';
-import { doc, getDoc, getDocs, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc } from "firebase/firestore";
+import { doc, getDoc, getDocs, deleteDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc } from "firebase/firestore";
 import { ref, set, onValue, getDatabase } from "firebase/database";
 
 export default Wallet = () => {
@@ -90,6 +90,7 @@ export default Wallet = () => {
             Balance: 0,
         }).then(() => {
             alert('data submitted');
+            setAdd(!add)
         }).catch((error) => {
             alert(error)
         })
@@ -220,7 +221,7 @@ export default Wallet = () => {
                                     name='remove-circle'
                                     size={20}
                                     color='firebrick'
-                                    onPress={() => deleteItem(item.id)}
+                                    onPress={async() => await deleteDoc(doc(db, "users/" + userId + "/payment/" + item.name))}
                                     style={{ flex: 2 }}
                                 />
                                     : <View style={{ flex: 2 }}></View>
