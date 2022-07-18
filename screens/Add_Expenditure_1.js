@@ -97,12 +97,8 @@ export default Add_Expenditure_1 = () => {
             const querySnapshot = await onSnapshot(walletRef, (refSnapshot) => {
                 const walletList = [];
                 refSnapshot.forEach((doc) => {
-                    walletList.push(doc.data());
+                    walletList.push(doc.data().name);
                 });
-                walletList.push({})
-                walletList.push({})
-                walletList.push({})
-                walletList.push({})
             setExpenditureData(walletList);
             });
         };
@@ -136,7 +132,7 @@ export default Add_Expenditure_1 = () => {
                 displaydate: moment(date).format("Do MMM"),
                 income: choice == "Income   " ? true : false,
                 bigcat: choice,
-                expenditure: (choice === "Expenditure   " || "Income   ") ? true : false,
+                expenditure: (choice === "Expenditure" || "Income") ? true : false,
             }).then(() => {
                 alert('data submitted');
             }).catch((error) => {
