@@ -137,7 +137,7 @@ export default Expenditure = () => {
                 <View>
                     <TouchableOpacity onPress={() => toggleOpen(true)} style={styles.input}>
                         <Text style={styles.inputText}>
-                            {month ? moment(month).format('MM/YYYY') : '   Date'}
+                            {month ? moment(month).format('YYYY/MM') : '   Date'}
                         </Text>
                     </TouchableOpacity>
 
