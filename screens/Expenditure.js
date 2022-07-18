@@ -72,10 +72,11 @@ export default Expenditure = () => {
 
     const datas = getDatabase();
     
-    const expRef = query(collection(db, "users/" + userId + "/expenditure"), where("bigcat", "in", ["Expenditure", "Income"]));
+    const expRef = query(collection(db, "users/" + userId + "/expenditure"), where("bigcat", "in", ["Expenditure", "Income"]), 
+    where("month", "==", moment(month).format('YYYY/MM')));
 
     
-    useEffect(() => {
+    const display = () => {
         const getData = async() => {
             const querySnapshot = onSnapshot(expRef, (refSnapshot) => {
                 const expList = [];
@@ -86,7 +87,8 @@ export default Expenditure = () => {
             })
         };
         getData();
-    }, []);
+        toggleOpen(false);
+    };
 
 
     
@@ -156,7 +158,7 @@ export default Expenditure = () => {
                                 />
                                 <TouchableOpacity
                                     style={styles.confirmButton}
-                                    onPress={() => toggleOpen(false)}>
+                                    onPress={display}>
                                     <Text>Confirm</Text>
                                 </TouchableOpacity>
                             </View>

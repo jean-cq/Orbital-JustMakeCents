@@ -130,6 +130,7 @@ export default Add_Expenditure_1 = () => {
                 category: chosen,
                 date: date,
                 displaydate: moment(date).format("Do MMM"),
+                month: moment(date).format('YYYY/MM'),
                 income: choice == "Income   " ? true : false,
                 bigcat: choice,
                 expenditure: (choice === "Expenditure" || "Income") ? true : false,
