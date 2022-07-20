@@ -1,5 +1,19 @@
 # JustMakeCents
-Mock ups and technical proof are shown as our video (for Milestone 2): https://youtu.be/7euA97gQx0g
+
+### Lift-off 🚀
+Poster: https://drive.google.com/file/d/1xKcIM_fL_aNwUvlvRGxqvT1w2KhKjYVm/view?usp=sharing
+
+Video: https://drive.google.com/file/d/1QTNZ_v4OQL_s4oLPkYNfcQgHx84GotR1/view?usp=sharing
+
+### Milestone 1
+Video: https://youtu.be/t8P1gmou49o
+
+### Milestone 2
+Poster: https://drive.google.com/file/d/1A7osd4TZwHlwfLkRGAGpPPVXb2qdAglo/view?usp=sharing
+
+Video: https://youtu.be/7euA97gQx0g
+
+### Milestone 3
 
 ## 💡Motivation
 
