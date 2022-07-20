@@ -9,16 +9,17 @@ import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import Tips1 from '../screens/tips1'
 import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import { useTheme } from '@react-navigation/native';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';
 import PageControl from 'react-native-page-control';
 import PagerView from 'react-native-pager-view';
-import { authentication } from "../lib/firebase.js";
+import { authentication, db } from "../lib/firebase.js";
 import { signOut } from "firebase/auth";
 import ProfileStacks from '../navigation/ProfileStacks.js';
+import { collection, query, doc, onSnapshot } from 'firebase/firestore';
 
 
 export default Profile = () => {
@@ -31,7 +32,26 @@ export default Profile = () => {
     const [current, setCurrent] = useState(0)
     const navigation = useNavigation();
     const [isSignedIn, setIsSignedIn] = useState(false);
+    const [profile, setProfile] = useState('');
 
+    const userId = authentication.currentUser.uid;
+
+    const q = query(collection(db, "users/" + userId + "/profile"  ));
+
+    useEffect(() => {
+        const getData = async() => {
+            const querySnapshot = onSnapshot(q, (refSnapshot) => {
+                const expList = [];
+                refSnapshot.forEach((doc) => {
+                    expList.push(doc.data());
+                });
+            setProfile(expList[0]);
+            })
+        };
+        getData();
+        console.log(profile);
+    }, []);
+    
 
     const SignOutUser = () => {
         signOut(authentication)
@@ -53,12 +73,25 @@ export default Profile = () => {
             {/*avatar*/}
             <View style={{ flexDirection: 'column', marginTop: 10, marginRight: 10 }}>
             <Catebutton text= "Edit your profile" onPress={() => navigation.navigate('Profile_edit')} />
-                <Ionicons
+                <View style = {{elevation:2,
+                    height:150,
+                    width:150,
+                    backgroundColor:'#efefef',
+                    position:'relative',
+                    borderRadius:999,
+                    overflow:'hidden',alignSelf: 'center'}}>
+                        
+                    { profile.picture === null
+                    ? <Ionicons           
                     name="ios-person-circle"
                     color={'black'}
-                    size={150}
-                    style={{ alignSelf: 'center', marginLeft: 25 }}/>
-                <Text style={{ fontSize: 30, textAlign:'center' }}>Ashley Wang</Text>
+                    size={160}
+                    style={{ alignSelf: 'center' }}                
+                    />
+                    :<Image source={{uri: profile.picture}} style = {{alignSelf: 'center', height: 150, width: 150}}/>} 
+                </View>
+                
+                <Text style={{ fontSize: 30, textAlign:'center' }}>{profile.name}</Text>
             </View>
             <View style={{ flexDirection: 'row', paddingTop: 20 }}>
                 <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#F9C70D', borderTopLeftRadius: 20 }}>

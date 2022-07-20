@@ -5,7 +5,11 @@ import { createNativeStackNavigator }from '@react-navigation/native-stack';
 import { useState, useEffect, useContext } from 'react';
 import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
 import Ionicons from '../node_modules/@expo/vector-icons/Ionicons.js';
-
+import UserPermissions from '../lib/UserPermissions.js';
+import * as ImagePicker from 'expo-image-picker';
+import { getDoc, runTransaction, doc, setDoc, updateDoc, query, collection, onSnapshot } from 'firebase/firestore';
+import { db, authentication } from '../lib/firebase.js';
+import { getAuth, updatePassword } from "firebase/auth";
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -14,28 +18,100 @@ export default Profile_edit = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState(null);
-    const [isModalVisible, setisModalVisible] = useState(false);
+    const [isModalNameVisible, setModalNameVisible] = useState(false);
+    const [isModalPasswordVisible, setModalPasswordVisible] = useState(false);
+    const [avatar, setAvatar] = useState(null);
+    const [profile, setProfile] = useState('');
+    
 
-    const changeModalVisibility = (bool) =>{
-        setisModalVisible(bool)
+    const auth = getAuth();
+
+    const user = auth.currentUser;
+
+    const handlePasswordUpdate = () =>{
+    updatePassword(user, password).then(() => {
+        alert('Password is successfully updated!');
+        changeModalPasswordVisibility(false);
+  // Update successful.
+    }).catch((error) => {
+        alert(error)
+  // An error ocurred
+  // ...
+});}
+
+    const userId = authentication.currentUser.uid;
+
+    const changeModalNameVisibility = (bool) =>{
+        setModalNameVisible(bool)
 
     }
+    const changeModalPasswordVisibility = (bool) =>{
+        setModalPasswordVisible(bool)
+
+    }
+    const handlePickerAvatar = async() => {
+        UserPermissions.getCameraPermission()
+
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes:ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect:[4, 3]
+        });
+
+        if (!result.cancelled){
+            setAvatar(result.uri);
+            create;
+        }
+
+    console.log(avatar)
+    }
+    const create = async() => {
+        const sfDocRef = doc(db, "users/" + userId + "/profile" + '/userinfo' );
+        const sfDoc = await getDoc(sfDocRef)
+        
+            
+            if (sfDoc.exists() === false) {
+                setDoc(sfDocRef, {
+                    name: username,
+                    picture: avatar,
+                
+                }).then(() => {
+                    alert('data submitted');
+                    changeModalNameVisibility(false);
+                    
+                }).catch((error) => {
+                    alert(error)
+                })}
+            
+        
+            else{
+           updateDoc(sfDocRef, {
+                name: username,
+                picture: avatar
+            }).then(() => {
+                alert('data submitted');
+                changeModalNameVisibility(false);
+                
+            }).catch((error) => {
+                alert(error)
+            })}
+          
+  
+
+    }
+    
+
 
 
 return (
 <View>
-                <TouchableOpacity onPress={() => changeModalVisibility(true)}>
+                <TouchableOpacity onPress={handlePickerAvatar}>
                     <View style={{
                             flexDirection: 'row', margin: WIDTH *0.01, justifyContent: 'center', height: HEIGHT *0.1 }}>
                         <Text style={{
                             textAlign:'left', alignSelf:'center', fontSize: 15, fontFamily: 'serif',flex:5
                         }} > Profile Photo </Text>
-                <Ionicons           
-                    name="ios-person-circle"
-                    color={'black'}
-                    size={50}
-                    style={{ textAlign:'right',alignSelf:'center', flex:1}}                
-                    />
+                        
                      
                     
 
@@ -50,14 +126,14 @@ return (
                 <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
 
-                        <TouchableOpacity onPress={() => changeModalVisibility(true)}>
+                        <TouchableOpacity onPress={() => changeModalNameVisibility(true)}>
                     <View style={{
                             flexDirection: 'row', margin: WIDTH *0.01, justifyContent: 'center', height: HEIGHT *0.1 }}>
                         <Text style={{
                             textAlign:'left', alignSelf:'center', fontSize: 15, fontFamily: 'serif',flex:5
                         }} > Name </Text>
 
-                        <Text style={{ textAlign:'right',alignSelf:'center', flex:1}}>{username}</Text>
+                    
             
                      
                     
@@ -75,45 +151,36 @@ return (
                 <Modal
                 transparent={true}
                 animationType = 'fade'
-                visible = {isModalVisible}
-                onRequestClose = {() => changeModalVisibility(false)}>
-                    <View style = {{flexDirection: 'column', marginHorizontal: 40, borderBottomWidth: 3, borderBottomColor: 'black'}}>
-                <Text style={{ fontSize: 20}}>Your Name : </Text>
-                <TextInput
-                marginHorizontal={10}
-                style={styles.textInput}
-                autoCapitalize="none"
-                value={username}
-                onChangeText={(text) => setUsername(text)}
-                
-            />
-            </View>
+                visible = {isModalNameVisible}
+                onRequestClose = {() => changeModalNameVisibility(false)}>
+                    <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>Your Name</Text>
+                        
+                        <TextInput
+                            
+                            marginHorizontal={10}
+                            style={styles.textInput}
+                            value={username}
+                            onChangeText={(text) => setUsername(text)} />
+                            
+                            <View style={{ height: 2,width: WIDTH -160, backgroundColor: '#C4C4C4' }}>
+                            </View>
+                        <TouchableOpacity
+                            style={styles.button1}
+                            onPress={create}
+                        >
+                            <Text style={styles.buttontext1}>Submit</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </Modal>
 
-            <TouchableOpacity onPress={() => changeModalVisibility(true)}>
-                    <View style={{
-                            flexDirection: 'row', margin: WIDTH *0.01, justifyContent: 'center', height: HEIGHT *0.1 }}>
-                        <Text style={{
-                            textAlign:'left', alignSelf:'center', fontSize: 15, fontFamily: 'serif',flex:5
-                        }} > Email </Text>
-
-                        <Text style={{ textAlign:'right',alignSelf:'center', flex:1}}>{email}</Text>
             
-                     
-                    
-
-                        <MaterialIcons
-                            name="keyboard-arrow-right"
-                            color={'black'}
-                            size={30}
-                            style={{ textAlign:'right',alignSelf:'center',flex:1}} />
-
-                    </View>
-                </TouchableOpacity>
                 <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
 
-                        <TouchableOpacity onPress={() => changeModalVisibility(true)}>
+                        <TouchableOpacity onPress={() => changeModalPasswordVisibility(true)}>
                     <View style={{
                             flexDirection: 'row', margin: WIDTH *0.01, justifyContent: 'center', height: HEIGHT *0.1 }}>
                         <Text style={{
@@ -132,6 +199,31 @@ return (
                 </TouchableOpacity>
                 <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
+                        <Modal
+                transparent={true}
+                animationType = 'fade'
+                visible = {isModalPasswordVisible}
+                onRequestClose = {() => changeModalPasswordVisibility(false)}>
+                    <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>New Password</Text>
+                        <TextInput
+                            
+                            marginHorizontal={10}
+                            style={styles.textInput}
+                            value={password}
+                            onChangeText={(text) => setPassword(text)} />
+                            <View style={{ height: 2,width: WIDTH -160, backgroundColor: '#C4C4C4' }}>
+                            </View>
+                        <TouchableOpacity
+                            style={styles.button1}
+                            onPress={handlePasswordUpdate}
+                        >
+                            <Text style={styles.buttontext1}>Submit</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
 </View>
 )
 
@@ -200,6 +292,54 @@ const styles = StyleSheet.create({
                 />
             </TouchableOpacity>
             </View>*/
+    },
+    button1: {
+        borderRadius: 20,
+        paddingVertical: 7,
+        paddingHorizontal: 10,
+        backgroundColor: 'grey',
+        marginTop: 35
+    },
+
+    buttontext1: {
+
+        color: 'black',
+        fontSize: 13,
+        textAlign: 'center'
+    },centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+    },
+    modalView: {
+        margin: 120,
+        backgroundColor: "white",
+        width:WIDTH - 120,
+        borderRadius: 20,
+        paddingVertical:20,     
+        paddingHorizontal:20,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    }, modalText: {
+        marginBottom: 15,
+        textAlign: "center",
+        fontWeight: 'bold'
+
+
+
+    },
+    textInput: {
+        alignSelf:'flex-start',
+        margin: 5
+    
     } 
 
 });
