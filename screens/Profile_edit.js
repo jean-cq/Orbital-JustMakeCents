@@ -22,7 +22,8 @@ export default Profile_edit = () => {
     const [isModalPasswordVisible, setModalPasswordVisible] = useState(false);
     const [avatar, setAvatar] = useState(null);
     const [profile, setProfile] = useState('');
-    
+
+
 
     const auth = getAuth();
 
@@ -60,12 +61,48 @@ export default Profile_edit = () => {
 
         if (!result.cancelled){
             setAvatar(result.uri);
-            create;
+            console.log(avatar);
+            createAvatar();
         }
 
-    console.log(avatar)
+    
     }
     const create = async() => {
+        const sfDocRef = doc(db, "users/" + userId + "/profile" + '/userinfo' );
+        const sfDoc = await getDoc(sfDocRef)
+        
+            
+            if (sfDoc.exists() === false) {
+                await setDoc(sfDocRef, {
+                    name: username,
+                    picture: avatar,
+                
+                }).then(() => {
+                    alert('data submitted');
+                    changeModalNameVisibility(false);
+                    
+                }).catch((error) => {
+                    alert(error)
+                })}
+            
+        
+            else{
+           await updateDoc(sfDocRef, {
+                name: username                            
+            }).then(() => {
+                alert('data submitted');
+                changeModalNameVisibility(false);
+                
+            }).catch((error) => {
+                alert(error)
+            })}
+          
+  
+
+    }
+
+    
+    const createAvatar = async() => {
         const sfDocRef = doc(db, "users/" + userId + "/profile" + '/userinfo' );
         const sfDoc = await getDoc(sfDocRef)
         
@@ -86,7 +123,7 @@ export default Profile_edit = () => {
         
             else{
            updateDoc(sfDocRef, {
-                name: username,
+                
                 picture: avatar
             }).then(() => {
                 alert('data submitted');
@@ -99,6 +136,7 @@ export default Profile_edit = () => {
   
 
     }
+    
     
 
 
@@ -343,3 +381,40 @@ const styles = StyleSheet.create({
     } 
 
 });
+/*
+const createAvatar = async() => {
+        const sfDocRef = doc(db, "users/" + userId + "/profile" + '/userinfo' );
+        const sfDoc = await getDoc(sfDocRef)
+        
+            
+            if (sfDoc.exists() === false) {
+                setDoc(sfDocRef, {
+                    name: username,
+                    picture: avatar,
+                
+                }).then(() => {
+                    alert('data submitted');
+                    changeModalNameVisibility(false);
+                    
+                }).catch((error) => {
+                    alert(error)
+                })}
+            
+        
+            else{
+           updateDoc(sfDocRef, {
+                name: username,
+                picture: avatar
+            }).then(() => {
+                alert('data submitted');
+                changeModalNameVisibility(false);
+                
+            }).catch((error) => {
+                alert(error)
+            })}
+          
+  
+
+    }
+
+*/

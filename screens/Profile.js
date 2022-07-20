@@ -19,7 +19,8 @@ import PagerView from 'react-native-pager-view';
 import { authentication, db } from "../lib/firebase.js";
 import { signOut } from "firebase/auth";
 import ProfileStacks from '../navigation/ProfileStacks.js';
-import { collection, query, doc, onSnapshot } from 'firebase/firestore';
+import { collection, query, doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { async } from '@firebase/util';
 
 
 export default Profile = () => {
@@ -38,8 +39,14 @@ export default Profile = () => {
 
     const q = query(collection(db, "users/" + userId + "/profile"  ));
 
-    useEffect(() => {
+    useEffect(async() => {
+        const sfDocRef = doc(db, "users/" + userId + "/profile" + '/userinfo' );
+        const sfDoc = await getDoc(sfDocRef)
+        
+            
+            
         const getData = async() => {
+            if (sfDoc.exists() !== false){
             const querySnapshot = onSnapshot(q, (refSnapshot) => {
                 const expList = [];
                 refSnapshot.forEach((doc) => {
@@ -47,9 +54,12 @@ export default Profile = () => {
                 });
             setProfile(expList[0]);
             })
-        };
+        }else{
+            setProfile(null);
+        }}
         getData();
         console.log(profile);
+        
     }, []);
     
 
@@ -81,17 +91,18 @@ export default Profile = () => {
                     borderRadius:999,
                     overflow:'hidden',alignSelf: 'center'}}>
                         
-                    { profile.picture === null
-                    ? <Ionicons           
+                    { (profile.picture !== null || profile !== null)
+                    ? <Image source={{uri: profile.picture}} style = {{alignSelf: 'center', height: 150, width: 150}}/>
+                    :<Ionicons           
                     name="ios-person-circle"
                     color={'black'}
                     size={160}
                     style={{ alignSelf: 'center' }}                
-                    />
-                    :<Image source={{uri: profile.picture}} style = {{alignSelf: 'center', height: 150, width: 150}}/>} 
+                    />} 
                 </View>
-                
-                <Text style={{ fontSize: 30, textAlign:'center' }}>{profile.name}</Text>
+                {(profile.picture !== null || profile !== null) 
+                ?<Text style={{ fontSize: 30, textAlign:'center' }}>{profile.name}</Text>
+                :<Text style={{ fontSize: 30, textAlign:'center' }}>User_Name</Text>}
             </View>
             <View style={{ flexDirection: 'row', paddingTop: 20 }}>
                 <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#F9C70D', borderTopLeftRadius: 20 }}>

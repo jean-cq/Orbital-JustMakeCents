@@ -18,7 +18,7 @@ import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
 import VirtualKeyboard from '../components/src/VirtualKeyboard.js';
 import { authentication, db } from '../lib/firebase.js';
 import { ref, set } from "firebase/database";
-import { doc, setDoc, collection, addDoc, query } from "firebase/firestore";
+import { doc, setDoc, collection, addDoc,onSnapshot, query } from "firebase/firestore";
 import moment from 'moment';
 import DatePicker from 'react-native-modern-datepicker';
 import CardModal from '../components/CardModal.js';
@@ -97,14 +97,15 @@ export default Add_Expenditure_1 = () => {
             const querySnapshot = await onSnapshot(walletRef, (refSnapshot) => {
                 const walletList = [];
                 refSnapshot.forEach((doc) => {
-                    walletList.push(doc.data().name);
+                    walletList.push(doc.data().Name);
                 });                
             setExpenditureData(walletList);
             });
         };
         getData();
+        console.log(ExpenditureData);
     }, []);
-    console.log(ExpenditureData);
+    
 
     const create = () => {
         if ((num[0] ===  '0' && num[1] !== '.') || 

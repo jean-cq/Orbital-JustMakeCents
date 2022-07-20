@@ -9,8 +9,8 @@ import Home_navigation  from './navigation/Home_navigation.js';
 import { useState, useEffect, useContext } from 'react';
 import { supabase } from './lib/supabase';
 import {supabaseClient} from './lib/supabase.ts';
+import { authentication } from './lib/firebase.js';
 
-import { auth } from 'firebase/auth';
 
 
 
@@ -21,7 +21,7 @@ const Stack = createNativeStackNavigator();
 export default App = ({ navigation }) => {
     return (
         <NavigationContainer>
-           {auth ? <Home_navigation /> : <AuthStacks />}
+           {authentication.currentUser !== null ? <Home_navigation /> : <AuthStacks />}
         </NavigationContainer>)
 }
 //{auth ? <Home_navigation/> : <AuthStacks/>}
