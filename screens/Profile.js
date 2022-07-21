@@ -109,7 +109,7 @@ export default Profile = () => {
                 </View>
                 {(profile === null)                
                 ?<Text style={{ fontSize: 30, textAlign:'center' }}>User_Name</Text>
-                :(profile.picture !== null)
+                :(profile.name !== null)
                 ?<Text style={{ fontSize: 30, textAlign:'center' }}>{profile.name}</Text>
                 :<Text style={{ fontSize: 30, textAlign:'center' }}>User_Name</Text>}
             </View>
