@@ -46,7 +46,7 @@ export default Profile = () => {
             
             
         const getData = async() => {
-            if (sfDoc.exists() !== false){
+            if (sfDoc.exists() === true){
             const querySnapshot = onSnapshot(q, (refSnapshot) => {
                 const expList = [];
                 refSnapshot.forEach((doc) => {
@@ -91,16 +91,25 @@ export default Profile = () => {
                     borderRadius:999,
                     overflow:'hidden',alignSelf: 'center'}}>
                         
-                    { (profile !== null || profile.picture !== null)
+                    { (profile === null)
+                    ? <Ionicons           
+                    name="ios-person-circle"
+                    color={'black'}
+                    size={160}
+                    style={{ alignSelf: 'center' }}                
+                    />                    
+                    : (profile.picture !== null)
                     ? <Image source={{uri: profile.picture}} style = {{alignSelf: 'center', height: 150, width: 150}}/>
                     :<Ionicons           
                     name="ios-person-circle"
                     color={'black'}
                     size={160}
                     style={{ alignSelf: 'center' }}                
-                    />} 
+                    /> } 
                 </View>
-                {(profile !== null || profile.picture !== null) 
+                {(profile === null)                
+                ?<Text style={{ fontSize: 30, textAlign:'center' }}>User_Name</Text>
+                :(profile.picture !== null)
                 ?<Text style={{ fontSize: 30, textAlign:'center' }}>{profile.name}</Text>
                 :<Text style={{ fontSize: 30, textAlign:'center' }}>User_Name</Text>}
             </View>
