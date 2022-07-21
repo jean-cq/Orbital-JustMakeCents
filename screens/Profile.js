@@ -91,7 +91,7 @@ export default Profile = () => {
                     borderRadius:999,
                     overflow:'hidden',alignSelf: 'center'}}>
                         
-                    { (profile.picture !== null || profile !== null)
+                    { (profile !== null || profile.picture !== null)
                     ? <Image source={{uri: profile.picture}} style = {{alignSelf: 'center', height: 150, width: 150}}/>
                     :<Ionicons           
                     name="ios-person-circle"
@@ -100,7 +100,7 @@ export default Profile = () => {
                     style={{ alignSelf: 'center' }}                
                     />} 
                 </View>
-                {(profile.picture !== null || profile !== null) 
+                {(profile !== null || profile.picture !== null) 
                 ?<Text style={{ fontSize: 30, textAlign:'center' }}>{profile.name}</Text>
                 :<Text style={{ fontSize: 30, textAlign:'center' }}>User_Name</Text>}
             </View>
