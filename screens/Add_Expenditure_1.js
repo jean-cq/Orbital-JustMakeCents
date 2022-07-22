@@ -287,7 +287,7 @@ export default Add_Expenditure_1 = () => {
             </View>
             
             <View style = {
-                {backgroundColor:  '#D1CFD7'}
+                {backgroundColor:  '#D1CFD7' , height: HEIGHT *0.5, width:WIDTH}
             }>
                 </View>
         </View>
