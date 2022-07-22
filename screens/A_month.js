@@ -1,6 +1,6 @@
 // JavaScript source code
 import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, Image, ScrollView, StyleSheet, Text, Dimensions, View } from 'react-native';
+import { Alert, Button, Image, ScrollView, StyleSheet, Text, Dimensions, View, TouchableOpacity, Modal } from 'react-native';
 import Flatbutton from '../components/Flatbutton.js';
 import DefaultImage from '../assets/starting_page.png';
 import Login_page from '../screens/Login_page.js';
@@ -15,6 +15,8 @@ import { BarChart, Grid, LineChart, PieChart, XAxis, YAxis } from 'react-native-
 import Expenditure from './Expenditure.js';
 import DatePicker from 'react-native-modern-datepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import moment from 'moment';
+import MonthPicker from 'react-native-month-picker';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -22,12 +24,15 @@ const HEIGHT = Dimensions.get('window').height;
 
 export default A_month = () => {
     const [ExpenditureData, setExpenditureData] = useState([]);
+    const [show, setShow] = useState(false);
+    const [isOpen, toggleOpen] = useState(false);
+    const [month, setMonth] = useState(null);
 
     const userId = authentication.currentUser.uid;
     
-    const monthRef = query(collection(db, "users/" + userId + "/expenditure"), where("bigcat", "in", ["Expenditure", "Income"]));
+    const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==", moment(month).format('YYYY/MM')));
 
-    useEffect(() => {
+    const display = () => {
         const getData = async () => {
             const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
                 const monthList = [];
@@ -38,10 +43,11 @@ export default A_month = () => {
             });
         };
         getData();
-    }, []);
+        toggleOpen(false);
+    };
 
     const fill = 'rgb(134, 65, 244)'
-        const data = [50, 10, 40, 95, -4, -24, null, 85, undefined, 0, 35, 53, -53, 24, 50, -20, -80]
+        const data = [ExpenditureData, ExpenditureData.recreation, ExpenditureData.medical, ExpenditureData.beautify, ExpenditureData.diet, ExpenditureData.education, ExpenditureData.necessity, ExpenditureData.others]
         const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7)
         const pieData = data
             .filter((value) => value != 0)
@@ -57,6 +63,41 @@ export default A_month = () => {
     return (
         <ScrollView>
 
+<View style={{ margin: 20}}>
+
+<View>
+    <TouchableOpacity onPress={() => toggleOpen(true)} style={styles.input}>
+        <Text style={styles.inputText}>
+            {month ? moment(month).format('YYYY/MM') : '   Date'}
+        </Text>
+    </TouchableOpacity>
+
+    <Modal
+        transparent
+        animationType="fade"
+        visible={isOpen}
+        onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+        }}>
+        <View style={styles.contentContainer}>
+            <View style={styles.content}>
+                <MonthPicker
+                    selectedDate={month || new Date()}
+                    onMonthChange={setMonth}
+                />
+                <TouchableOpacity
+                    style={styles.confirmButton}
+                    onPress={display}>
+                    <Text>Confirm</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    </Modal>
+</View>
+
+
+</View>
+
         <View style = {{width: WIDTH * 0.9, alignSelf: 'center'}}>
             <Text>Month!</Text>
 
@@ -65,16 +106,15 @@ export default A_month = () => {
             
             <YAxis
                     style={{ marginVertical: -10 }}
-                    data={ExpenditureData}
+                    data={data}
                     formatLabel={(value, index) => value}
                     contentInset={{ left: 10, right: 10 }}
                     svg={{ fontSize: 10, fill: 'black' }}
                 />
                 <LineChart
                 style={{ height: 200 }}
-                data={ExpenditureData}
+                data={data}
                 svg={{ stroke: 'rgb(134, 65, 244)' }}
-                yAccessor={({ item }) => item.amount}
                 contentInset={{ top: 20, bottom: 20 }}
             >
                 <Grid />
@@ -91,8 +131,6 @@ export default A_month = () => {
             <BarChart style={{ height: 200 }} 
             data={ExpenditureData} 
             svg={{ fill }} 
-            yAccessor={({ item }) => item.amount}
-            xAccessor={({ item }) => item.category}
             contentInset={{ top: 30, bottom: 30 }}>
                 <Grid />
             </BarChart>
@@ -132,5 +170,25 @@ const styles = StyleSheet.create({
     },
     chartContainer: {
       height: 200
-    }
+    }, 
+    contentContainer: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: '100%',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    confirmButton: {
+        borderWidth: 0.5,
+        padding: 15,
+        margin: 10,
+        borderRadius: 5,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    content: {
+        backgroundColor: '#fff',
+        marginHorizontal: 20,
+        marginVertical: 70,
+    },
   });

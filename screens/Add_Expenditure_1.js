@@ -18,7 +18,7 @@ import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
 import VirtualKeyboard from '../components/src/VirtualKeyboard.js';
 import { authentication, db } from '../lib/firebase.js';
 import { ref, set } from "firebase/database";
-import { doc, setDoc, collection, addDoc,onSnapshot, query } from "firebase/firestore";
+import { doc, setDoc, collection, addDoc,onSnapshot, query, getDoc, updateDoc, increment } from "firebase/firestore";
 import moment from 'moment';
 import DatePicker from 'react-native-modern-datepicker';
 import CardModal from '../components/CardModal.js';
@@ -107,8 +107,9 @@ export default Add_Expenditure_1 = () => {
         console.log(ExpenditureData);
     }, []);
     
+    
 
-    const create = () => {
+    const create = async() => {
         if ((num[0] ===  '0' && num[1] !== '.') || 
         (NumAftDot[1] && (NumAftDot[1].length > 2 || 
             NumAftDot.length > 2))) {
@@ -142,6 +143,178 @@ export default Add_Expenditure_1 = () => {
             }).catch((error) => {
                 alert(error)
             })
+
+
+        const monthDocRef = doc(db, "users/" + userId + "/month/" + date.slice(0, 4) + date.slice(5, 7));
+        const monthDoc = await getDoc(monthDocRef);
+
+        if (choice == "Expenditure" || "Income") {
+            if (monthDoc.exists() == false) {
+                if (choice == "Expenditure") {
+                    await setDoc(monthDocRef, {
+                        expenditure: +num,
+                        income: 0,
+                        traffic: 0,
+                        recreation: 0,
+                        medical: 0,
+                        beautify: 0,
+                        diet: 0,
+                        education: 0,
+                        necessity:0,
+                        others:0,
+                        mon: date.slice(0, 7),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                    if (chosen == "Traffic") {
+                        await updateDoc(monthDocRef, {
+                            traffic: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Recreation") {
+                        await updateDoc(monthDocRef, {
+                            recreation: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Medical") {
+                        await updateDoc(monthDocRef, {
+                            medical: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Beautify") {
+                        await updateDoc(monthDocRef, {
+                            beautify: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Diet") {
+                        await updateDoc(monthDocRef, {
+                            diet: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Education") {
+                        await updateDoc(monthDocRef, {
+                            education: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Necessity") {
+                        await updateDoc(monthDocRef, {
+                            necessity: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Others") {
+                        await updateDoc(monthDocRef, {
+                            others: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                }
+                else {
+                    await setDoc(monthDocRef, {
+                        expenditure: 0,
+                        income: +num,
+                        income: 0,
+                        traffic: 0,
+                        recreation: 0,
+                        medical: 0,
+                        beautify: 0,
+                        diet: 0,
+                        education: 0,
+                        necessity:0,
+                        others:0,
+                        mon: date.slice(0, 7),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                }
+            } 
+            else {
+                if (choice == "Expenditure") {
+                    await updateDoc(monthDocRef, {
+                        expenditure: increment(num),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                    if (chosen == "Traffic") {
+                        await updateDoc(monthDocRef, {
+                            traffic: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Recreation") {
+                        await updateDoc(monthDocRef, {
+                            recreation: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Medical") {
+                        await updateDoc(monthDocRef, {
+                            medical: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Beautify") {
+                        await updateDoc(monthDocRef, {
+                            beautify: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Diet") {
+                        await updateDoc(monthDocRef, {
+                            diet: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Education") {
+                        await updateDoc(monthDocRef, {
+                            education: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Necessity") {
+                        await updateDoc(monthDocRef, {
+                            necessity: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Others") {
+                        await updateDoc(monthDocRef, {
+                            others: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                }
+                else {
+                    await updateDoc(monthDocRef, {
+                        income: increment(num),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                }
+            }
+        }
     }}
 
     let NumAftDot = num.split('.')

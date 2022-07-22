@@ -340,7 +340,7 @@ export default Profile = () => {
 
                 <TouchableOpacity style={{
                     backgroundColor: '#C4C4C4', marginTop: 5, padding: 13, borderRadius: 20, flexDiection: 'row', justifyContent: 'space-between'
-                }} onPress={() => Alert.alert("This is FAQ.")}>
+                }} onPress={() => navigation.navigate('Contact_us')}>
                     <Text style={{
                         textAlign: 'left', padding: 10, position: 'absolute', paddingTop: 13
                     }} >
@@ -353,7 +353,7 @@ export default Profile = () => {
 
                     <Text style={{
                         textAlign: 'center', fontSize: 20
-                    }} > FAQ </Text>
+                    }} > Contact Us </Text>
 
 
                 </TouchableOpacity>

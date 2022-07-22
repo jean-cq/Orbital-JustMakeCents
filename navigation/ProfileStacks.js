@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import Profile from '../screens/Profile.js';
 import Starting_page from '../screens/Starting_page.js';
 import Profile_edit from '../screens/Profile_edit.js';
+import Contact_us from '../screens/Contact_us.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,12 @@ export default ProfileStacks = () => {
             
                 <Stack.Screen name="Profile_edit" component={Profile_edit} options={{
                 title: "My Profile"
+                
+            }}
+            />
+
+                <Stack.Screen name="Contact_us" component={Profile_edit} options={{
+                title: "Contact us"
                 
             }}
             />
