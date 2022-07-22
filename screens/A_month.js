@@ -11,7 +11,9 @@ import { ref, set, onValue, getDatabase } from "firebase/database";
 import { useEffect, useState } from 'react';
 import { db, authentication } from '../lib/firebase.js';
 import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
-import ReactNativeFusionCharts from 'react-native-fusioncharts';
+import { BarChart, Grid, LineChart, PieChart } from 'react-native-svg-charts';
+import Expenditure from './Expenditure.js';
+import DatePicker from 'react-native-modern-datepicker';
 
 export default A_month = () => {
     const [ExpenditureData, setExpenditureData] = useState([]);
@@ -33,11 +35,64 @@ export default A_month = () => {
         getData();
     }, []);
 
+    const fill = 'rgb(134, 65, 244)'
+        const data = [50, 10, 40, 95, -4, -24, null, 85, undefined, 0, 35, 53, -53, 24, 50, -20, -80]
+        const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7)
+        const pieData = data
+            .filter((value) => value != 0)
+            .map((value, index) => ({
+                value,
+                svg: {
+                    fill: randomColor(),
+                    onPress: () => console.log('press', index),
+                },
+                key: `pie-${index}`,
+            }))
 
     return (
 
         <SafeAreaView>
             <Text>Month!</Text>
+
+
+            <Text>Line chart for week trends</Text>
+            <LineChart
+                style={{ height: 200 }}
+                data={ExpenditureData}
+                svg={{ stroke: 'rgb(134, 65, 244)' }}
+                yAccessor={({ item }) => item.amount}
+                contentInset={{ top: 20, bottom: 20 }}
+            >
+                <Grid />
+            </LineChart>
+
+            <Text>Bar chart income vs expenditure</Text>
+            <BarChart style={{ height: 200 }} 
+            data={ExpenditureData} 
+            svg={{ fill }} 
+            yAccessor={({ item }) => item.amount}
+            xAccessor={({ item }) => item.category}
+            contentInset={{ top: 30, bottom: 30 }}>
+                <Grid />
+            </BarChart>
+
+            <Text>Bar chart for each category</Text>
+            <BarChart style={{ height: 200 }} 
+            data={ExpenditureData} 
+            svg={{ fill }} 
+            yAccessor={({ item }) => item.amount}
+            xAccessor={({ item }) => item.category}
+            contentInset={{ top: 30, bottom: 30 }}>
+                <Grid />
+            </BarChart>
+
+            <Text>Pie chart for each category</Text>
+            <PieChart style={{ height: 200 }} data={pieData} />
+
+            <Text>Pie chart for payment method</Text>
+            <PieChart style={{ height: 200 }} data={pieData} />
+
+            
         </SafeAreaView>
 
         )
