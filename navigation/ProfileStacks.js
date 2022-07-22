@@ -41,7 +41,7 @@ export default ProfileStacks = () => {
             }}
             />
 
-                <Stack.Screen name="Contact_us" component={Profile_edit} options={{
+                <Stack.Screen name="Contact_us" component={Contact_us} options={{
                 title: "Contact us"
                 
             }}
