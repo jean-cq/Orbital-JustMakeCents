@@ -64,8 +64,11 @@ export default B_lending = () => {
                 refSnapshot.forEach((doc) => {
                     lenList.push(doc.data());
                 });
+                lenList.push({});
+                lenList.push({});
+                lenList.push({});
+                lenList.push({});
                 setLenData(lenList);
-                console.log(LenData)
             });
         };
         getData();

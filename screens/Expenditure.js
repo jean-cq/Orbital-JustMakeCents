@@ -83,6 +83,10 @@ export default Expenditure = () => {
                 refSnapshot.forEach((doc) => {
                     expList.push(doc.data());
                 });
+                expList.push({});
+                expList.push({});
+                expList.push({});
+                expList.push({});
             setExpenditureData(expList);
             })
         };

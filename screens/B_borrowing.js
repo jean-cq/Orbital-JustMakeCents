@@ -64,6 +64,10 @@ export default B_borrowing = () => {
                 refSnapshot.forEach((doc) => {
                     lenList.push(doc.data());
                 });
+                lenList.push({});
+                lenList.push({});
+                lenList.push({});
+                lenList.push({});
                 setBorrowingData(lenList);
             });
         };
