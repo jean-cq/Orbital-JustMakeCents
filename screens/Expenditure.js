@@ -1,5 +1,5 @@
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, is, ListItem, ScrollView } from 'react-native';
+import { Alert, TextInput, Button, Image, Modal, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, is, ListItem, ScrollView } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 //import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
