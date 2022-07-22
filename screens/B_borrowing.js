@@ -71,7 +71,7 @@ export default B_borrowing = () => {
     }, []);
 
     return (
-        <View>
+        <SafeAreaView >
 
 
             <View style={{ background: '#C4C4C4', flexDirection: 'row', padding: 20 }}>
@@ -125,7 +125,7 @@ export default B_borrowing = () => {
                 )}
 
             />
-        </View>
+        </SafeAreaView >
 
 
     );

@@ -72,7 +72,7 @@ export default B_lending = () => {
     
     
     return (
-        <View>
+        <SafeAreaView >
 
 
             <View style={{ background: '#C4C4C4', flexDirection: 'row', padding: 15 }}>
@@ -127,7 +127,7 @@ export default B_lending = () => {
                 )}
 
             />
-        </View>
+        </SafeAreaView >
 
 
     );

@@ -61,7 +61,7 @@ export default B_year = () => {
     }, [])
 
     return (
-        <View>
+        <SafeAreaView >
             <View style={styles.container}>
 
                 <Text style={{ marginLeft: 20, fontSize: 16, fontWeight: 'bold' }}>Budget used : $150</Text>
@@ -171,7 +171,7 @@ export default B_year = () => {
             </Modal>
             <View style={styles.buttonposition}>
             </View>
-        </View>
+        </SafeAreaView >
 
 
 

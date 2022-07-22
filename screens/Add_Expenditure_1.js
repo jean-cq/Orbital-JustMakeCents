@@ -148,7 +148,7 @@ export default Add_Expenditure_1 = () => {
 
     return (
 
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <StatusBar style="auto" />
             <View style={{
                 width: WIDTH,
@@ -284,7 +284,7 @@ export default Add_Expenditure_1 = () => {
                 
             </View>
 
-        </View>
+        </SafeAreaView>
     
     );
 }

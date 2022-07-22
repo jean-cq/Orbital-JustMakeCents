@@ -34,12 +34,57 @@ export default Profile = () => {
     const navigation = useNavigation();
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [profile, setProfile] = useState('');
+    const [user, setUser] = useState('');
 
-    const userId = authentication.currentUser.uid;
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    setUser(user);
+    
+  }
 
-    const q = query(collection(db, "users/" + userId + "/profile"  ));
+  ;
+    useEffect(() => {
+        const subscriber = authentication.onAuthStateChanged((user) =>
+        { if (user) {
+        const userId = authentication.currentUser.uid;
+        const sfDocRef = doc(db, "users/" + userId + "/profile" + '/userinfo' );
+        const q = query(collection(db, "users/" + userId + "/profile"  ))
+        
+            
+            
+        const getData = async() => {
+            const sfDoc = await getDoc(sfDocRef)
+            if (sfDoc.exists() === true){
+            const querySnapshot = onSnapshot(q, (refSnapshot) => {
+                const expList = [];
+                refSnapshot.forEach((doc) => {
+                    expList.push(doc.data());
+                });
+            setProfile(expList[0]);
+            console.log(profile);
+            })
+        }else{
+            setProfile(null);
+        }}
+        getData();}
+        
+        });
+        
+        subscriber();
+      }, []);
+    
+     
+          
+      
+    
 
-    useEffect(async() => {
+    
+    
+
+    
+
+    const trytry = async() =>{
+        const q = query(collection(db, "users/" + userId + "/profile"  ));
         const sfDocRef = doc(db, "users/" + userId + "/profile" + '/userinfo' );
         const sfDoc = await getDoc(sfDocRef)
         
@@ -60,14 +105,14 @@ export default Profile = () => {
         getData();
         console.log(profile);
         
-    }, []);
+    }
     
 
     const SignOutUser = () => {
         signOut(authentication)
         .then((re)=>{
             setIsSignedIn(false);
-            navigation.navigate("Starting_page")
+            navigation.navigate('Starting_page')
         })
         .catch((re)=>{
             console.log(re)

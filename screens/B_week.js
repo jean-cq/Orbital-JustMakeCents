@@ -80,7 +80,7 @@ export default B_week = () => {
 
 
     return (
-        <View>
+        <SafeAreaView >
             <View style={styles.container}>
 
                 <Text style={{ marginLeft: 20, fontSize: 16, fontWeight: 'bold' }}>Budget used : $150</Text>
@@ -190,7 +190,7 @@ export default B_week = () => {
             </Modal>
             <View style={styles.buttonposition}>
             </View>
-        </View>
+        </SafeAreaView >
 
 
 
