@@ -1,5 +1,5 @@
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Modal, Text, View, FlatList, ListItem } from 'react-native';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, Modal, Text, View, FlatList, ListItem } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
@@ -17,6 +17,7 @@ import Svg, { Circle, Rect } from 'react-native-svg';
 import { db, authentication } from '../lib/firebase.js';
 import { doc, getDoc, getDocs, deleteDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc } from "firebase/firestore";
 import { ref, set, onValue, getDatabase } from "firebase/database";
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default Wallet = () => {
 

@@ -42,7 +42,7 @@ export default Profile = () => {
     
   }
 
-  ;
+  
     useEffect(() => {
         const subscriber = authentication.onAuthStateChanged((user) =>
         { if (user) {

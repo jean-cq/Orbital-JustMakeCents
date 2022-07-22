@@ -1,6 +1,6 @@
 // JavaScript source code
 import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
+import { Alert, Button, Image, ScrollView, StyleSheet, Text, Dimensions, View } from 'react-native';
 import Flatbutton from '../components/Flatbutton.js';
 import DefaultImage from '../assets/starting_page.png';
 import Login_page from '../screens/Login_page.js';
@@ -14,6 +14,11 @@ import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, 
 import { BarChart, Grid, LineChart, PieChart, XAxis, YAxis } from 'react-native-svg-charts';
 import Expenditure from './Expenditure.js';
 import DatePicker from 'react-native-modern-datepicker';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
+
 
 export default A_month = () => {
     const [ExpenditureData, setExpenditureData] = useState([]);
@@ -50,13 +55,22 @@ export default A_month = () => {
             }))
 
     return (
+        <ScrollView>
 
-        <SafeAreaView>
+        <SafeAreaView style = {{width: WIDTH * 0.9, alignSelf: 'center'}}>
             <Text>Month!</Text>
 
 
             <Text>Line chart for week trends</Text>
-            <LineChart
+            
+            <YAxis
+                    style={{ marginVertical: -10 }}
+                    data={ExpenditureData}
+                    formatLabel={(value, index) => value}
+                    contentInset={{ left: 10, right: 10 }}
+                    svg={{ fontSize: 10, fill: 'black' }}
+                />
+                <LineChart
                 style={{ height: 200 }}
                 data={ExpenditureData}
                 svg={{ stroke: 'rgb(134, 65, 244)' }}
@@ -65,13 +79,6 @@ export default A_month = () => {
             >
                 <Grid />
             </LineChart>
-            <YAxis
-                    style={{ marginVertical: -10 }}
-                    data={ExpenditureData}
-                    formatLabel={(value, index) => value}
-                    contentInset={{ left: 10, right: 10 }}
-                    svg={{ fontSize: 10, fill: 'black' }}
-                />
             <XAxis
                     style={{ marginVertical: -10 }}
                     data={ExpenditureData}
@@ -108,6 +115,7 @@ export default A_month = () => {
 
             
         </SafeAreaView>
+        </ScrollView>
 
         )
 }

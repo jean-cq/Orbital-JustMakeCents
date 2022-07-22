@@ -1,5 +1,5 @@
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, Modal, ListItem } from 'react-native';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, Text, View, FlatList, Modal, ListItem } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
@@ -16,6 +16,7 @@ import Svg, { Circle, Rect } from 'react-native-svg';
 import { db, authentication } from '../lib/firebase.js';
 import { doc, getDoc,setDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 import { stringify } from '@firebase/util';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default B_lending = () => {
 

@@ -1,6 +1,6 @@
 // JavaScript source code
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Modal, Text, View, FlatList, ListItem, Dimensions, ScrollView } from 'react-native';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, Modal, Text, View, FlatList, ListItem, Dimensions, ScrollView } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 //import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
@@ -22,6 +22,7 @@ import { doc, setDoc, collection, addDoc,onSnapshot, query } from "firebase/fire
 import moment from 'moment';
 import DatePicker from 'react-native-modern-datepicker';
 import CardModal from '../components/CardModal.js';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -148,11 +149,11 @@ export default Add_Expenditure_1 = () => {
 
     return (
 
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <StatusBar style="auto" />
             <View style={{
                 width: WIDTH,
-                height: HEIGHT * 0.1,
+                height: HEIGHT * 0.075,
                 alignItems:'center',
                 justifyContent: 'center',
             }}>
@@ -204,7 +205,7 @@ export default Add_Expenditure_1 = () => {
                                 }}
                                 isChecked={chosen === item.label}
                                 text={item.label}
-                                textSize={15}
+                                textSize={14}
                                 buttonDefaultColor={item.value % 2 === 0 ? "#f5c900" : "yellow"}
                                 buttonSelectedColor="#cdad7a"
                                 textDefaultColor="black"
@@ -284,7 +285,7 @@ export default Add_Expenditure_1 = () => {
                 
             </View>
 
-        </SafeAreaView>
+        </View>
     
     );
 }
@@ -299,11 +300,11 @@ const styles = StyleSheet.create({
         marginLeft: 1
     },
     keyboardContainer: {
-    marginTop: (HEIGHT * 0.47),
+    marginTop: (HEIGHT * 0.425),
         flexDirection: 'row',
         position: 'absolute',
         backgroundColor: '#D1CFD7',
-            paddingVertical: 20
+            paddingVertical: 10
     },
     textInput: {
         fontSize: 23,
