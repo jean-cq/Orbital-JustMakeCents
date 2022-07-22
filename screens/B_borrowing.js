@@ -75,7 +75,7 @@ export default B_borrowing = () => {
     }, []);
 
     return (
-        <SafeAreaView >
+        <View >
 
 
             <View style={{ background: '#C4C4C4', flexDirection: 'row', padding: 20 }}>
@@ -87,8 +87,7 @@ export default B_borrowing = () => {
                 <Text style={{ flex: 2, textAlign: 'right' }}>Amount</Text>
 
             </View>
-            <View style={{ height: 1, backgroundColor: 'grey' }}>
-            </View>
+            
             <FlatList
                 scrollEnabled={true}
                 showsVerticalScrollIndicator={true}
@@ -129,7 +128,7 @@ export default B_borrowing = () => {
                 )}
 
             />
-        </SafeAreaView >
+        </View >
 
 
     );

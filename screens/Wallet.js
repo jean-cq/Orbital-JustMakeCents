@@ -88,7 +88,7 @@ export default Wallet = () => {
 }
 
     return (
-        <SafeAreaView style={{ flexDirection: 'column' }}>
+        <View style={{ flexDirection: 'column' }}>
             { /*Budget*/}
 
             < View style={styles.container} >
@@ -239,7 +239,7 @@ export default Wallet = () => {
             />
             <View style={styles.buttonposition}>
             </View>
-        </SafeAreaView >
+        </View >
 
 
 

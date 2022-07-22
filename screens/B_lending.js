@@ -76,20 +76,21 @@ export default B_lending = () => {
     
     
     return (
-        <SafeAreaView >
+        <View >
 
 
-            <View style={{ background: '#C4C4C4', flexDirection: 'row', padding: 15 }}>
+            <View style={{ background: '#C4C4C4', flexDirection: 'row', padding: 15}}>
                 <Text style={{ flex: 1 }}>Status</Text>
 
                 <Text style={{ flex: 2, textAlign: 'center' }}>Who</Text>
 
                 <Text style={{ flex: 2, textAlign: 'center' }}>Category</Text>
                 <Text style={{ flex: 2, textAlign: 'right' }}>Amount</Text>
-
+        <View style={{ height: 1, backgroundColor: 'grey' }}>
             </View>
-            <View style={{ height: 1, backgroundColor: 'grey' }}>
             </View>
+            
+            
             <FlatList
                 showsVerticalScrollIndicator={true}
                 data={LenData}
@@ -126,12 +127,14 @@ export default B_lending = () => {
                         </View>
                         <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
-
+                        
                     </View>
+                    
                 )}
 
             />
-        </SafeAreaView >
+            
+        </View >
 
 
     );

@@ -123,7 +123,7 @@ export default Profile = () => {
     }
 
     return (
-        <SafeAreaView style={{ flexDirection: 'column' }}>
+        <View style={{ flexDirection: 'column' }}>
             <ScrollView>
             {/*avatar*/}
             <View style={{ flexDirection: 'column', marginTop: 10, marginRight: 10 }}>
@@ -373,7 +373,7 @@ export default Profile = () => {
         
             </View>
         </ScrollView>
-        </SafeAreaView>)}
+        </View>)}
 
 const styles = StyleSheet.create({
     button: {

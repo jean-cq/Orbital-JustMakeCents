@@ -187,7 +187,7 @@ export default Add_Expenditure_1 = () => {
             <View style={{
                 marginTop: 1,
                 width: WIDTH * 0.9,
-                height: HEIGHT * 0.5,
+                height: HEIGHT * 0.35,
                 alignContent:'center',
                 justifyContent: 'center',
             }}>
@@ -218,6 +218,7 @@ export default Add_Expenditure_1 = () => {
                     }
                 />
             </View>
+            
             <View style={styles.keyboardContainer}>
                 <View style={{ flex: 1, justifyContent: 'space-between' }}>
                     <View>
@@ -284,7 +285,11 @@ export default Add_Expenditure_1 = () => {
                 </View>
                 
             </View>
-
+            
+            <View style = {
+                {backgroundColor:  '#D1CFD7'}
+            }>
+                </View>
         </View>
     
     );
@@ -300,9 +305,9 @@ const styles = StyleSheet.create({
         marginLeft: 1
     },
     keyboardContainer: {
-    marginTop: (HEIGHT * 0.425),
+       
         flexDirection: 'row',
-        position: 'absolute',
+        position: 'relative',
         backgroundColor: '#D1CFD7',
             paddingVertical: 10
     },

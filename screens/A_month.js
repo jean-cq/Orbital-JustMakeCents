@@ -57,7 +57,7 @@ export default A_month = () => {
     return (
         <ScrollView>
 
-        <SafeAreaView style = {{width: WIDTH * 0.9, alignSelf: 'center'}}>
+        <View style = {{width: WIDTH * 0.9, alignSelf: 'center'}}>
             <Text>Month!</Text>
 
 
@@ -114,7 +114,7 @@ export default A_month = () => {
             <PieChart style={{ height: 200 }} data={pieData} />
 
             
-        </SafeAreaView>
+        </View>
         </ScrollView>
 
         )
