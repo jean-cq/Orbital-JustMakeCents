@@ -11,7 +11,7 @@ import { ref, set, onValue, getDatabase } from "firebase/database";
 import { useEffect, useState } from 'react';
 import { db, authentication } from '../lib/firebase.js';
 import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
-import { BarChart, Grid, LineChart, PieChart } from 'react-native-svg-charts';
+import { BarChart, Grid, LineChart, PieChart, XAxis, YAxis } from 'react-native-svg-charts';
 import Expenditure from './Expenditure.js';
 import DatePicker from 'react-native-modern-datepicker';
 
@@ -65,6 +65,20 @@ export default A_month = () => {
             >
                 <Grid />
             </LineChart>
+            <YAxis
+                    style={{ marginVertical: -10 }}
+                    data={ExpenditureData}
+                    formatLabel={(value, index) => value}
+                    contentInset={{ left: 10, right: 10 }}
+                    svg={{ fontSize: 10, fill: 'black' }}
+                />
+            <XAxis
+                    style={{ marginVertical: -10 }}
+                    data={ExpenditureData}
+                    formatLabel={(value, index) => value}
+                    contentInset={{ left: 10, right: 10 }}
+                    svg={{ fontSize: 10, fill: 'black' }}
+                />
 
             <Text>Bar chart income vs expenditure</Text>
             <BarChart style={{ height: 200 }} 
