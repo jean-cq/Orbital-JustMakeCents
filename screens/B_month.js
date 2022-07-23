@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import { db, authentication } from '../lib/firebase.js';
+import moment from 'moment';
 import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 
 
@@ -21,8 +22,10 @@ import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, 
 export default B_month = () => {
 
     const navigation = useNavigation();
+    const [IncomeData, setIncomeData] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [rem, setRem] = useState('');
+    const [sumBudget,setSumBudget] = useState(0);
     const [items, setItems] = useState([
         { id: '0', category: 'Recreation', amount: '50' },
         { id: '1', category: 'Diet', amount: '260' },
@@ -62,13 +65,24 @@ export default B_month = () => {
 
     }, [])
 
+    const y = new Date().getFullYear();
+    const m = new Date().getMonth() + 1;
+    const month = () =>{
+        if (m < 10){
+            return y+ '/0' +m
+        }else {
+            return y+'/'+m
+        }
+    }
     const userId = authentication.currentUser.uid;
     const expRef = query(collection(db, "users/" + userId + "/budget"), where("category", "==", "month"));
-
+    const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==",month()));
+    
     useEffect(() => {
         const getData = async () => {
             const querySnapshot = await onSnapshot(expRef, (refSnapshot) => {
                 const expList = [];
+               
                 refSnapshot.forEach((doc) => {
                     expList.push({id: '0', category: "Traffic", amount: doc.data().traffic});
                     expList.push({id: '1', category: "Recreation", amount: doc.data().recreation});
@@ -78,13 +92,30 @@ export default B_month = () => {
                     expList.push({id: '5', category: "Education", amount: doc.data().education});
                     expList.push({id: '6', category: "Necessity", amount: doc.data().necessity});
                     expList.push({id: '7', category: "Others", amount: doc.data().others});
+                    expList.push(doc.data().traffic + doc.data().recreation+doc.data().medical + 
+                        doc.data().beautify + doc.data().diet + doc.data().education + doc.data().necessity + doc.data().others);
                 });
             setExpenditureData(expList);
-            console.log(expList);
+            setSumBudget(ExpenditureData[8]);
+            console.log(expList);                  
+            });
+        };const getMonthData = async () => {
+            const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
+                const incomeList = [];
+                refSnapshot.forEach((doc) => {                
+                    incomeList.push(doc.data().expenditure);
+                });
+                
+                setIncomeData(incomeList);
             });
         };
         getData();
+       getMonthData();
+    console.log(IncomeData);
+        console.log(ExpenditureData[8]);
+        console.log(month());
     }, []);
+
     const updateBudget = async() => {
         const budDocRef = doc(db, "users/" + userId + "/budget" + "/month")
         const sfDoc = await getDoc(budDocRef)
@@ -106,6 +137,8 @@ export default B_month = () => {
                 alert(error)
             })}
 
+            
+
     return (
         <SafeAreaView >
             <View style={styles.container}>
@@ -126,7 +159,9 @@ export default B_month = () => {
                     <Rect
                         x="40"
                         y="20"
-                        width={0.75 * 300}
+                        width={(IncomeData[0] < sumBudget && IncomeData[0] > 0) 
+                            ? ( IncomeData[0]/ sumBudget) * 300
+                            : 300}
                         height="15"
                         fill='yellow'
                         strokeWidth="3"
@@ -136,7 +171,7 @@ export default B_month = () => {
                 </Svg>
 
 
-                <Text style={{ textAlign: 'right', marginRight: 20, fontSize: 10 }}>75%</Text>
+                <Text style={{ textAlign: 'right', marginRight: 20, fontSize: 10 }}>{100 * IncomeData[0]/ sumBudget}%</Text>
             </View>
 
             <View style={{ backgroundColor: '#C4C4C4', padding: 10 }}>

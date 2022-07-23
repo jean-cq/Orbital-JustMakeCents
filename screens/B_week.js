@@ -16,13 +16,15 @@ import Svg, { Circle, Rect } from 'react-native-svg';
 import { db, authentication } from '../lib/firebase.js';
 import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 
-
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 export default B_week = () => {
 
     const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
     const [rem, setRem] = useState('');
+    const [hi, setHi] = useState(true);
     const [items, setItems] = useState([
         { id: '0', category: 'Recreation', amount: '50' },
         { id: '1', category: 'Diet', amount: '260' },
@@ -85,7 +87,11 @@ export default B_week = () => {
         };
         getData();
     }, []);
+
+  
+
     const updateBudget = async() => {
+    
         const budDocRef = doc(db, "users/" + userId + "/budget" + "/week")
         const sfDoc = await getDoc(budDocRef)
                await updateDoc(budDocRef , {
@@ -105,6 +111,10 @@ export default B_week = () => {
             }).catch((error) => {
                 alert(error)
             })}
+            let sumBudget = 0;
+            for(let i = 0; i < 8 ; i++){
+                sumBudget = sumBudget + ExpenditureData[i].amount
+                }
 
     return (
         <SafeAreaView >
@@ -126,7 +136,7 @@ export default B_week = () => {
                     <Rect
                         x="40"
                         y="20"
-                        width={0.75 * 300}
+                        width={(0.75/sumBudget )* 300}
                         height="15"
                         fill='yellow'
                         strokeWidth="3"
