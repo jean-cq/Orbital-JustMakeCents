@@ -58,21 +58,18 @@ The mobile application provides a money manager interface for students to keep t
 6. Budget
     - Display the percentage of money spent against the budget 
     - Allow users to set their own budget for each category
-7. UI completed except for Analytics page
-
-## 🧭Features to be completed by the mid of July
-1. Analytics page
+7. Analytics page
     - Allow users to visualise their daily expenses(e.g. pie chart and bar plot)
-2. Budget
-    - Provide recommendations on adjustments to the budget with machine learning(if possible)
-3. Shopping list
-    - Provide recommendations on how much and how frequent certain products should be purchased with machine learning
-4. Notification
-    - Remind users of returning the money to friends and banks
-5. Profile
+8. Profile
     - Settings and badge collection
-6. Login
-    - Forget Password
+
+## 🧭Features to be completed in the future
+1. Budget
+    - Provide recommendations on adjustments to the budget with machine learning(if possible)
+2. Shopping list
+    - Provide recommendations on how much and how frequent certain products should be purchased with machine learning
+3. Notification
+    - Remind users of returning the money to friends and banks
 
 ## ❓Addressing concerns raised in Milestone 1
 - Incentives consistently motivate users
@@ -120,4 +117,4 @@ The mobile application provides a money manager interface for students to keep t
 - 3rd week of June: Daily expenses & analysis
 - 4th week of June: Testing and debugging (Implement machine learning)
 - 1st week of July: Implementation of peer teams’ suggestions
-- 2nd week of July: 3rd week of July: Testing and debugging
+- 2nd week of July - 3rd week of July: Testing and debugging
