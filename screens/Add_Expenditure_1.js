@@ -138,11 +138,30 @@ export default Add_Expenditure_1 = () => {
                 income: choice == "Income" ? true : false,
                 bigcat: choice,
                 expenditure: (choice === "Expenditure" || "Income") ? true : false,
+                method: selectedPayment,
             }).then(() => {
                 alert('data submitted');
             }).catch((error) => {
                 alert(error)
             })
+            
+                if (choice == "Expenditure") {
+                    updateDoc(doc(db, "users/" + userId + "/payment/" + selectedPayment), {
+                        Expenses: increment(num),
+                        Balance: increment(-num),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                }
+                else {
+                    updateDoc(doc(db, "users/" + userId + "/payment/" + selectedPayment), {
+                        Income: increment(num),
+                        Balance: increment(num),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                }
+        
 
 
         const monthDocRef = doc(db, "users/" + userId + "/month/" + date.slice(0, 4) + date.slice(5, 7));

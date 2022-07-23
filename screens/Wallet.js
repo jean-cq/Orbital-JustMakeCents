@@ -225,7 +225,7 @@ export default Wallet = () => {
 
                             <Text style={{ flex: 3, textAlign: 'right' }}> {item.Income} </Text>
 
-                            <Text style={{ flex: 3, textAlign: 'right' }}> {(item.Income >= item.Expenses) ? '+' : '-'}{item.Balance} </Text>
+                            <Text style={{ flex: 3, textAlign: 'right' }}> {item.Balance} </Text>
 
                         </View>
                         <View style={{ height: 1, backgroundColor: 'grey' }}>
