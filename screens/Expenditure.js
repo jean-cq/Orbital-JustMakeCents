@@ -92,6 +92,7 @@ export default Expenditure = () => {
         };
         getData();
         toggleOpen(false);
+        
     };
 
     const showBudget = async() => {

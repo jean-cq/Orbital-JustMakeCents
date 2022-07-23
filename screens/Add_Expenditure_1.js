@@ -439,7 +439,7 @@ export default Add_Expenditure_1 = () => {
 
                                     <TouchableOpacity
                                         style={styles.confirmButton}
-                                        onPress={() => toggleOpen(false)}>
+                                        onPress={() =>{ toggleOpen(false); console.log(date)}}>
                                         <Text>Confirm</Text>
                                     </TouchableOpacity>
                                 </View>

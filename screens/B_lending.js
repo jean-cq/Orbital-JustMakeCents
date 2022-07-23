@@ -86,8 +86,7 @@ export default B_lending = () => {
 
                 <Text style={{ flex: 2, textAlign: 'center' }}>Category</Text>
                 <Text style={{ flex: 2, textAlign: 'right' }}>Amount</Text>
-        <View style={{ height: 1, backgroundColor: 'grey' }}>
-            </View>
+        
             </View>
             
             
