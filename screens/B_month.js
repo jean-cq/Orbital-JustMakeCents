@@ -14,6 +14,9 @@ import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { db, authentication } from '../lib/firebase.js';
+import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
+import Expenditure from './Expenditure.js';
 
 
 
@@ -61,6 +64,30 @@ export default B_month = () => {
 
     }, [])
 
+    const userId = authentication.currentUser.uid;
+    const expRef = query(collection(db, "users/" + userId + "/budget"), where("category", "==", "month"));
+
+    useEffect(() => {
+        const getData = async () => {
+            const querySnapshot = await onSnapshot(expRef, (refSnapshot) => {
+                const expList = [];
+                refSnapshot.forEach((doc) => {
+                    expList.push({category: "Traffic", amount: doc.data().traffic});
+                    expList.push({category: "Recreation", amount: doc.data().recreation});
+                    expList.push({category: "Medical", amount: doc.data().medical});
+                    expList.push({category: "Beautify", amount: doc.data().beautify});
+                    expList.push({category: "Diet", amount: doc.data().diet});
+                    expList.push({category: "Education", amount: doc.data().education});
+                    expList.push({category: "Necessity", amount: doc.data().necessity});
+                    expList.push({category: "Others", amount: doc.data().others});
+                });
+            setExpenditureData(expList);
+            console.log(expList);
+            });
+        };
+        getData();
+    }, []);
+
     return (
         <View >
             <View style={styles.container}>
@@ -102,7 +129,7 @@ export default B_month = () => {
 
             <FlatList
                 showsVerticalScrollIndicator={true}
-                data={items}
+                data={ExpenditureData}
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >

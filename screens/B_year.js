@@ -13,6 +13,8 @@ import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
+import { db, authentication } from '../lib/firebase.js';
+import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 
 
 
@@ -60,6 +62,30 @@ export default B_year = () => {
 
     }, [])
 
+    const userId = authentication.currentUser.uid;
+    const expRef = query(collection(db, "users/" + userId + "/budget"), where("category", "==", "year"));
+
+    useEffect(() => {
+        const getData = async () => {
+            const querySnapshot = await onSnapshot(expRef, (refSnapshot) => {
+                const expList = [];
+                refSnapshot.forEach((doc) => {
+                    expList.push({category: "Traffic", amount: doc.data().traffic});
+                    expList.push({category: "Recreation", amount: doc.data().recreation});
+                    expList.push({category: "Medical", amount: doc.data().medical});
+                    expList.push({category: "Beautify", amount: doc.data().beautify});
+                    expList.push({category: "Diet", amount: doc.data().diet});
+                    expList.push({category: "Education", amount: doc.data().education});
+                    expList.push({category: "Necessity", amount: doc.data().necessity});
+                    expList.push({category: "Others", amount: doc.data().others});
+                });
+            setExpenditureData(expList);
+            console.log(expList);
+            });
+        };
+        getData();
+    }, []);
+
     return (
         <SafeAreaView >
             <View style={styles.container}>
@@ -101,7 +127,7 @@ export default B_year = () => {
 
             <FlatList
                 showsVerticalScrollIndicator={true}
-                data={items}
+                data={ExpenditureData}
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
