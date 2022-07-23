@@ -87,6 +87,56 @@ export default Wallet = () => {
     }
 }
 
+const showBudget = async() => {
+    const budgetWkDocRef = doc(db, "users/" + userId + "/budget/" + "week");
+    const budgetMnDocRef = doc(db, "users/" + userId + "/budget/" + "month");
+    const budgetYrDocRef = doc(db, "users/" + userId + "/budget/" + "year");
+    const WkDoc = await getDoc(budgetWkDocRef);
+    const MnDoc = await getDoc(budgetMnDocRef);
+    const YrDoc = await getDoc(budgetYrDocRef);
+    
+    const budgetset = async() => {
+        if (WkDoc.exists() === false) {
+        await setDoc(budgetWkDocRef, {
+            traffic: 0,
+            recreation: 0,
+            medical: 0,
+            beautify: 0,
+            diet: 0,
+            education: 0,
+            necessity:0,
+            others:0,
+        }).catch((error) => {
+            alert(error)
+        })
+        await setDoc(budgetMnDocRef, {
+            traffic: 0,
+            recreation: 0,
+            medical: 0,
+            beautify: 0,
+            diet: 0,
+            education: 0,
+            necessity:0,
+            others:0,
+        }).catch((error) => {
+            alert(error)
+        })
+        await setDoc(budgetYrDocRef, {
+            traffic: 0,
+            recreation: 0,
+            medical: 0,
+            beautify: 0,
+            diet: 0,
+            education: 0,
+            necessity:0,
+            others:0,
+        }).catch((error) => {
+            alert(error)
+        })
+    }}
+    budgetset().then(navigation.navigate('Budget'));
+}
+
     return (
         <View style={{ flexDirection: 'column' }}>
             { /*Budget*/}
@@ -95,7 +145,7 @@ export default Wallet = () => {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                     <Text style={{ marginLeft: 50, fontSize: 16, fontWeight: 'bold' }}>Budget</Text>
 
-                    <TouchableOpacity style={{ marginLeft: 70 }} onPress={() => navigation.navigate('Budget')}>
+                    <TouchableOpacity style={{ marginLeft: 70 }} onPress={showBudget}>
 
                         <Svg width='300' height='30'>
                             <Rect
