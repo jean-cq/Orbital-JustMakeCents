@@ -99,7 +99,12 @@ export default Expenditure = () => {
         const budgetWkDocRef = doc(db, "users/" + userId + "/budget/" + "week");
         const budgetMnDocRef = doc(db, "users/" + userId + "/budget/" + "month");
         const budgetYrDocRef = doc(db, "users/" + userId + "/budget/" + "year");
-        if (budgetWkDocRef.exists() == false) {
+        const WkDoc = await getDoc(budgetWkDocRef);
+        const MnDoc = await getDoc(budgetMnDocRef);
+        const YrDoc = await getDoc(budgetYrDocRef);
+        
+        const budgetset = async() => {
+            if (WkDoc.exists() === false) {
             await setDoc(budgetWkDocRef, {
                 traffic: 0,
                 recreation: 0,
@@ -136,8 +141,8 @@ export default Expenditure = () => {
             }).catch((error) => {
                 alert(error)
             })
-        }
-        navigation.navigate('Budget');
+        }}
+        budgetset().then(navigation.navigate('Budget'));
     }
     
 
