@@ -64,6 +64,21 @@ export default B_week = () => {
     }, [])
 
     const userId = authentication.currentUser.uid;
+    const expRef = query(collection(db, "users/" + userId + "/budget"), where("category", "==", "week"));
+
+    useEffect(() => {
+        const getData = async () => {
+            const querySnapshot = await onSnapshot(expRef, (refSnapshot) => {
+                const expList = [];
+                refSnapshot.forEach((doc) => {
+                    expList.push(doc.data());
+                });
+            setExpenditureData(expList);
+            console.log(expList);
+            });
+        };
+        getData();
+    }, []);
 
     /* const create = (item) => { updateDoc(doc(db, "users/" + userId + "/week/" + item.category), {
         amount: item.amount,

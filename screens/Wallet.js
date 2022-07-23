@@ -106,6 +106,7 @@ const showBudget = async() => {
             education: 0,
             necessity:0,
             others:0,
+            category: "week",
         }).catch((error) => {
             alert(error)
         })
@@ -118,6 +119,7 @@ const showBudget = async() => {
             education: 0,
             necessity:0,
             others:0,
+            category: "month",
         }).catch((error) => {
             alert(error)
         })
@@ -130,6 +132,7 @@ const showBudget = async() => {
             education: 0,
             necessity:0,
             others:0,
+            category: "year",
         }).catch((error) => {
             alert(error)
         })
