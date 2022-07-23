@@ -57,6 +57,7 @@ export default Contact_us = () => {
                             size={50}
                             style={{ textAlign:'center',alignSelf:'center'}} />
             </View>
+            <Text style = {{textAlign: 'center', paddingBottom: 20, fontSize: 20}}>JustMakeCents</Text>
             <View style = {styles.line}>
             </View>
             <TouchableOpacity onPress={handleYoutube}>
@@ -120,23 +121,26 @@ const styles = StyleSheet.create({
         flexDirection: "row", 
         paddingVertical:10,
         paddingHorizontal:10,
+        justifyContent:'flex-start',
         width:WIDTH,
         height: HEIGHT *0.09
         
     },
     text:{
-        padding:10
+        padding:10,
+        textAlign:'center'
     },
     linktext:{
         paddingVertical: 10,
-        paddingHorizontal:WIDTH * 0.25
+        paddingHorizontal:WIDTH * 0.2
     },
     icons:{
         textAlign:'left',alignSelf:'center'
     },
     line:{
         height: 1,
-        backgroundColor:'#c4c4c4'
+        backgroundColor:'#c4c4c4',
+        justifyContent:'center'
     },
     arrow:{
         textAlign:'right', 
