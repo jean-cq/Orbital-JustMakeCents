@@ -112,8 +112,6 @@ export default Expenditure = () => {
             }).catch((error) => {
                 alert(error)
             })
-        }
-        if (budgetMnDocRef.exists() == false) {
             await setDoc(budgetMnDocRef, {
                 traffic: 0,
                 recreation: 0,
@@ -126,8 +124,6 @@ export default Expenditure = () => {
             }).catch((error) => {
                 alert(error)
             })
-        }
-        if (budgetYrDocRef.exists() == false) {
             await setDoc(budgetYrDocRef, {
                 traffic: 0,
                 recreation: 0,
