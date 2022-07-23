@@ -102,7 +102,7 @@ export default Expenditure = () => {
         const WkDoc = await getDoc(budgetWkDocRef);
         const MnDoc = await getDoc(budgetMnDocRef);
         const YrDoc = await getDoc(budgetYrDocRef);
-        
+
         const budgetset = async() => {
             if (WkDoc.exists() === false) {
             await setDoc(budgetWkDocRef, {

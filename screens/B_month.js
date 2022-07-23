@@ -1,5 +1,5 @@
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, Text, View, FlatList, Modal, ListItem } from 'react-native';
+import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, Modal, ListItem } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
@@ -13,10 +13,8 @@ import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { db, authentication } from '../lib/firebase.js';
 import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
-import Expenditure from './Expenditure.js';
 
 
 
@@ -72,14 +70,14 @@ export default B_month = () => {
             const querySnapshot = await onSnapshot(expRef, (refSnapshot) => {
                 const expList = [];
                 refSnapshot.forEach((doc) => {
-                    expList.push({category: "Traffic", amount: doc.data().traffic});
-                    expList.push({category: "Recreation", amount: doc.data().recreation});
-                    expList.push({category: "Medical", amount: doc.data().medical});
-                    expList.push({category: "Beautify", amount: doc.data().beautify});
-                    expList.push({category: "Diet", amount: doc.data().diet});
-                    expList.push({category: "Education", amount: doc.data().education});
-                    expList.push({category: "Necessity", amount: doc.data().necessity});
-                    expList.push({category: "Others", amount: doc.data().others});
+                    expList.push({id: '0', category: "Traffic", amount: doc.data().traffic});
+                    expList.push({id: '1', category: "Recreation", amount: doc.data().recreation});
+                    expList.push({id: '2', category: "Medical", amount: doc.data().medical});
+                    expList.push({id: '3', category: "Beautify", amount: doc.data().beautify});
+                    expList.push({id: '4', category: "Diet", amount: doc.data().diet});
+                    expList.push({id: '5', category: "Education", amount: doc.data().education});
+                    expList.push({id: '6', category: "Necessity", amount: doc.data().necessity});
+                    expList.push({id: '7', category: "Others", amount: doc.data().others});
                 });
             setExpenditureData(expList);
             console.log(expList);
@@ -87,9 +85,29 @@ export default B_month = () => {
         };
         getData();
     }, []);
+    const updateBudget = async() => {
+        const budDocRef = doc(db, "users/" + userId + "/budget" + "/month")
+        const sfDoc = await getDoc(budDocRef)
+               await updateDoc(budDocRef , {
+                traffic: +ExpenditureData[0].amount,
+                    recreation: +ExpenditureData[1].amount,
+                    medical: +ExpenditureData[2].amount,
+                    beautify: +ExpenditureData[3].amount,
+                    diet: +ExpenditureData[4].amount,
+                    education: +ExpenditureData[5].amount,
+                    necessity:+ExpenditureData[6].amount,
+                    others:+ExpenditureData[7].amount,
+                    category: "month",
+            }).then(() => {
+                alert('data submitted');
+                setModalVisible(!modalVisible)
+                
+            }).catch((error) => {
+                alert(error)
+            })}
 
     return (
-        <View >
+        <SafeAreaView >
             <View style={styles.container}>
 
                 <Text style={{ marginLeft: 20, fontSize: 16, fontWeight: 'bold' }}>Budget used : $150</Text>
@@ -182,15 +200,15 @@ export default B_month = () => {
                             marginHorizontal={10}
                             style={styles.textInput}
                             keyboardType='numeric'
-                            value={items.amount}
-                            onChangeText={(text) => setItems(items.map(item =>
+                            value={ExpenditureData.amount}
+                            onChangeText={(text) => setExpenditureData(ExpenditureData.map(item =>
                                 item.id === rem
                                     ? { ...item, amount: text }
                                     : item
                             ))} />
                         <TouchableOpacity
                             style={styles.button1}
-                            onPress={() => setModalVisible(!modalVisible)}
+                            onPress={updateBudget}
                         >
                             <Text style={styles.buttontext1}>Submit</Text>
                         </TouchableOpacity>
@@ -199,7 +217,7 @@ export default B_month = () => {
             </Modal>
             <View style={styles.buttonposition}>
             </View>
-        </View >
+        </SafeAreaView >
 
 
 

@@ -13,9 +13,8 @@ import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
-import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 import { db, authentication } from '../lib/firebase.js';
-import { ref, set, onValue, getDatabase } from "firebase/database";
+import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 
 
 
@@ -71,14 +70,14 @@ export default B_week = () => {
             const querySnapshot = await onSnapshot(expRef, (refSnapshot) => {
                 const expList = [];
                 refSnapshot.forEach((doc) => {
-                    expList.push({category: "Traffic", amount: doc.data().traffic});
-                    expList.push({category: "Recreation", amount: doc.data().recreation});
-                    expList.push({category: "Medical", amount: doc.data().medical});
-                    expList.push({category: "Beautify", amount: doc.data().beautify});
-                    expList.push({category: "Diet", amount: doc.data().diet});
-                    expList.push({category: "Education", amount: doc.data().education});
-                    expList.push({category: "Necessity", amount: doc.data().necessity});
-                    expList.push({category: "Others", amount: doc.data().others});
+                    expList.push({id: '0', category: "Traffic", amount: doc.data().traffic});
+                    expList.push({id: '1', category: "Recreation", amount: doc.data().recreation});
+                    expList.push({id: '2', category: "Medical", amount: doc.data().medical});
+                    expList.push({id: '3', category: "Beautify", amount: doc.data().beautify});
+                    expList.push({id: '4', category: "Diet", amount: doc.data().diet});
+                    expList.push({id: '5', category: "Education", amount: doc.data().education});
+                    expList.push({id: '6', category: "Necessity", amount: doc.data().necessity});
+                    expList.push({id: '7', category: "Others", amount: doc.data().others});
                 });
             setExpenditureData(expList);
             console.log(expList);
@@ -86,20 +85,26 @@ export default B_week = () => {
         };
         getData();
     }, []);
-
-    /* const create = (item) => { updateDoc(doc(db, "users/" + userId + "/week/" + item.category), {
-        amount: item.amount,
-    }).then(() => {
-        alert('data submitted');
-    }).catch((error) => {
-        setDoc(doc(db, "users/" + userId + "/week/" + item.category), {
-            category: item.category,
-            amount: item.amount,
-        })
-    })
-    setModalVisible(!modalVisible)
-} */
-
+    const updateBudget = async() => {
+        const budDocRef = doc(db, "users/" + userId + "/budget" + "/week")
+        const sfDoc = await getDoc(budDocRef)
+               await updateDoc(budDocRef , {
+                traffic: +ExpenditureData[0].amount,
+                    recreation: +ExpenditureData[1].amount,
+                    medical: +ExpenditureData[2].amount,
+                    beautify: +ExpenditureData[3].amount,
+                    diet: +ExpenditureData[4].amount,
+                    education: +ExpenditureData[5].amount,
+                    necessity:+ExpenditureData[6].amount,
+                    others:+ExpenditureData[7].amount,
+                    category: "week",
+            }).then(() => {
+                alert('data submitted');
+                setModalVisible(!modalVisible)
+                
+            }).catch((error) => {
+                alert(error)
+            })}
 
     return (
         <SafeAreaView >
@@ -188,22 +193,22 @@ export default B_week = () => {
             >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}></Text>
+                        <Text style={styles.modalText}>Budget</Text>
                         <TextInput
                             placeholder="Amount"
                             placeholderTextColor="grey"
                             marginHorizontal={10}
                             style={styles.textInput}
                             keyboardType='numeric'
-                            value={items.amount}
-                            onChangeText={(text) => setItems(items.map(item =>
+                            value={ExpenditureData.amount}
+                            onChangeText={(text) => setExpenditureData(ExpenditureData.map(item =>
                                 item.id === rem
                                     ? { ...item, amount: text }
                                     : item
                             ))} />
                         <TouchableOpacity
                             style={styles.button1}
-                            onPress={() => setModalVisible(!modalVisible)}
+                            onPress={updateBudget}
                         >
                             <Text style={styles.buttontext1}>Submit</Text>
                         </TouchableOpacity>

@@ -70,14 +70,14 @@ export default B_year = () => {
             const querySnapshot = await onSnapshot(expRef, (refSnapshot) => {
                 const expList = [];
                 refSnapshot.forEach((doc) => {
-                    expList.push({category: "Traffic", amount: doc.data().traffic});
-                    expList.push({category: "Recreation", amount: doc.data().recreation});
-                    expList.push({category: "Medical", amount: doc.data().medical});
-                    expList.push({category: "Beautify", amount: doc.data().beautify});
-                    expList.push({category: "Diet", amount: doc.data().diet});
-                    expList.push({category: "Education", amount: doc.data().education});
-                    expList.push({category: "Necessity", amount: doc.data().necessity});
-                    expList.push({category: "Others", amount: doc.data().others});
+                    expList.push({id: '0', category: "Traffic", amount: doc.data().traffic});
+                    expList.push({id: '1', category: "Recreation", amount: doc.data().recreation});
+                    expList.push({id: '2', category: "Medical", amount: doc.data().medical});
+                    expList.push({id: '3', category: "Beautify", amount: doc.data().beautify});
+                    expList.push({id: '4', category: "Diet", amount: doc.data().diet});
+                    expList.push({id: '5', category: "Education", amount: doc.data().education});
+                    expList.push({id: '6', category: "Necessity", amount: doc.data().necessity});
+                    expList.push({id: '7', category: "Others", amount: doc.data().others});
                 });
             setExpenditureData(expList);
             console.log(expList);
@@ -85,6 +85,26 @@ export default B_year = () => {
         };
         getData();
     }, []);
+    const updateBudget = async() => {
+        const budDocRef = doc(db, "users/" + userId + "/budget" + "/year")
+        const sfDoc = await getDoc(budDocRef)
+               await updateDoc(budDocRef , {
+                traffic: +ExpenditureData[0].amount,
+                    recreation: +ExpenditureData[1].amount,
+                    medical: +ExpenditureData[2].amount,
+                    beautify: +ExpenditureData[3].amount,
+                    diet: +ExpenditureData[4].amount,
+                    education: +ExpenditureData[5].amount,
+                    necessity:+ExpenditureData[6].amount,
+                    others:+ExpenditureData[7].amount,
+                    category: "year",
+            }).then(() => {
+                alert('data submitted');
+                setModalVisible(!modalVisible)
+                
+            }).catch((error) => {
+                alert(error)
+            })}
 
     return (
         <SafeAreaView >
@@ -180,15 +200,15 @@ export default B_year = () => {
                             marginHorizontal={10}
                             style={styles.textInput}
                             keyboardType='numeric'
-                            value={items.amount}
-                            onChangeText={(text) => setItems(items.map(item =>
+                            value={ExpenditureData.amount}
+                            onChangeText={(text) => setExpenditureData(ExpenditureData.map(item =>
                                 item.id === rem
                                     ? { ...item, amount: text }
                                     : item
                             ))} />
                         <TouchableOpacity
                             style={styles.button1}
-                            onPress={() => setModalVisible(!modalVisible)}
+                            onPress={updateBudget}
                         >
                             <Text style={styles.buttontext1}>Submit</Text>
                         </TouchableOpacity>
