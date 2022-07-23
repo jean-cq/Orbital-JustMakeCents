@@ -139,6 +139,7 @@ export default Add_Expenditure_1 = () => {
                 bigcat: choice,
                 expenditure: (choice === "Expenditure" || "Income") ? true : false,
                 method: selectedPayment,
+                year: moment(date).format('YYYY'),
             }).then(() => {
                 alert('data submitted');
             }).catch((error) => {
@@ -334,6 +335,180 @@ export default Add_Expenditure_1 = () => {
                 }
             }
         }
+
+        const yearDocRef = doc(db, "users/" + userId + "/year/" + date.slice(0, 4));
+        const yearDoc = await getDoc(yearDocRef);
+
+        if (choice == "Expenditure" || "Income") {
+            if (yearDoc.exists() == false) {
+                if (choice == "Expenditure") {
+                    await setDoc(yearDocRef, {
+                        expenditure: +num,
+                        income: 0,
+                        traffic: 0,
+                        recreation: 0,
+                        medical: 0,
+                        beautify: 0,
+                        diet: 0,
+                        education: 0,
+                        necessity:0,
+                        others:0,
+                        year: date.slice(0, 4),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                    if (chosen == "Traffic") {
+                        await updateDoc(yearDocRef, {
+                            traffic: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Recreation") {
+                        await updateDoc(yearDocRef, {
+                            recreation: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Medical") {
+                        await updateDoc(yearDocRef, {
+                            medical: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Beautify") {
+                        await updateDoc(yearDocRef, {
+                            beautify: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Diet") {
+                        await updateDoc(yearDocRef, {
+                            diet: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Education") {
+                        await updateDoc(yearDocRef, {
+                            education: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Necessity") {
+                        await updateDoc(yearDocRef, {
+                            necessity: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Others") {
+                        await updateDoc(yearDocRef, {
+                            others: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                }
+                else {
+                    await setDoc(yearDocRef, {
+                        expenditure: 0,
+                        income: +num,
+                        income: 0,
+                        traffic: 0,
+                        recreation: 0,
+                        medical: 0,
+                        beautify: 0,
+                        diet: 0,
+                        education: 0,
+                        necessity:0,
+                        others:0,
+                        year: date.slice(0, 4),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                }
+            } 
+            else {
+                if (choice == "Expenditure") {
+                    await updateDoc(yearDocRef, {
+                        expenditure: increment(num),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                    if (chosen == "Traffic") {
+                        await updateDoc(yearDocRef, {
+                            traffic: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Recreation") {
+                        await updateDoc(yearDocRef, {
+                            recreation: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Medical") {
+                        await updateDoc(yearDocRef, {
+                            medical: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Beautify") {
+                        await updateDoc(yearDocRef, {
+                            beautify: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Diet") {
+                        await updateDoc(yearDocRef, {
+                            diet: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Education") {
+                        await updateDoc(yearDocRef, {
+                            education: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Necessity") {
+                        await updateDoc(yearDocRef, {
+                            necessity: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Others") {
+                        await updateDoc(yearDocRef, {
+                            others: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                }
+                else {
+                    await updateDoc(yearDocRef, {
+                        income: increment(num),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                }
+            }
+        }
+
+    
+
     }}
 
     let NumAftDot = num.split('.')
