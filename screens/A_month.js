@@ -24,6 +24,7 @@ const HEIGHT = Dimensions.get('window').height;
 
 export default A_month = () => {
     const [ExpenditureData, setExpenditureData] = useState([]);
+    const [NumData, setNumData] = useState([]);
     const [show, setShow] = useState(false);
     const [isOpen, toggleOpen] = useState(false);
     const [month, setMonth] = useState(null);
@@ -36,10 +37,27 @@ export default A_month = () => {
         const getData = async () => {
             const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
                 const monthList = [];
+                const numList = [];
                 refSnapshot.forEach((doc) => {
-                    monthList.push(doc.data());
+                    monthList.push({id: '0', category: "Traffic", amount: doc.data().traffic});
+                    monthList.push({id: '1', category: "Recreation", amount: doc.data().recreation});
+                    monthList.push({id: '2', category: "Medical", amount: doc.data().medical});
+                    monthList.push({id: '3', category: "Beautify", amount: doc.data().beautify});
+                    monthList.push({id: '4', category: "Diet", amount: doc.data().diet});
+                    monthList.push({id: '5', category: "Education", amount: doc.data().education});
+                    monthList.push({id: '6', category: "Necessity", amount: doc.data().necessity});
+                    monthList.push({id: '7', category: "Others", amount: doc.data().others});
+                    numList.push(doc.data().traffic);
+                    numList.push(doc.data().recreation);
+                    numList.push(doc.data().medical);
+                    numList.push(doc.data().beautify);
+                    numList.push(doc.data().diet);
+                    numList.push(doc.data().education);
+                    numList.push(doc.data().necessity);
+                    numList.push(doc.data().others);
                 });
                 setExpenditureData(monthList);
+                setNumData(numList);
             });
         };
         getData();
@@ -47,7 +65,7 @@ export default A_month = () => {
     };
 
     const fill = 'rgb(134, 65, 244)'
-        const data = [ExpenditureData, ExpenditureData.recreation, ExpenditureData.medical, ExpenditureData.beautify, ExpenditureData.diet, ExpenditureData.education, ExpenditureData.necessity, ExpenditureData.others]
+        const data = NumData
         const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7)
         const pieData = data
             .filter((value) => value != 0)
@@ -107,7 +125,7 @@ export default A_month = () => {
             
             <YAxis
                     style={{ marginVertical: -10 }}
-                    data={data}
+                    data={ExpenditureData}
                     formatLabel={(value, index) => value}
                     contentInset={{ left: 10, right: 10 }}
                     svg={{ fontSize: 10, fill: 'black' }}
@@ -142,9 +160,17 @@ export default A_month = () => {
             svg={{ fill }} 
             yAccessor={({ item }) => item.amount}
             xAccessor={({ item }) => item.category}
-            contentInset={{ top: 30, bottom: 30 }}>
+            contentInset={{ top: 30, bottom: 30 }}>   
                 <Grid />
             </BarChart>
+            <XAxis
+                    style={{ marginHorizontal: 10, marginVertical: -5 }}
+                    data={ExpenditureData}
+                    formatLabel={(value, index) => value}
+                    contentInset={{ left: 10, right: 10 }}
+                    svg={{ fontSize: 10, fill: 'black' }}
+                />
+
 
             <Text>Pie chart for each category</Text>
             <PieChart style={{ height: 200 }} data={pieData} />
