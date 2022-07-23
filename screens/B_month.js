@@ -25,6 +25,7 @@ export default B_month = () => {
     const [IncomeData, setIncomeData] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [rem, setRem] = useState('');
+    const [exp,setExp] = useState(0);
     const [sumBudget,setSumBudget] = useState(0);
     const [items, setItems] = useState([
         { id: '0', category: 'Recreation', amount: '50' },
@@ -96,8 +97,9 @@ export default B_month = () => {
                         doc.data().beautify + doc.data().diet + doc.data().education + doc.data().necessity + doc.data().others);
                 });
             setExpenditureData(expList);
-            setSumBudget(ExpenditureData[8]);
-            console.log(expList);                  
+            
+            
+            console.log(ExpenditureData);                  
             });
         };const getMonthData = async () => {
             const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
@@ -110,9 +112,11 @@ export default B_month = () => {
             });
         };
         getData();
-       getMonthData();
-    console.log(IncomeData);
-        console.log(ExpenditureData[8]);
+        getMonthData();
+        setExp(IncomeData[0]);
+        setSumBudget(ExpenditureData[8]);
+        console.log(exp);
+        console.log(sumBudget);
         console.log(month());
     }, []);
 
@@ -171,7 +175,10 @@ export default B_month = () => {
                 </Svg>
 
 
-                <Text style={{ textAlign: 'right', marginRight: 20, fontSize: 10 }}>{100 * IncomeData[0]/ sumBudget}%</Text>
+                <Text style={{ textAlign: 'right', marginRight: 20, fontSize: 10 }}>{(sumBudget === 0)
+                ? 'please set your budget'
+                : 100 * IncomeData[0]/ sumBudget
+                }%</Text>
             </View>
 
             <View style={{ backgroundColor: '#C4C4C4', padding: 10 }}>

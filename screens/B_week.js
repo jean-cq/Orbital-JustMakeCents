@@ -16,6 +16,10 @@ import Svg, { Circle, Rect } from 'react-native-svg';
 import { db, authentication } from '../lib/firebase.js';
 import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 export default B_week = () => {
 
     const navigation = useNavigation();
