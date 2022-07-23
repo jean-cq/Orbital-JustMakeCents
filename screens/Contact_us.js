@@ -102,9 +102,9 @@ export default Contact_us = () => {
                             color={'black'}
                             size={30}
                             style={styles.icons} />
-                <Text style = {styles.text}>Our Email</Text>
+                <Text style = {styles.text}>justmakecents2022@gmail.com</Text>
                 
-                <Text style = {styles.linktext}>justmakecents2022@gmail.com</Text>
+                <Text style = {styles.linktext}></Text>
             </View>
             <View style = {styles.line}>
             </View>
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         
     },
     text:{
-        padding:10,
+        padding:HEIGHT *0.015,
         textAlign:'center'
     },
     linktext:{
