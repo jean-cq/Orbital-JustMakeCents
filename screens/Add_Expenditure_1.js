@@ -414,11 +414,8 @@ export default Add_Expenditure_1 = () => {
             <View style={styles.keyboardContainer}>
                 <View style={{ flex: 1, justifyContent: 'space-between' }}>
                     <View>
-                        <TouchableOpacity onPress={() => toggleOpen(true)} style={styles.input}>
-                            <Text style={styles.inputText}>
-                                {date ? moment(date).format("Do MMM YY") : '  Date'}
-                            </Text>
-                        </TouchableOpacity>
+                    <Catebutton text={date ? moment(date).format("Do MMM YY") : 'Date'} onPress={() => toggleOpen(true)} />
+                        
 
                         <Modal
                             transparent
@@ -506,24 +503,6 @@ const styles = StyleSheet.create({
     textInput: {
         fontSize: 23,
         marginLeft:64
-    },
-    input: {
-        backgroundColor: 'orange',
-        paddingVertical: 5,
-        paddingHorizontal: 8,
-
-        borderRadius: 10,
-        marginLeft: 18,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    inputText: {
-        fontSize: 13,
-
-        textAlign: 'center',
-        justifyContent: 'center',
-        color: 'white'
     },
     contentContainer: {
         flexDirection: 'column',

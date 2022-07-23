@@ -59,6 +59,7 @@ export default A_month = () => {
                 },
                 key: `pie-${index}`,
             }))
+            
 
     return (
         <ScrollView>
@@ -68,7 +69,7 @@ export default A_month = () => {
 <View>
     <TouchableOpacity onPress={() => toggleOpen(true)} style={styles.input}>
         <Text style={styles.inputText}>
-            {month ? moment(month).format('YYYY/MM') : '   Date'}
+            {month ? moment(month).format('YYYY/MM') : 'Month'}
         </Text>
     </TouchableOpacity>
 
@@ -99,7 +100,7 @@ export default A_month = () => {
 </View>
 
         <View style = {{width: WIDTH * 0.9, alignSelf: 'center'}}>
-            <Text>Month!</Text>
+            
 
 
             <Text>Line chart for week trends</Text>
@@ -190,5 +191,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginHorizontal: 20,
         marginVertical: 70,
+    },input: {
+        backgroundColor: 'white',
+        paddingVertical: 8,
+        
+        paddingHorizontal:2,
+        borderRadius: 5,
+        width: WIDTH * 0.3,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign:'center'
+    },
+    inputText: {
+        fontSize: 13,       
+        color: 'black'
     },
   });

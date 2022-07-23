@@ -191,7 +191,7 @@ export default Expenditure = () => {
                 <View>
                     <TouchableOpacity onPress={() => toggleOpen(true)} style={styles.input}>
                         <Text style={styles.inputText}>
-                            {month ? moment(month).format('YYYY/MM') : '   Date'}
+                            {month ? moment(month).format('YYYY/MM') : 'Month'}
                         </Text>
                     </TouchableOpacity>
 
@@ -205,7 +205,7 @@ export default Expenditure = () => {
                         <View style={styles.contentContainer}>
                             <View style={styles.content}>
                                 <MonthPicker
-                                    selectedDate={month || new Date()}
+                                    selectedDate={month || new Date().getMonth}
                                     onMonthChange={setMonth}
                                 />
                                 <TouchableOpacity
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         width: '32%',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     inputText: {
