@@ -71,7 +71,14 @@ export default B_week = () => {
             const querySnapshot = await onSnapshot(expRef, (refSnapshot) => {
                 const expList = [];
                 refSnapshot.forEach((doc) => {
-                    expList.push(doc.data());
+                    expList.push({category: "Traffic", amount: doc.data().traffic});
+                    expList.push({category: "Recreation", amount: doc.data().recreation});
+                    expList.push({category: "Medical", amount: doc.data().medical});
+                    expList.push({category: "Beautify", amount: doc.data().beautify});
+                    expList.push({category: "Diet", amount: doc.data().diet});
+                    expList.push({category: "Education", amount: doc.data().education});
+                    expList.push({category: "Necessity", amount: doc.data().necessity});
+                    expList.push({category: "Others", amount: doc.data().others});
                 });
             setExpenditureData(expList);
             console.log(expList);
@@ -135,7 +142,7 @@ export default B_week = () => {
 
             <FlatList
                 showsVerticalScrollIndicator={true}
-                data={items}
+                data={ExpenditureData}
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
