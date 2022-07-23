@@ -28,6 +28,7 @@ export default A_month = () => {
     const [show, setShow] = useState(false);
     const [isOpen, toggleOpen] = useState(false);
     const [month, setMonth] = useState(null);
+    const [IncomeData, setIncomeData] = useState([]);
 
     const userId = authentication.currentUser.uid;
     
@@ -38,6 +39,7 @@ export default A_month = () => {
             const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
                 const monthList = [];
                 const numList = [];
+                const incomeList = [];
                 refSnapshot.forEach((doc) => {
                     monthList.push({id: '0', category: "Traffic", amount: doc.data().traffic});
                     monthList.push({id: '1', category: "Recreation", amount: doc.data().recreation});
@@ -55,9 +57,12 @@ export default A_month = () => {
                     numList.push(doc.data().education);
                     numList.push(doc.data().necessity);
                     numList.push(doc.data().others);
+                    incomeList.push({category: "Income", amount: doc.data().income});
+                    incomeList.push({category: "Expenditure", amount: doc.data().expenditure});
                 });
                 setExpenditureData(monthList);
                 setNumData(numList);
+                setIncomeData(incomeList);
             });
         };
         getData();
@@ -123,13 +128,7 @@ export default A_month = () => {
 
             <Text>Line chart for week trends</Text>
             
-            <YAxis
-                    style={{ marginVertical: -10 }}
-                    data={ExpenditureData}
-                    formatLabel={(value, index) => value}
-                    contentInset={{ left: 10, right: 10 }}
-                    svg={{ fontSize: 10, fill: 'black' }}
-                />
+            
                 <LineChart
                 style={{ height: 200 }}
                 data={data}
@@ -148,8 +147,10 @@ export default A_month = () => {
 
             <Text>Bar chart income vs expenditure</Text>
             <BarChart style={{ height: 200 }} 
-            data={ExpenditureData} 
+            data={IncomeData} 
             svg={{ fill }} 
+            yAccessor={({ item }) => item.amount}
+            xAccessor={({ item }) => item.category}
             contentInset={{ top: 30, bottom: 30 }}>
                 <Grid />
             </BarChart>
