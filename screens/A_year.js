@@ -32,7 +32,7 @@ export default A_month = () => {
 
     const userId = authentication.currentUser.uid;
     
-    const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==", moment(month).format('YYYY/MM')));
+    const monthRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", "2022"));
 
     const display = () => {
         const getData = async () => {
