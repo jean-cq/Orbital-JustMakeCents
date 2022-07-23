@@ -20,7 +20,7 @@ import { ActivityIndicator } from 'react-native';
 import {database} from 'firebase/database';
 import { FirebaseError } from 'firebase/app';
 import { ref, set, onValue, getDatabase } from "firebase/database";
-import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
+import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc } from "firebase/firestore";
 import moment from 'moment';
 import MonthPicker from 'react-native-month-picker';
 
@@ -94,7 +94,54 @@ export default Expenditure = () => {
         toggleOpen(false);
     };
 
-
+    const showBudget = async() => {
+        const budgetWkDocRef = doc(db, "users/" + userId + "/budget/" + "week");
+        const budgetMnDocRef = doc(db, "users/" + userId + "/budget/" + "month");
+        const budgetYrDocRef = doc(db, "users/" + userId + "/budget/" + "year");
+        if (budgetWkDocRef.exists() == false) {
+            await setDoc(budgetWkDocRef, {
+                traffic: 0,
+                recreation: 0,
+                medical: 0,
+                beautify: 0,
+                diet: 0,
+                education: 0,
+                necessity:0,
+                others:0,
+            }).catch((error) => {
+                alert(error)
+            })
+        }
+        if (budgetMnDocRef.exists() == false) {
+            await setDoc(budgetMnDocRef, {
+                traffic: 0,
+                recreation: 0,
+                medical: 0,
+                beautify: 0,
+                diet: 0,
+                education: 0,
+                necessity:0,
+                others:0,
+            }).catch((error) => {
+                alert(error)
+            })
+        }
+        if (budgetYrDocRef.exists() == false) {
+            await setDoc(budgetYrDocRef, {
+                traffic: 0,
+                recreation: 0,
+                medical: 0,
+                beautify: 0,
+                diet: 0,
+                education: 0,
+                necessity:0,
+                others:0,
+            }).catch((error) => {
+                alert(error)
+            })
+        }
+        navigation.navigate('Budget');
+    }
     
 
     return (
@@ -108,7 +155,7 @@ export default Expenditure = () => {
                 <View style={{ flexDirection: 'column' }}>
                     <Text style={{ marginLeft: 50, fontSize: 16, fontWeight:'bold' }}>Budget</Text>
 
-                    <TouchableOpacity style={{ marginLeft: 50}} onPress={() => navigation.navigate('Budget')}>
+                    <TouchableOpacity style={{ marginLeft: 50}} onPress={showBudget}>
 
                         <Svg width='300' height= '30'>
                             <Rect
