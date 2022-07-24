@@ -52,6 +52,8 @@ export default A_year = () => {
 
     useEffect(() => {
         const getData = async () => {
+            const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", selectedYear));
+           
             const querySnapshot = onSnapshot(yearRef, (refSnapshot) => {
                 const monthList = [];
                 const numList = [];
@@ -91,8 +93,9 @@ export default A_year = () => {
                 setPerData(perList);
             });
         };
-        getData().then(changeModalVisibility);
-        console.log(selectedYear);
+        if(selectedYear !== 'Year'){
+        getData();
+        console.log(selectedYear);}
     },[])
 
 
@@ -139,7 +142,7 @@ export default A_year = () => {
             
 
 
-            <Text>Line chart for week trends</Text>
+            <Text>Line chart for year trends</Text>
             
             
                 <LineChart
