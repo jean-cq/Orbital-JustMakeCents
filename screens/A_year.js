@@ -17,6 +17,7 @@ import DatePicker from 'react-native-modern-datepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import moment from 'moment';
 import MonthPicker from 'react-native-month-picker';
+import Catebutton from '../components/Catebutton.js';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -32,10 +33,19 @@ export default A_month = () => {
     const [perData, setPerData] = useState([]);
     const [payNumData, setPayNumData] = useState([]);
     const [payCatData, setPayCatData] = useState([]);
+    const [selectedYear, setSelectedYear] = useState('Year');
+    const [isModalVisible, setisModalVisible] = useState(false);
+    const changeModalVisibility = (bool) =>{
+        setisModalVisible(bool)
+    }
+    const setData = (data) => {
+        setSelectedYear(data)
+    }
+    const tenYears = ["2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032"]
 
     const userId = authentication.currentUser.uid;
     
-    const monthRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", "2022"));
+    const monthRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", selectedYear));
     const payRef = query(collection(db, "uers/" + userId + "/payment"));
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
@@ -81,9 +91,10 @@ export default A_month = () => {
                 setPerData(perList);
             });
         };
-        getData();
-        toggleOpen(false);
+        getData().then(changeModalVisibility);
+        console.log(selectedYear);
     };
+
 
     const fill = 'rgb(134, 65, 244)'
         const data = NumData
@@ -105,33 +116,20 @@ export default A_month = () => {
 <View style={{ margin: 20}}>
 
 <View>
-    <TouchableOpacity onPress={() => toggleOpen(true)} style={styles.input}>
-        <Text style={styles.inputText}>
-            {month ? moment(month).format('YYYY/MM') : 'Month'}
-        </Text>
-    </TouchableOpacity>
-
-    <Modal
-        transparent
-        animationType="fade"
-        visible={isOpen}
-        onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-        }}>
-        <View style={styles.contentContainer}>
-            <View style={styles.content}>
-                <MonthPicker
-                    selectedDate={month || new Date()}
-                    onMonthChange={setMonth}
-                />
-                <TouchableOpacity
-                    style={styles.confirmButton}
-                    onPress={display}>
-                    <Text>Confirm</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    </Modal>
+<Catebutton text={selectedYear} onPress={() => changeModalVisibility(true)} />
+<Modal
+                        transparent={true}
+                        animationType = 'fade'
+                        visible = {isModalVisible}
+                        onRequestClose = {display}
+                        >
+                            <CardModal
+                            changeModalVisibility = {changeModalVisibility}
+                            data = {tenYears}
+                            setData = {setData}
+                            />
+                    </Modal>
+    
 </View>
 
 
