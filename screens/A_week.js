@@ -50,15 +50,15 @@ export default A_week = () => {
         const getDayMonth = (year, month, da) => {
             return new Date(year,month,da).getDay();
          }
-         const week = () => {
+         const week = (y,m,dt) => {
             const firstdayMonth = getDayMonth(y, m, 1);
             if(firstdayMonth === 0){
                 const w = Math.ceil(dt/7);
-                return 'w' + w;
+                return w;
             }else{
                 const differ =  dt - ((6 - firstdayMonth) + 1) ;
                 const ww = Math.ceil(differ/7);
-                return 'w' + ww;
+                return ww;
             }
 
 
@@ -74,10 +74,14 @@ export default A_week = () => {
     const weekSelelction = ['this week', 'last week'];
     const selected = () =>{
         if(selectedWeek === 'this week'){
-            return month(m) + '/' + week();
+            return month(m) + '/' + 'w' + week(y, m, dt);
         }else{
-            if(week() === 0)
-            return month(m - 1) + '/' + week();
+            if(week(y, m, dt) === 1){
+            return month(m - 1) + '/' + 'w' + week(y, m - 1,new Date().setDate(-7).getDate() );}
+            else{
+                return month(m) + '/' + 'w' + (week(y, m, dt) - 1);
+
+            }
         }
 
 

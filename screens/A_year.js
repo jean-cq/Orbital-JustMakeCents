@@ -38,9 +38,7 @@ export default A_year = () => {
     const changeModalVisibility = (bool) =>{
         setisModalVisible(bool)
     }
-    const setData = (data) => {
-        setSelectedYear(data)
-    }
+    
 
     const userId = authentication.currentUser.uid;
     const y = new Date().getFullYear();
@@ -112,8 +110,8 @@ export default A_year = () => {
                 setPerData(perList);
             });
         };
-
-        console.log(ExpenditureData);
+      
+        getData();
     },[])
 
 
