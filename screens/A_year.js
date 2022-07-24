@@ -112,8 +112,6 @@ export default A_year = () => {
                 setPerData(perList);
             });
         };
-        if(selectedYear !== 'Year'){
-        getData();}
 
         console.log(ExpenditureData);
     },[])
