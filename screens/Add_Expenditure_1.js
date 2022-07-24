@@ -146,6 +146,7 @@ export default Add_Expenditure_1 = () => {
                 alert(error)
             })
             
+            if (selectedPayment != "Card") {
                 if (choice == "Expenditure") {
                     updateDoc(doc(db, "users/" + userId + "/payment/" + selectedPayment), {
                         Expenses: increment(num),
@@ -162,6 +163,9 @@ export default Add_Expenditure_1 = () => {
                         alert(error)
                     })
                 }
+            }
+
+                
         
 
 
