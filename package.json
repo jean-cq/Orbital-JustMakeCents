@@ -58,6 +58,7 @@
     "react-year-picker": "^0.3.7",
     "rn-segmented-control": "^1.1.2",
     "typescript": "~4.3.5",
+    "victory-native": "^36.5.3",
     "webpack-dev-server": "~3.11.0"
   },
   "devDependencies": {
