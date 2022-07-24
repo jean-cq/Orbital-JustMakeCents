@@ -35,6 +35,8 @@ export default A_year = () => {
     const [payNumData, setPayNumData] = useState([]);
     const [payCatData, setPayCatData] = useState([]);
     const [isModalVisible, setisModalVisible] = useState(false);
+    const [selectedYear, setSelectedYear] = useState('2022');
+    const tenYears = ["2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032"]
     const changeModalVisibility = (bool) =>{
         setisModalVisible(bool)
     }
@@ -49,10 +51,14 @@ export default A_year = () => {
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
+    const setData = (data) => {
+        setSelectedYear(data)
+    }
+
     useEffect(() => {
 
         const getData = () => {
-            const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", y));
+            const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", selectedYear));
 
            
             const querySnapshot = onSnapshot(yearRef, (refSnapshot) => {
@@ -111,8 +117,9 @@ export default A_year = () => {
             });
         };
       
-        getData();
-    },[])
+        if(selectedYear !== 'Year'){
+            getData();}
+    },[selectedYear])
 
 
     const fill = 'rgb(134, 65, 244)'
@@ -138,7 +145,23 @@ export default A_year = () => {
 
         <View style = {{width: WIDTH * 0.9, alignSelf: 'center'}}>
             
-
+        <View>
+        <Catebutton text={selectedYear} onPress={() => changeModalVisibility(true)} />
+        <Modal
+                                transparent={true}
+                                animationType = 'fade'
+                                visible = {isModalVisible}
+                                onRequestClose = {null}
+                                >
+                                    
+                                    <CardModal
+                                    changeModalVisibility = {changeModalVisibility}
+                                    data = {tenYears}
+                                    setData = {setData}
+                                    />
+                            </Modal>
+            
+        </View>
 
             <Text>Line chart for year trends</Text>
             
