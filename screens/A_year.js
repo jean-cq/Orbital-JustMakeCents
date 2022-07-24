@@ -50,7 +50,7 @@ export default A_year = () => {
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
-    const display = () => {
+    useEffect(() => {
         const getData = async () => {
             const querySnapshot = onSnapshot(yearRef, (refSnapshot) => {
                 const monthList = [];
@@ -93,7 +93,7 @@ export default A_year = () => {
         };
         getData().then(changeModalVisibility);
         console.log(selectedYear);
-    };
+    },[])
 
 
     const fill = 'rgb(134, 65, 244)'
@@ -121,7 +121,7 @@ export default A_year = () => {
                         transparent={true}
                         animationType = 'fade'
                         visible = {isModalVisible}
-                        onRequestClose = {display}
+                        onRequestClose = {null}
                         >
                             <CardModal
                             changeModalVisibility = {changeModalVisibility}

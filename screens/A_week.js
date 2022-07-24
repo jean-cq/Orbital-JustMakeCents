@@ -41,17 +41,30 @@ export default A_week = () => {
         setSelectedYear(data)
     }
     const currentDate = new Date();
-        const m = currentDate.getMonth() - 1;
+        const m = currentDate.getMonth();
         const y = currentDate.getFullYear();
+        const d = currentDate.getDay();
+        const dt = currentDate.getDate();
         const getDateMonth = (year, month, da) => {
            return new Date(year,month,da).getDate();
         };
         const getDayMonth = (year, month, da) => {
             return new Date(year,month,da).getDay();
          }
-       
-        const d = currentDate.getDay();
-        const dt = currentDate.getDate();
+         const week = () => {
+            const firstdayMonth = getDayMonth(y, m, 1);
+            if(firstdayMonth === 0){
+                const w = Math.ceil(dt/7);
+                return 'w' + w;
+            }else{
+                const differ =  dt - ((6 - firstdayMonth) + 1) ;
+                const ww = Math.ceil(differ/7);
+                return 'w' + ww;
+            }
+
+
+    };
+        
     const tenYears = ["2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032"]
 
     const userId = authentication.currentUser.uid;
