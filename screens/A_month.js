@@ -138,7 +138,7 @@ export default A_month = () => {
             
 
 
-            <Text>Line chart for week trends</Text>
+            <Text>Line chart for month trends</Text>
             
             
                 <LineChart

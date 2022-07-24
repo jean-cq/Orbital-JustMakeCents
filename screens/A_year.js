@@ -34,7 +34,6 @@ export default A_year = () => {
     const [perData, setPerData] = useState([]);
     const [payNumData, setPayNumData] = useState([]);
     const [payCatData, setPayCatData] = useState([]);
-    const [selectedYear, setSelectedYear] = useState('Year');
     const [isModalVisible, setisModalVisible] = useState(false);
     const changeModalVisibility = (bool) =>{
         setisModalVisible(bool)
@@ -42,18 +41,17 @@ export default A_year = () => {
     const setData = (data) => {
         setSelectedYear(data)
     }
-    const tenYears = ["2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032"]
 
-    const userId = authentication.currentUser.uid;
+    const year = new Date().getFullYear();
     
-    const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", selectedYear));
-    const payRef = query(collection(db, "uers/" + userId + "/payment"));
+    const userId = authentication.currentUser.uid;
+
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
     useEffect(() => {
         const getData = async () => {
-            const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", selectedYear));
+            const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", year));
            
             const querySnapshot = onSnapshot(yearRef, (refSnapshot) => {
                 const monthList = [];
@@ -110,8 +108,13 @@ export default A_year = () => {
                 setPerData(perList);
             });
         };
+<<<<<<< Updated upstream
         if(selectedYear !== 'Year'){
         getData();}
+=======
+        getData();
+        console.log(year);
+>>>>>>> Stashed changes
     },[])
 
 
@@ -133,24 +136,6 @@ export default A_year = () => {
         <ScrollView>
 
 <View style={{ margin: 20}}>
-
-<View>
-<Catebutton text={selectedYear} onPress={() => changeModalVisibility(true)} />
-<Modal
-                        transparent={true}
-                        animationType = 'fade'
-                        visible = {isModalVisible}
-                        onRequestClose = {null}
-                        >
-                            
-                            <CardModal
-                            changeModalVisibility = {changeModalVisibility}
-                            data = {tenYears}
-                            setData = {setData}
-                            />
-                    </Modal>
-    
-</View>
 
 
 </View>
