@@ -11,6 +11,7 @@ const Tab = createMaterialTopTabNavigator();
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
+
 export default function AnalyticsStacks() {
   return (
       <Tab.Navigator

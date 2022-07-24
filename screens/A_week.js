@@ -30,7 +30,7 @@ export default A_week = () => {
     const [IncomeData, setIncomeData] = useState([]);
     const [perData, setPerData] = useState([]);
     const [payNumData, setPayNumData] = useState([]);
-    const [selectedWeek, setSelectedWeek] = useState('Week');
+    const [selectedWeek, setSelectedWeek] = useState('this week');
     const [payCatData, setPayCatData] = useState([]);
     const [isModalVisible, setisModalVisible] = useState(false);
     const changeModalVisibility = (bool) =>{
@@ -136,11 +136,11 @@ export default A_week = () => {
             });
         };
 
-        if(selectedWeek !== 'Week'){
+        
         
         getData();
-        console.log(selected());}
-    },[]);
+        console.log(selected());
+    },[selectedWeek]);
 
 
     const fill = 'rgb(134, 65, 244)'

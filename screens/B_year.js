@@ -66,7 +66,7 @@ export default B_year = () => {
     const y = new Date().getFullYear();
     const userId = authentication.currentUser.uid;
     const expRef = query(collection(db, "users/" + userId + "/budget"), where("category", "==", "year"));
-    const monthRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", y));
+    const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", y.toString()));
 
     useEffect(() => {
         const getData = async () => {
@@ -89,7 +89,7 @@ export default B_year = () => {
             console.log(expList);
             });
         };const getYearData = async () => {
-                    const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
+                    const querySnapshot = onSnapshot(yearRef, (refSnapshot) => {
                         const incomeList = [];
                         refSnapshot.forEach((doc) => {                           
                             incomeList.push(doc.data().expenditure);
@@ -101,8 +101,10 @@ export default B_year = () => {
                 getData();
                 setSumBudget(ExpenditureData[8]);
                 console.log(sumBudget);
-                console.log(IncomeData[0]);
+                console.log(IncomeData);
+                console.log(y);
     }, []);
+
     const updateBudget = async() => {
         const budDocRef = doc(db, "users/" + userId + "/budget" + "/year")
         const sfDoc = await getDoc(budDocRef)
