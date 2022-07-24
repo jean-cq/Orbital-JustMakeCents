@@ -17,6 +17,7 @@ import DatePicker from 'react-native-modern-datepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import moment from 'moment';
 import MonthPicker from 'react-native-month-picker';
+import { VictoryPie } from 'victory-native';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -53,14 +54,30 @@ export default A_month = () => {
                     monthList.push({id: '5', category: "Education", amount: doc.data().education});
                     monthList.push({id: '6', category: "Necessity", amount: doc.data().necessity});
                     monthList.push({id: '7', category: "Others", amount: doc.data().others});
-                    numList.push(doc.data().traffic);
-                    numList.push(doc.data().recreation);
-                    numList.push(doc.data().medical);
-                    numList.push(doc.data().beautify);
-                    numList.push(doc.data().diet);
-                    numList.push(doc.data().education);
-                    numList.push(doc.data().necessity);
-                    numList.push(doc.data().others);
+                    if (doc.data().traffic != 0) {
+                        numList.push({y: doc.data().traffic, x: "Traffic, "+ parseFloat(doc.data().traffic / doc.data().expenditure * 100).toFixed(2) + "%"});
+                    }
+                    if (doc.data().recreation != 0) {
+                        numList.push({y: doc.data().recreation, x: "Recreation, "+ parseFloat(doc.data().recreation / doc.data().expenditure * 100).toFixed(2) + "%"});
+                    }
+                    if (doc.data().medical != 0) {
+                        numList.push({y: doc.data().medical, x: "Medical, "+ parseFloat(doc.data().medical / doc.data().expenditure * 100).toFixed(2) + "%"});
+                    }
+                    if (doc.data().beautify != 0) {
+                        numList.push({y: doc.data().beautify, x: "Beautify, "+ parseFloat(doc.data().beautify / doc.data().expenditure * 100).toFixed(2) + "%"});
+                    }
+                    if (doc.data().diet != 0) {
+                        numList.push({y: doc.data().diet, x: "Diet, "+ parseFloat(doc.data().diet / doc.data().expenditure * 100).toFixed(2) + "%"});
+                    }
+                    if (doc.data().education != 0) {
+                        numList.push({y: doc.data().education, x: "Education, "+ parseFloat(doc.data().education / doc.data().expenditure * 100).toFixed(2) + "%"});
+                    }
+                    if (doc.data().necessity != 0) {
+                        numList.push({y: doc.data().necessity, x: "Necessity, "+ parseFloat(doc.data().necessity / doc.data().expenditure * 100).toFixed(2) + "%"});
+                    } 
+                    if (doc.data().others != 0) {
+                        numList.push({y: doc.data().others, x: "Others, "+ parseFloat(doc.data().others / doc.data().expenditure * 100).toFixed(2) + "%"});
+                    }
                     incomeList.push({category: "Income", amount: doc.data().income});
                     incomeList.push({category: "Expenditure", amount: doc.data().expenditure});
                     perList.push(parseFloat(doc.data().traffic / doc.data().expenditure * 100).toFixed(2));
@@ -204,7 +221,17 @@ export default A_month = () => {
 
             <Text>    </Text>
             <Text>Pie chart for each category</Text>
-            <PieChart style={{ height: 200 }} data={pieData} />
+            <VictoryPie
+                data={NumData}
+                width={400}
+                height={250}
+                innerRadius={50}
+                style={{
+                labels: {
+                fill: 'black', fontSize: 15, padding: 7,
+                }, }}
+                colorScale={colorScheme}
+                /> 
 
 
             

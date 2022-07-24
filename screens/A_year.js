@@ -45,15 +45,16 @@ export default A_year = () => {
     const tenYears = ["2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032"]
 
     const userId = authentication.currentUser.uid;
+    const y = new Date().getFullYear();
     
-    const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", selectedYear));
+    const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", "2022"));
     const payRef = query(collection(db, "uers/" + userId + "/payment"));
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
     useEffect(() => {
-        const getData = async () => {
-            const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", selectedYear));
+        const getData = () => {
+            const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", y));
            
             const querySnapshot = onSnapshot(yearRef, (refSnapshot) => {
                 const monthList = [];
@@ -112,6 +113,7 @@ export default A_year = () => {
         };
         if(selectedYear !== 'Year'){
         getData();}
+        console.log(ExpenditureData);
     },[])
 
 
@@ -133,25 +135,6 @@ export default A_year = () => {
         <ScrollView>
 
 <View style={{ margin: 20}}>
-
-<View>
-<Catebutton text={selectedYear} onPress={() => changeModalVisibility(true)} />
-<Modal
-                        transparent={true}
-                        animationType = 'fade'
-                        visible = {isModalVisible}
-                        onRequestClose = {null}
-                        >
-                            
-                            <CardModal
-                            changeModalVisibility = {changeModalVisibility}
-                            data = {tenYears}
-                            setData = {setData}
-                            />
-                    </Modal>
-    
-</View>
-
 
 </View>
 
