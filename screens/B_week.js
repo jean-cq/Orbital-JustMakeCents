@@ -79,7 +79,6 @@ export default B_week = () => {
                     expList.push({id: '7', category: "Others", amount: doc.data().others});
                 });
             setExpenditureData(expList);
-            console.log(expList);
             });
         };
         getData();

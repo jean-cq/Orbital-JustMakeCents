@@ -29,10 +29,16 @@ export default A_month = () => {
     const [isOpen, toggleOpen] = useState(false);
     const [month, setMonth] = useState(null);
     const [IncomeData, setIncomeData] = useState([]);
+    const [perData, setPerData] = useState([]);
+    const [payNumData, setPayNumData] = useState([]);
+    const [payCatData, setPayCatData] = useState([]);
 
     const userId = authentication.currentUser.uid;
     
     const monthRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", "2022"));
+    const payRef = query(collection(db, "uers/" + userId + "/payment"));
+    const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
+    const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
     const display = () => {
         const getData = async () => {
@@ -40,6 +46,7 @@ export default A_month = () => {
                 const monthList = [];
                 const numList = [];
                 const incomeList = [];
+                const perList = [];
                 refSnapshot.forEach((doc) => {
                     monthList.push({id: '0', category: "Traffic", amount: doc.data().traffic});
                     monthList.push({id: '1', category: "Recreation", amount: doc.data().recreation});
@@ -59,10 +66,19 @@ export default A_month = () => {
                     numList.push(doc.data().others);
                     incomeList.push({category: "Income", amount: doc.data().income});
                     incomeList.push({category: "Expenditure", amount: doc.data().expenditure});
+                    perList.push(parseFloat(doc.data().traffic / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().recreation / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().medical / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().beautify / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().diet / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().education / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().necessity / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().others / doc.data().expenditure * 100).toFixed(2));
                 });
                 setExpenditureData(monthList);
                 setNumData(numList);
                 setIncomeData(incomeList);
+                setPerData(perList);
             });
         };
         getData();
@@ -73,12 +89,11 @@ export default A_month = () => {
         const data = NumData
         const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7)
         const pieData = data
-            .filter((value) => value != 0)
             .map((value, index) => ({
                 value,
                 svg: {
-                    fill: randomColor(),
-                    onPress: () => console.log('press', index),
+                    fill: colorScheme[index],
+                    onPress: () => alert(categories[index] + ", " + perData[index] + "%"),
                 },
                 key: `pie-${index}`,
             }))
@@ -132,7 +147,7 @@ export default A_month = () => {
                 <LineChart
                 style={{ height: 200 }}
                 data={data}
-                svg={{ stroke: 'rgb(134, 65, 244)' }}
+                svg={{ stroke: 'orange' }}
                 contentInset={{ top: 20, bottom: 20 }}
             >
                 <Grid />
@@ -146,33 +161,50 @@ export default A_month = () => {
                 />
 
             <Text>Bar chart income vs expenditure</Text>
-            <BarChart style={{ height: 200 }} 
+            <YAxis
+                    data={IncomeData}
+                    contentInset={ {top: 20, bottom: 20} }
+                    svg={{
+                        fill: 'grey',
+                        fontSize: 10,
+                    }}
+                    numberOfTicks={10}
+                    formatLabel={(value) => `${value}ºC`}
+                />
+            <BarChart style={{ height: 200, marginHorizontal: 20 }} 
             data={IncomeData} 
-            svg={{ fill }} 
+            svg={{ stroke: 'orange', fill: 'orange' }}
             yAccessor={({ item }) => item.amount}
             xAccessor={({ item }) => item.category}
             contentInset={{ top: 30, bottom: 30 }}>
                 <Grid />
             </BarChart>
+            <XAxis
+                    style={{ marginHorizontal: 10, marginVertical: 5 }}
+                    data={IncomeData}
+                    formatLabel={(value, index) => IncomeData[index].category}
+                    contentInset={{ left: 80, right: 80 }}
+                    svg={{ fontSize: 10, fill: 'black' }}
+                />
 
             <Text>Bar chart for each category</Text>
             <BarChart style={{ height: 200 }} 
             data={ExpenditureData} 
-            svg={{ fill }} 
+            svg={{ stroke: '#fd5e53', fill: '#fd5e53' }}
             yAccessor={({ item }) => item.amount}
             xAccessor={({ item }) => item.category}
             contentInset={{ top: 30, bottom: 30 }}>   
                 <Grid />
             </BarChart>
             <XAxis
-                    style={{ marginHorizontal: 10, marginVertical: -5 }}
+                    style={{ marginHorizontal: 12, marginVertical: -10 }}
                     data={ExpenditureData}
-                    formatLabel={(value, index) => value}
+                    formatLabel={(value, index) => ExpenditureData[index].category}
                     contentInset={{ left: 10, right: 10 }}
-                    svg={{ fontSize: 10, fill: 'black' }}
+                    svg={{ fontSize: 7, fill: 'black' }}
                 />
 
-
+            <Text>    </Text>
             <Text>Pie chart for each category</Text>
             <PieChart style={{ height: 200 }} data={pieData} />
 
