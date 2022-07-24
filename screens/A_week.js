@@ -27,18 +27,17 @@ export default A_week = () => {
     const [NumData, setNumData] = useState([]);
     const [show, setShow] = useState(false);
     const [isOpen, toggleOpen] = useState(false);
-    const [month, setMonth] = useState(null);
     const [IncomeData, setIncomeData] = useState([]);
     const [perData, setPerData] = useState([]);
     const [payNumData, setPayNumData] = useState([]);
+    const [selectedWeek, setSelectedWeek] = useState('Week');
     const [payCatData, setPayCatData] = useState([]);
-    const [selectedYear, setSelectedYear] = useState('Year');
     const [isModalVisible, setisModalVisible] = useState(false);
     const changeModalVisibility = (bool) =>{
         setisModalVisible(bool)
     }
     const setData = (data) => {
-        setSelectedYear(data)
+        setSelectedWeek(data)
     }
     const currentDate = new Date();
         const m = currentDate.getMonth();
@@ -64,17 +63,36 @@ export default A_week = () => {
 
 
     };
+    const month = () =>{
+        if ((m+1) < 10){
+            return y + '/0' + (m+1)
+        }else {
+            return y +'/'+ (m+1)
+        }
+    }
         
-    const tenYears = ["2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032"]
+    const weekSelelction = ['this week', 'last week'];
+    const selected = () =>{
+        if(selectedWeek === 'this week'){
+            return month() + '/' + week();
+        }
+
+
+    }
+
 
     const userId = authentication.currentUser.uid;
     
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
     const display = () => {
         const getData = async () => {
-            const querySnapshot = onSnapshot(yearRef, (refSnapshot) => {
+            const querySnapshot = onSnapshot(weekRef, (refSnapshot) => {
                 const monthList = [];
                 const numList = [];
                 const incomeList = [];
@@ -113,8 +131,13 @@ export default A_week = () => {
                 setPerData(perList);
             });
         };
-        getData().then(changeModalVisibility);
-        console.log(selectedYear);
+
+        if(selectedWeek !== 'Week'){
+        const weekRef = query(collection(db, "users/" + userId + "/week"), where("week", "==", selected()));
+        getData();
+        console.log(selectedWeek);}else{
+            Alert.alert('no data');
+        }
     };
 
 
@@ -138,7 +161,7 @@ export default A_week = () => {
 <View style={{ margin: 20}}>
 
 <View>
-<Catebutton text={selectedYear} onPress={() => changeModalVisibility(true)} />
+<Catebutton text={selectedWeek} onPress={() => changeModalVisibility(true)} />
 <Modal
                         transparent={true}
                         animationType = 'fade'
@@ -147,7 +170,7 @@ export default A_week = () => {
                         >
                             <CardModal
                             changeModalVisibility = {changeModalVisibility}
-                            data = {tenYears}
+                            data = {weekSelelction}
                             setData = {setData}
                             />
                     </Modal>

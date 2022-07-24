@@ -126,6 +126,7 @@ export default A_year = () => {
                         visible = {isModalVisible}
                         onRequestClose = {null}
                         >
+                            
                             <CardModal
                             changeModalVisibility = {changeModalVisibility}
                             data = {tenYears}
