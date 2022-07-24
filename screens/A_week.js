@@ -83,10 +83,7 @@ export default A_week = () => {
 
     const userId = authentication.currentUser.uid;
     
-<<<<<<< Updated upstream
-=======
-    
->>>>>>> Stashed changes
+
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
