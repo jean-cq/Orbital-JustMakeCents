@@ -37,15 +37,71 @@ export default Expenditure = () => {
         { id: '3', status: true, category: 'others', name: 'scholarship', income: true, amount: 300.00, note : 'qkym'},
     ]);
     const [inputValue, setInputValue] = useState('');
+    const [sumBudget,setSumBudget] = useState(0);
     const [ExpenditureData, setExpenditureData] = useState([]);
-
+    const [bData, setbData] = useState([]);
+    const [IncomeData, setIncomeData] = useState([]);
     const [show, setShow] = useState(false);
     const [isOpen, toggleOpen] = useState(false);
     const [month, setMonth] = useState(null);
     const [loading, setLoading] = useState(true); // Set loading to true on component mount
     const [users, setUsers] = useState([]); // Initial empty array of users
 
-    
+
+
+    const y = new Date().getFullYear();
+    const m = new Date().getMonth() + 1;
+    const monthb = () =>{
+        if (m < 10){
+            return y+ '/0' +m
+        }else {
+            return y+'/'+m
+        }
+    }
+    const bRef = query(collection(db, "users/" + userId + "/budget"), where("category", "==", "month"));
+    const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==",monthb()));
+
+    useEffect(() => {
+        const getData = async () => {
+            const querySnapshot = onSnapshot(bRef, (refSnapshot) => {
+                const expList = [];
+               
+                refSnapshot.forEach((doc) => {
+                    expList.push({id: '0', category: "Traffic", amount: doc.data().traffic});
+                    expList.push({id: '1', category: "Recreation", amount: doc.data().recreation});
+                    expList.push({id: '2', category: "Medical", amount: doc.data().medical});
+                    expList.push({id: '3', category: "Beautify", amount: doc.data().beautify});
+                    expList.push({id: '4', category: "Diet", amount: doc.data().diet});
+                    expList.push({id: '5', category: "Education", amount: doc.data().education});
+                    expList.push({id: '6', category: "Necessity", amount: doc.data().necessity});
+                    expList.push({id: '7', category: "Others", amount: doc.data().others});
+                    expList.push(doc.data().traffic + doc.data().recreation+doc.data().medical + 
+                        doc.data().beautify + doc.data().diet + doc.data().education + doc.data().necessity + doc.data().others);
+                });
+            setbData(expList);
+            
+            
+            console.log(expList);                  
+            });
+        };const getMonthData = async () => {
+            const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
+                const incomeList = [];
+                refSnapshot.forEach((doc) => {                
+                    incomeList.push(doc.data().expenditure);
+                });
+                
+                setIncomeData(incomeList);
+            });
+        };
+        getData();
+        getMonthData();
+        
+        setSumBudget(bData[8]);
+        console.log(sumBudget);
+        console.log(IncomeData);
+         
+       
+    }, []);
 
    
 
@@ -175,7 +231,9 @@ export default Expenditure = () => {
                             <Rect
                                 x="0"
                                 y="10"
-                                width={0.75 * 225}
+                                width={(IncomeData[0] < sumBudget && IncomeData[0] > 0) 
+                                    ? ( IncomeData[0]/ sumBudget) * 225
+                                    : 225}
                                 height="15"
                                 fill ='yellow'
                                 strokeWidth="3"
@@ -185,7 +243,12 @@ export default Expenditure = () => {
                         </Svg>
 
                     </TouchableOpacity>
-                    <Text style={{ textAlign: 'right', marginRight: 70,fontSize: 10 }}>75%</Text>
+                    <Text style={{ textAlign: 'right', marginRight: 70,fontSize: 10 }}>{(sumBudget === 0)
+                ? 'please set your budget'
+                : IncomeData[0] === undefined
+                ? 'no expenses'
+                : 100 * IncomeData[0]/ sumBudget + '%'
+                }</Text>
                     </View>
                     
             </View>

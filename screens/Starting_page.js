@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     }, image: {
         width: WIDTH,
-        height:HEIGHT * 0.8,
+        height:HEIGHT * 0.78,
         justifyContent: "flex-start"
     }, fixToText: {
         flexDirection: 'row',

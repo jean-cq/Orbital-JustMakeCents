@@ -56,15 +56,7 @@ export default B_month = () => {
         setItems(item => item.status = !item.status)
     }
 
-    const loadAllExpenditure = async () => {
-
-        const { Expenditure, error } = await supabase.getAllExpenditure();
-        setExpenditureData(Expenditure)
-    }
-    useEffect(() => {
-        loadAllExpenditure();
-
-    }, [])
+   
 
     const y = new Date().getFullYear();
     const m = new Date().getMonth() + 1;
@@ -118,10 +110,7 @@ export default B_month = () => {
         getMonthData();
         setExp(IncomeData[0]);
         setSumBudget(ExpenditureData[8]);
-        console.log(exp);
-        console.log(sumBudget);
-        console.log(month());
-        console.log(a);      
+         
        
     }, []);
 
@@ -182,8 +171,10 @@ export default B_month = () => {
 
                 <Text style={{ textAlign: 'right', marginRight: 20, fontSize: 10 }}>{(sumBudget === 0)
                 ? 'please set your budget'
-                : 100 * IncomeData[0]/ sumBudget
-                }%</Text>
+                : IncomeData[0] === undefined
+                ? 'no expenses'
+                : 100 * IncomeData[0]/ sumBudget + '%'
+                }</Text>
             </View>
 
             <View style={{ backgroundColor: '#C4C4C4', padding: 10 }}>
