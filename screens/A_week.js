@@ -63,7 +63,7 @@ export default A_week = () => {
 
 
     };
-    const month = () =>{
+    const month = (m) =>{
         if ((m+1) < 10){
             return y + '/0' + (m+1)
         }else {
@@ -74,7 +74,10 @@ export default A_week = () => {
     const weekSelelction = ['this week', 'last week'];
     const selected = () =>{
         if(selectedWeek === 'this week'){
-            return month() + '/' + week();
+            return month(m) + '/' + week();
+        }else{
+            if(week() === 0)
+            return month(m - 1) + '/' + week();
         }
 
 
@@ -83,10 +86,6 @@ export default A_week = () => {
 
     const userId = authentication.currentUser.uid;
     
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
