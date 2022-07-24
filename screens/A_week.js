@@ -16,6 +16,7 @@ import DatePicker from 'react-native-modern-datepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import moment from 'moment';
 import MonthPicker from 'react-native-month-picker';
+import Catebutton from '../components/Catebutton.js';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -23,38 +24,98 @@ const HEIGHT = Dimensions.get('window').height;
 
 export default A_week = () => {
     const [ExpenditureData, setExpenditureData] = useState([]);
+    const [NumData, setNumData] = useState([]);
     const [show, setShow] = useState(false);
     const [isOpen, toggleOpen] = useState(false);
-    const [week, setWeek] = useState(null);
+    const [month, setMonth] = useState(null);
+    const [IncomeData, setIncomeData] = useState([]);
+    const [perData, setPerData] = useState([]);
+    const [payNumData, setPayNumData] = useState([]);
+    const [payCatData, setPayCatData] = useState([]);
+    const [selectedYear, setSelectedYear] = useState('Year');
+    const [isModalVisible, setisModalVisible] = useState(false);
+    const changeModalVisibility = (bool) =>{
+        setisModalVisible(bool)
+    }
+    const setData = (data) => {
+        setSelectedYear(data)
+    }
+    const currentDate = new Date();
+        const m = currentDate.getMonth() - 1;
+        const y = currentDate.getFullYear();
+        const getDateMonth = (year, month, da) => {
+           return new Date(year,month,da).getDate();
+        };
+        const getDayMonth = (year, month, da) => {
+            return new Date(year,month,da).getDay();
+         }
+       
+        const d = currentDate.getDay();
+        const dt = currentDate.getDate();
+    const tenYears = ["2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032"]
 
     const userId = authentication.currentUser.uid;
-    const date = new Date();
-    const weekRef = query(collection(db, "users/" + userId + "/expenditure"), where("date", "==", moment(date).format('YYYY/MM')));
+    
+    const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", selectedYear));
+    const payRef = query(collection(db, "uers/" + userId + "/payment"));
+    const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
+    const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
     const display = () => {
         const getData = async () => {
-            const querySnapshot = onSnapshot(weekRef, (refSnapshot) => {
-                const weekList = [];
+            const querySnapshot = onSnapshot(yearRef, (refSnapshot) => {
+                const monthList = [];
+                const numList = [];
+                const incomeList = [];
+                const perList = [];
                 refSnapshot.forEach((doc) => {
-                    weekList.push(doc.data());
+                    monthList.push({id: '0', category: "Traffic", amount: doc.data().traffic});
+                    monthList.push({id: '1', category: "Recreation", amount: doc.data().recreation});
+                    monthList.push({id: '2', category: "Medical", amount: doc.data().medical});
+                    monthList.push({id: '3', category: "Beautify", amount: doc.data().beautify});
+                    monthList.push({id: '4', category: "Diet", amount: doc.data().diet});
+                    monthList.push({id: '5', category: "Education", amount: doc.data().education});
+                    monthList.push({id: '6', category: "Necessity", amount: doc.data().necessity});
+                    monthList.push({id: '7', category: "Others", amount: doc.data().others});
+                    numList.push(doc.data().traffic);
+                    numList.push(doc.data().recreation);
+                    numList.push(doc.data().medical);
+                    numList.push(doc.data().beautify);
+                    numList.push(doc.data().diet);
+                    numList.push(doc.data().education);
+                    numList.push(doc.data().necessity);
+                    numList.push(doc.data().others);
+                    incomeList.push({category: "Income", amount: doc.data().income});
+                    incomeList.push({category: "Expenditure", amount: doc.data().expenditure});
+                    perList.push(parseFloat(doc.data().traffic / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().recreation / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().medical / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().beautify / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().diet / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().education / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().necessity / doc.data().expenditure * 100).toFixed(2));
+                    perList.push(parseFloat(doc.data().others / doc.data().expenditure * 100).toFixed(2));
                 });
-                setExpenditureData(weekList);
+                setExpenditureData(monthList);
+                setNumData(numList);
+                setIncomeData(incomeList);
+                setPerData(perList);
             });
         };
-        getData();
-        toggleOpen(false);
+        getData().then(changeModalVisibility);
+        console.log(selectedYear);
     };
 
+
     const fill = 'rgb(134, 65, 244)'
-        const data = [ExpenditureData, ExpenditureData.recreation, ExpenditureData.medical, ExpenditureData.beautify, ExpenditureData.diet, ExpenditureData.education, ExpenditureData.necessity, ExpenditureData.others]
+        const data = NumData
         const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7)
         const pieData = data
-            .filter((value) => value != 0)
             .map((value, index) => ({
                 value,
                 svg: {
-                    fill: randomColor(),
-                    onPress: () => console.log('press', index),
+                    fill: colorScheme[index],
+                    onPress: () => alert(categories[index] + ", " + perData[index] + "%"),
                 },
                 key: `pie-${index}`,
             }))
@@ -65,7 +126,22 @@ export default A_week = () => {
 
 <View style={{ margin: 20}}>
 
-
+<View>
+<Catebutton text={selectedYear} onPress={() => changeModalVisibility(true)} />
+<Modal
+                        transparent={true}
+                        animationType = 'fade'
+                        visible = {isModalVisible}
+                        onRequestClose = {display}
+                        >
+                            <CardModal
+                            changeModalVisibility = {changeModalVisibility}
+                            data = {tenYears}
+                            setData = {setData}
+                            />
+                    </Modal>
+    
+</View>
 
 
 </View>
@@ -76,17 +152,11 @@ export default A_week = () => {
 
             <Text>Line chart for week trends</Text>
             
-            <YAxis
-                    style={{ marginVertical: -10 }}
-                    data={data}
-                    formatLabel={(value, index) => value}
-                    contentInset={{ left: 10, right: 10 }}
-                    svg={{ fontSize: 10, fill: 'black' }}
-                />
+            
                 <LineChart
                 style={{ height: 200 }}
                 data={data}
-                svg={{ stroke: 'rgb(134, 65, 244)' }}
+                svg={{ stroke: 'orange' }}
                 contentInset={{ top: 20, bottom: 20 }}
             >
                 <Grid />
@@ -100,23 +170,50 @@ export default A_week = () => {
                 />
 
             <Text>Bar chart income vs expenditure</Text>
-            <BarChart style={{ height: 200 }} 
-            data={ExpenditureData} 
-            svg={{ fill }} 
-            contentInset={{ top: 30, bottom: 30 }}>
-                <Grid />
-            </BarChart>
-
-            <Text>Bar chart for each category</Text>
-            <BarChart style={{ height: 200 }} 
-            data={ExpenditureData} 
-            svg={{ fill }} 
+            <YAxis
+                    data={IncomeData}
+                    contentInset={ {top: 20, bottom: 20} }
+                    svg={{
+                        fill: 'grey',
+                        fontSize: 10,
+                    }}
+                    numberOfTicks={10}
+                    formatLabel={(value) => `${value}ºC`}
+                />
+            <BarChart style={{ height: 200, marginHorizontal: 20 }} 
+            data={IncomeData} 
+            svg={{ stroke: 'orange', fill: 'orange' }}
             yAccessor={({ item }) => item.amount}
             xAccessor={({ item }) => item.category}
             contentInset={{ top: 30, bottom: 30 }}>
                 <Grid />
             </BarChart>
+            <XAxis
+                    style={{ marginHorizontal: 10, marginVertical: 5 }}
+                    data={IncomeData}
+                    formatLabel={(value, index) => IncomeData[index].category}
+                    contentInset={{ left: 80, right: 80 }}
+                    svg={{ fontSize: 10, fill: 'black' }}
+                />
 
+            <Text>Bar chart for each category</Text>
+            <BarChart style={{ height: 200 }} 
+            data={ExpenditureData} 
+            svg={{ stroke: '#fd5e53', fill: '#fd5e53' }}
+            yAccessor={({ item }) => item.amount}
+            xAccessor={({ item }) => item.category}
+            contentInset={{ top: 30, bottom: 30 }}>   
+                <Grid />
+            </BarChart>
+            <XAxis
+                    style={{ marginHorizontal: 12, marginVertical: -10 }}
+                    data={ExpenditureData}
+                    formatLabel={(value, index) => ExpenditureData[index].category}
+                    contentInset={{ left: 10, right: 10 }}
+                    svg={{ fontSize: 7, fill: 'black' }}
+                />
+
+            <Text>    </Text>
             <Text>Pie chart for each category</Text>
             <PieChart style={{ height: 200 }} data={pieData} />
 

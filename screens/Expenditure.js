@@ -266,6 +266,7 @@ export default Expenditure = () => {
                             <Text style={{ flex: 2, textAlign: 'center' }}>{item.category}</Text>
                             <Text style={{ flex: 2, textAlign: 'right' }}> {item.income ? '+' : '-'}{item.amount} </Text>
                             <Text style={{ flex: 3, textAlign: 'right'}}> {item.note} </Text>
+                            
                         </View>
                         <View style={{ height: 1, backgroundColor:'grey' }}> 
                         </View>

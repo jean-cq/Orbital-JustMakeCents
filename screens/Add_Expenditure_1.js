@@ -507,6 +507,202 @@ export default Add_Expenditure_1 = () => {
             }
         }
 
+        const entryDate = moment(date).format('YYYY-MM-DD');
+        const m = new Date(entryDate).getMonth();
+        const y = new Date(entryDate).getFullYear();
+        const getDateMonth = (year, month, da) => {
+           return new Date(year,month,da).getDate();
+        };
+        const getDayMonth = (year, month, da) => {
+            return new Date(year,month,da).getDay();
+         }
+       
+        const d = new Date(entryDate).getDay();
+        const dt = new Date(entryDate).getDate();
+        const week = () => {
+                const firstdayMonth = getDayMonth(y, m, 1);
+                if(firstdayMonth === 0){
+                    const w = Math.ceil(dt/7);
+                    return 'w' + w;
+                }else{
+                    const differ =  dt - ((6 - firstdayMonth) + 1) ;
+                    const ww = Math.ceil(differ/7);
+                    return 'w' + ww;
+                }
+
+
+        };
+        const weekDocRef = doc(db, "users/" + userId + "/week/" + date.slice(0, 4) + date.slice(5, 7) + week());
+        const weekDoc = await getDoc(weekDocRef);
+
+        if (choice == "Expenditure" || "Income") {
+            if (weekDoc.exists() == false) {
+                if (choice == "Expenditure") {
+                    await setDoc(weekDocRef, {
+                        expenditure: +num,
+                        income: 0,
+                        traffic: 0,
+                        recreation: 0,
+                        medical: 0,
+                        beautify: 0,
+                        diet: 0,
+                        education: 0,
+                        necessity:0,
+                        others:0,
+                        week: date.slice(0, 7) + '/' + week(),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                    if (chosen == "Traffic") {
+                        await updateDoc(weekDocRef, {
+                            traffic: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Recreation") {
+                        await updateDoc(weekDocRef, {
+                            recreation: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Medical") {
+                        await updateDoc(weekDocRef, {
+                            medical: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Beautify") {
+                        await updateDoc(weekDocRef, {
+                            beautify: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Diet") {
+                        await updateDoc(weekDocRef, {
+                            diet: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Education") {
+                        await updateDoc(weekDocRef, {
+                            education: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Necessity") {
+                        await updateDoc(weekDocRef, {
+                            necessity: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Others") {
+                        await updateDoc(weekDocRef, {
+                            others: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                }
+                else {
+                    await setDoc(weekDocRef, {
+                        expenditure: 0,
+                        income: +num,
+                        income: 0,
+                        traffic: 0,
+                        recreation: 0,
+                        medical: 0,
+                        beautify: 0,
+                        diet: 0,
+                        education: 0,
+                        necessity:0,
+                        others:0,
+                        year: date.slice(0, 4),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                }
+            } 
+            else {
+                if (choice == "Expenditure") {
+                    await updateDoc(weekDocRef, {
+                        expenditure: increment(num),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                    if (chosen == "Traffic") {
+                        await updateDoc(weekDocRef, {
+                            traffic: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Recreation") {
+                        await updateDoc(weekDocRef, {
+                            recreation: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Medical") {
+                        await updateDoc(weekDocRef, {
+                            medical: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Beautify") {
+                        await updateDoc(weekDocRef, {
+                            beautify: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Diet") {
+                        await updateDoc(weekDocRef, {
+                            diet: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Education") {
+                        await updateDoc(weekDocRef, {
+                            education: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Necessity") {
+                        await updateDoc(weekDocRef, {
+                            necessity: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                    else if (chosen == "Others") {
+                        await updateDoc(weekDocRef, {
+                            others: increment(num),
+                        }).catch((error) => {
+                            alert(error)
+                        })
+                    }
+                }
+                else {
+                    await updateDoc(weekDocRef, {
+                        income: increment(num),
+                    }).catch((error) => {
+                        alert(error)
+                    })
+                }
+            }
+        }
+
     
 
     }}

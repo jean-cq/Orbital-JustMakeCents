@@ -23,7 +23,7 @@ const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 
-export default A_month = () => {
+export default A_year = () => {
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [NumData, setNumData] = useState([]);
     const [show, setShow] = useState(false);
@@ -45,14 +45,14 @@ export default A_month = () => {
 
     const userId = authentication.currentUser.uid;
     
-    const monthRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", selectedYear));
+    const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", selectedYear));
     const payRef = query(collection(db, "uers/" + userId + "/payment"));
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
     const display = () => {
         const getData = async () => {
-            const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
+            const querySnapshot = onSnapshot(yearRef, (refSnapshot) => {
                 const monthList = [];
                 const numList = [];
                 const incomeList = [];

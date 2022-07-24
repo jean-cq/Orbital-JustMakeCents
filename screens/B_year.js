@@ -84,9 +84,8 @@ export default B_year = () => {
                     expList.push(doc.data().traffic + doc.data().recreation+doc.data().medical + 
                         doc.data().beautify + doc.data().diet + doc.data().education + doc.data().necessity + doc.data().others);
                 });
-            setExpenditureData(expList);
+            setExpenditureData(expList);            
             
-            setSumBudget(ExpenditureData[8])
             console.log(expList);
             });
         };const getYearData = async () => {
@@ -100,6 +99,9 @@ export default B_year = () => {
                 };
                 getYearData();
                 getData();
+                setSumBudget(ExpenditureData[8]);
+                console.log(sumBudget);
+                console.log(IncomeData[0]);
     }, []);
     const updateBudget = async() => {
         const budDocRef = doc(db, "users/" + userId + "/budget" + "/year")
@@ -156,6 +158,8 @@ export default B_year = () => {
 
                 <Text style={{ textAlign: 'right', marginRight: 20, fontSize: 10 }}>{(sumBudget === 0)
                 ? 'please set your budget'
+                : IncomeData[0] === undefined
+                ? 'no expenses'
                 : 100 * IncomeData[0]/ sumBudget + '%'
                 }</Text>
             </View>

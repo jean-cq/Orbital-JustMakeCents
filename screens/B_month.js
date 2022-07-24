@@ -75,13 +75,16 @@ export default B_month = () => {
             return y+'/'+m
         }
     }
+    
     const userId = authentication.currentUser.uid;
     const expRef = query(collection(db, "users/" + userId + "/budget"), where("category", "==", "month"));
     const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==",month()));
+    const d = new Date(moment('2022/07/05').format('YYYY-MM-DD')).getMonth();
+    const a = new Date('2022',d,1);
     
     useEffect(() => {
         const getData = async () => {
-            const querySnapshot = await onSnapshot(expRef, (refSnapshot) => {
+            const querySnapshot = onSnapshot(expRef, (refSnapshot) => {
                 const expList = [];
                
                 refSnapshot.forEach((doc) => {
@@ -118,6 +121,8 @@ export default B_month = () => {
         console.log(exp);
         console.log(sumBudget);
         console.log(month());
+        console.log(a);      
+       
     }, []);
 
     const updateBudget = async() => {
