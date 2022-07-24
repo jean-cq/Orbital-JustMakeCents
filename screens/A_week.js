@@ -69,8 +69,6 @@ export default A_week = () => {
 
     const userId = authentication.currentUser.uid;
     
-    const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", selectedYear));
-    const payRef = query(collection(db, "uers/" + userId + "/payment"));
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
@@ -229,10 +227,6 @@ export default A_week = () => {
             <Text>    </Text>
             <Text>Pie chart for each category</Text>
             <PieChart style={{ height: 200 }} data={pieData} />
-
-            <Text>Pie chart for payment method</Text>
-            <PieChart style={{ height: 200 }} data={pieData} />
-
             
         </View>
         </ScrollView>

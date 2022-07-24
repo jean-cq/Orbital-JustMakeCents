@@ -30,13 +30,10 @@ export default A_month = () => {
     const [month, setMonth] = useState(null);
     const [IncomeData, setIncomeData] = useState([]);
     const [perData, setPerData] = useState([]);
-    const [payNumData, setPayNumData] = useState([]);
-    const [payCatData, setPayCatData] = useState([]);
 
     const userId = authentication.currentUser.uid;
     
     const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==", moment(month).format('YYYY/MM')));
-    const payRef = query(collection(db, "uers/" + userId + "/payment"));
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
@@ -81,23 +78,8 @@ export default A_month = () => {
                 setPerData(perList);
             });
         };
-        const getPayData = async () => {
-            const querySnapshot = onSnapshot(payRef, (refSnapshot) => {
-                const payNumList = [];
-                const payCatList = [];
-                refSnapshot.forEach((doc) => {
-                    payNumList.push(doc.data().Expenses);
-                    payCatList.push(doc.data().Name);
-                });
-                setPayNumData(payNumList);
-                setPayCatData(payCatList);
-            })
-        };
         getData();
-        getPayData();
         toggleOpen(false);
-        console.log(payCatData);
-        console.log(payNumData);
     };
 
     const fill = 'rgb(134, 65, 244)'
@@ -224,8 +206,6 @@ export default A_month = () => {
             <Text>Pie chart for each category</Text>
             <PieChart style={{ height: 200 }} data={pieData} />
 
-            <Text>Pie chart for payment method</Text>
-            <PieChart style={{ height: 200 }} data={pieData} />
 
             
         </View>

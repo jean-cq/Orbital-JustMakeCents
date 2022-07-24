@@ -209,9 +209,6 @@ export default A_year = () => {
             <Text>Pie chart for each category</Text>
             <PieChart style={{ height: 200 }} data={pieData} />
 
-            <Text>Pie chart for payment method</Text>
-            <PieChart style={{ height: 200 }} data={pieData} />
-
             
         </View>
         </ScrollView>
