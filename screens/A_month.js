@@ -24,6 +24,11 @@ const HEIGHT = Dimensions.get('window').height;
 
 
 export default A_month = () => {
+    const y = new Date().getFullYear();
+    const mIndex = new Date().getMonth();
+    const monthNum = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
+    const m = monthNum[mIndex];
+    const thisMon = y + "/" + m;
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [NumData, setNumData] = useState([]);
     const [show, setShow] = useState(false);
@@ -33,6 +38,8 @@ export default A_month = () => {
     const [perData, setPerData] = useState([]);
 
     const userId = authentication.currentUser.uid;
+
+
     
     const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==", moment(month).format('YYYY/MM')));
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
