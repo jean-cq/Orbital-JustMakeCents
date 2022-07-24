@@ -14,6 +14,9 @@ Poster: https://drive.google.com/file/d/1A7osd4TZwHlwfLkRGAGpPPVXb2qdAglo/view?u
 Video: https://youtu.be/7euA97gQx0g
 
 ### Milestone 3
+Poster: https://drive.google.com/file/d/1DzFjSj6fmMFJITypQypx04ntwSiXnsYc/view?usp=sharing
+
+Video: 
 
 ## 💡Motivation
 
