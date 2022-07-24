@@ -117,11 +117,12 @@ function ShoppingListScreen() {
           tabBarActiveTintColor: 'orange',
         })}
       >
+        <Tab.Screen name="New Entry" component={Add_Expenditure_1}/>
           <Tab.Screen name="Analytics" component={AnalyticsStacks} />
             <Tab.Screen name="Expenditure" component={ExpenditureStacks} options={{
                 headerShown: false
             }}/>
-          <Tab.Screen name="New Entry" component={Add_Expenditure_1}/>
+          
           <Tab.Screen name="Lending & Borrowing" component={LendingStacks}/>
           <Tab.Screen name="Profile" component={ProfileStacks} options={{
                 headerShown: false}}

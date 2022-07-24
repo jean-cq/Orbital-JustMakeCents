@@ -17,6 +17,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import moment from 'moment';
 import MonthPicker from 'react-native-month-picker';
 import Catebutton from '../components/Catebutton.js';
+import { VictoryPie } from 'victory-native';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -159,8 +160,8 @@ export default A_week = () => {
 
     return (
         <ScrollView>
-
-<View style={{ margin: 20}}>
+ <View style = {{width: WIDTH * 0.9, alignSelf: 'center'}}>
+<View style={{ marginTop: 20, alignSelf: 'flex-start'}}>
 
 <View>
 <Catebutton text={selectedWeek} onPress={() => changeModalVisibility(true)} />
@@ -182,11 +183,11 @@ export default A_week = () => {
 
 </View>
 
-        <View style = {{width: WIDTH * 0.9, alignSelf: 'center'}}>
+       
             
+        <View style = {styles.chartContainer}>
 
-
-            <Text>Line chart for week trends</Text>
+            <Text style={styles.title}>Line chart for week trends</Text>
             
             
                 <LineChart
@@ -204,8 +205,9 @@ export default A_week = () => {
                     contentInset={{ left: 10, right: 10 }}
                     svg={{ fontSize: 10, fill: 'black' }}
                 />
-
-            <Text>Bar chart income vs expenditure</Text>
+                </View>
+                <View style = {styles.chartContainer}>
+            <Text style={styles.title}>Bar chart income vs expenditure</Text>
             <YAxis
                     data={IncomeData}
                     contentInset={ {top: 20, bottom: 20} }
@@ -231,8 +233,10 @@ export default A_week = () => {
                     contentInset={{ left: 80, right: 80 }}
                     svg={{ fontSize: 10, fill: 'black' }}
                 />
+                </View>
+                <View style = {styles.chartContainer}>
 
-            <Text>Bar chart for each category</Text>
+            <Text style={styles.title}>Bar chart for each category</Text>
             <BarChart style={{ height: 200 }} 
             data={ExpenditureData} 
             svg={{ stroke: '#fd5e53', fill: '#fd5e53' }}
@@ -248,11 +252,11 @@ export default A_week = () => {
                     contentInset={{ left: 10, right: 10 }}
                     svg={{ fontSize: 7, fill: 'black' }}
                 />
-
-            <Text>    </Text>
-            <Text>Pie chart for each category</Text>
+                </View>
+        <View style = {styles.chartContainer}>
+            <Text style={styles.title}>Pie chart for each category</Text>
             <PieChart style={{ height: 200 }} data={pieData} />
-            
+            </View>
         </View>
         </ScrollView>
 
@@ -269,9 +273,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       marginBottom: 10
     },
-    chartContainer: {
-      height: 200
-    }, 
+    
     contentContainer: {
         flexDirection: 'column',
         justifyContent: 'center',
@@ -306,5 +308,15 @@ const styles = StyleSheet.create({
     inputText: {
         fontSize: 13,       
         color: 'black'
+    },title:{
+        fontWeight:'bold', 
+        textDecorationLine: 'underline',
+        textShadowColor:"#c4c4c4"
     },
+    chartContainer: {
+        paddingVertical: 10,
+        borderBottomColor:'#c4c4c4',
+        borderBottomWidth:1,
+        
+    }
   });

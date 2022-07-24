@@ -86,7 +86,7 @@ export default B_year = () => {
                 });
             setExpenditureData(expList);            
             
-            console.log(expList);
+          
             });
         };const getYearData = async () => {
                     const querySnapshot = onSnapshot(yearRef, (refSnapshot) => {
@@ -100,10 +100,8 @@ export default B_year = () => {
                 getYearData();
                 getData();
                 setSumBudget(ExpenditureData[8]);
-                console.log(sumBudget);
-                console.log(IncomeData);
-                console.log(y);
-    }, []);
+               
+    }, [ExpenditureData]);
 
     const updateBudget = async() => {
         const budDocRef = doc(db, "users/" + userId + "/budget" + "/year")

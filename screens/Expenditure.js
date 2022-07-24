@@ -79,9 +79,7 @@ export default Expenditure = () => {
                         doc.data().beautify + doc.data().diet + doc.data().education + doc.data().necessity + doc.data().others);
                 });
             setbData(expList);
-            
-            
-            console.log(expList);                  
+                            
             });
         };const getMonthData = async () => {
             const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
@@ -97,11 +95,11 @@ export default Expenditure = () => {
         getMonthData();
         
         setSumBudget(bData[8]);
-        console.log(sumBudget);
-        console.log(IncomeData);
+            //bData[0].amount + bData[1].amount + bData[2].amount + bData[3].amount + bData[4].amount + bData[5].amount + bData[6].amount + bData[7].amount);
+       
          
        
-    }, []);
+    }, [bData]);
 
    
 
@@ -243,12 +241,7 @@ export default Expenditure = () => {
                         </Svg>
 
                     </TouchableOpacity>
-                    <Text style={{ textAlign: 'right', marginRight: 70,fontSize: 10 }}>{(sumBudget === 0)
-                ? 'please set your budget'
-                : IncomeData[0] === undefined
-                ? 'no expenses'
-                : 100 * IncomeData[0]/ sumBudget + '%'
-                }</Text>
+                    <Text style={{ textAlign: 'right', marginRight: 70,fontSize: 10 }}>Press the bar to set your budget</Text>
                     </View>
                     
             </View>

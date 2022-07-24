@@ -30,7 +30,7 @@ export default AuthStacks = () => {
                 }}
             >
                 <Stack.Screen name="Starting_page" component={Starting_page} options={{
-                    title: 'Awesome app'
+                    headerShown:false
                 }}
                 />
                 <Stack.Screen name="Login_page" component={Login_page} options={{

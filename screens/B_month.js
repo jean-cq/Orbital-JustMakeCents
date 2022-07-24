@@ -94,7 +94,7 @@ export default B_month = () => {
             setExpenditureData(expList);
             
             
-            console.log(ExpenditureData);                  
+                      
             });
         };const getMonthData = async () => {
             const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
@@ -112,7 +112,7 @@ export default B_month = () => {
         setSumBudget(ExpenditureData[8]);
          
        
-    }, []);
+    }, [ExpenditureData]);
 
     const updateBudget = async() => {
         const budDocRef = doc(db, "users/" + userId + "/budget" + "/month")

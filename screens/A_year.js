@@ -139,13 +139,15 @@ export default A_year = () => {
     return (
         <ScrollView>
 
-<View style={{ margin: 20}}>
+<View style = {{width: WIDTH * 0.9, alignSelf: 'center'}}>
 
-</View>
+        <View style={{ marginTop: 20, alignSelf: 'flex-start'}}>
 
-        <View style = {{width: WIDTH * 0.9, alignSelf: 'center'}}>
+
+
+        
             
-        <View>
+        
         <Catebutton text={selectedYear} onPress={() => changeModalVisibility(true)} />
         <Modal
                                 transparent={true}
@@ -161,9 +163,11 @@ export default A_year = () => {
                                     />
                             </Modal>
             
-        </View>
+       </View>
+        
+            <View style = {styles.chartContainer}>
 
-            <Text>Line chart for year trends</Text>
+            <Text style={styles.title}>Line chart for year trends</Text>
             
             
                 <LineChart
@@ -181,8 +185,12 @@ export default A_year = () => {
                     contentInset={{ left: 10, right: 10 }}
                     svg={{ fontSize: 10, fill: 'black' }}
                 />
+                </View>
 
-            <Text>Bar chart income vs expenditure</Text>
+                <View style = {styles.chartContainer}>
+
+
+            <Text style={styles.title}>Bar chart income vs expenditure</Text>
             <YAxis
                     data={IncomeData}
                     contentInset={ {top: 20, bottom: 20} }
@@ -208,8 +216,11 @@ export default A_year = () => {
                     contentInset={{ left: 80, right: 80 }}
                     svg={{ fontSize: 10, fill: 'black' }}
                 />
+        <View/>
 
-            <Text>Bar chart for each category</Text>
+        <View style = {styles.chartContainer}>
+
+            <Text style={styles.title}>Bar chart for each category</Text>
             <BarChart style={{ height: 200 }} 
             data={ExpenditureData} 
             svg={{ stroke: '#fd5e53', fill: '#fd5e53' }}
@@ -226,20 +237,23 @@ export default A_year = () => {
                     svg={{ fontSize: 7, fill: 'black' }}
                 />
 
-            <Text>    </Text>
-            <Text>Pie chart for each category</Text>
+            </View>
+
+            <View style = {styles.chartContainer}>
+            <Text style={styles.title}>Pie chart for each category</Text>
             <VictoryPie
                 data={NumData}
                 width={400}
                 height={250}
                 innerRadius={50}
-                style={{
+                style={{alignSelf:'center',
                 labels: {
-                fill: 'black', fontSize: 15, padding: 7,
+                fill: 'black', fontSize: 12, padding: 7,
                 }, }}
                 colorScale={colorScheme}
                 /> 
-            
+            </View>
+        </View>
         </View>
         </ScrollView>
 
@@ -255,9 +269,6 @@ const styles = StyleSheet.create({
       fontSize: 20,
       textAlign: 'center',
       marginBottom: 10
-    },
-    chartContainer: {
-      height: 200
     }, 
     contentContainer: {
         flexDirection: 'column',
@@ -293,5 +304,15 @@ const styles = StyleSheet.create({
     inputText: {
         fontSize: 13,       
         color: 'black'
+    },title:{
+        fontWeight:'bold', 
+        textDecorationLine: 'underline',
+        textShadowColor:"#c4c4c4"
     },
+    chartContainer: {
+        paddingVertical: 10,
+        borderBottomColor:'#c4c4c4',
+        borderBottomWidth:1,
+       
+    }
   });

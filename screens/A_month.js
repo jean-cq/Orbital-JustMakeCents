@@ -18,6 +18,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import moment from 'moment';
 import MonthPicker from 'react-native-month-picker';
 import { VictoryPie } from 'victory-native';
+import Catebutton from '../components/Catebutton.js';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -25,27 +26,40 @@ const HEIGHT = Dimensions.get('window').height;
 
 export default A_month = () => {
     const y = new Date().getFullYear();
-    const mIndex = new Date().getMonth();
+    const m = new Date().getMonth() + 1;
+    const monthh = (m) =>{
+        if (m < 10){
+            return '0' +m;
+        }else {
+            return m.toString();
+        }
+    };
     const monthNum = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
-    const m = monthNum[mIndex];
-    const thisMon = y + "/" + m;
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [NumData, setNumData] = useState([]);
     const [show, setShow] = useState(false);
     const [isOpen, toggleOpen] = useState(false);
-    const [month, setMonth] = useState(null);
+    const [selectedMonth, setSelectedMonth] = useState(monthh(m));
     const [IncomeData, setIncomeData] = useState([]);
     const [perData, setPerData] = useState([]);
+    const [isModalVisible, setisModalVisible] = useState(false);
+    const changeModalVisibility = (bool) =>{
+        setisModalVisible(bool)
+    }
 
     const userId = authentication.currentUser.uid;
 
+  
 
+    const setData = (data) => {
+        setSelectedMonth(data)
+    }
     
-    const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==", moment(month).format('YYYY/MM')));
+    const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==", y + '/' + selectedMonth));
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
-    const display = () => {
+    useEffect(() => {
         const getData = async () => {
             const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
                 const monthList = [];
@@ -104,11 +118,11 @@ export default A_month = () => {
         };
         getData();
         toggleOpen(false);
-    };
+    },[])
 
-    const fill = 'rgb(134, 65, 244)'
-        const data = NumData
-        const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7)
+    const fill = 'rgb(134, 65, 244)';
+        const data = NumData;
+        const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7);
         const pieData = data
             .map((value, index) => ({
                 value,
@@ -117,52 +131,38 @@ export default A_month = () => {
                     onPress: () => alert(categories[index] + ", " + perData[index] + "%"),
                 },
                 key: `pie-${index}`,
-            }))
+            }));
             
 
     return (
         <ScrollView>
+<View style = {{width: WIDTH * 0.9, alignSelf: 'center'}}>
 
-<View style={{ margin: 20}}>
+<View style={{ marginTop: 20 , alignSelf: 'flex-start'}}>
 
-<View>
-    <TouchableOpacity onPress={() => toggleOpen(true)} style={styles.input}>
-        <Text style={styles.inputText}>
-            {month ? moment(month).format('YYYY/MM') : 'Month'}
-        </Text>
-    </TouchableOpacity>
-
-    <Modal
-        transparent
-        animationType="fade"
-        visible={isOpen}
-        onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-        }}>
-        <View style={styles.contentContainer}>
-            <View style={styles.content}>
-                <MonthPicker
-                    selectedDate={month || new Date()}
-                    onMonthChange={setMonth}
-                />
-                <TouchableOpacity
-                    style={styles.confirmButton}
-                    onPress={display}>
-                    <Text>Confirm</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-    </Modal>
-</View>
-
-
-</View>
-
-        <View style = {{width: WIDTH * 0.9, alignSelf: 'center'}}>
+     
+        <Catebutton text={selectedMonth} onPress={() => changeModalVisibility(true)} />
+        <Modal
+                                transparent={true}
+                                animationType = 'fade'
+                                visible = {isModalVisible}
+                                onRequestClose = {null}
+                                >
+                                    
+                                    <CardModal
+                                    changeModalVisibility = {changeModalVisibility}
+                                    data = {monthNum}
+                                    setData = {setData}
+                                    />
+                            </Modal>
             
+        </View>
+        
+        
+            
+        <View style = {styles.chartContainer}>
 
-
-            <Text>Line chart for month trends</Text>
+            <Text style={styles.title}>Line chart for month trends</Text>
             
             
                 <LineChart
@@ -180,8 +180,9 @@ export default A_month = () => {
                     contentInset={{ left: 10, right: 10 }}
                     svg={{ fontSize: 10, fill: 'black' }}
                 />
-
-            <Text>Bar chart income vs expenditure</Text>
+                </View>
+                <View style = {styles.chartContainer}>
+            <Text style={styles.title}>Bar chart income vs expenditure</Text>
             <YAxis
                     data={IncomeData}
                     contentInset={ {top: 20, bottom: 20} }
@@ -207,8 +208,9 @@ export default A_month = () => {
                     contentInset={{ left: 80, right: 80 }}
                     svg={{ fontSize: 10, fill: 'black' }}
                 />
-            
-            <Text>Bar chart for each category</Text>
+            </View>
+            <View style = {styles.chartContainer}>
+            <Text style={styles.title}>Bar chart for each category</Text>
             <BarChart style={{ height: 200 }} 
             data={ExpenditureData} 
             svg={{ stroke: '#fd5e53', fill: '#fd5e53' }}
@@ -224,10 +226,9 @@ export default A_month = () => {
                     contentInset={{ left: 10, right: 10 }}
                     svg={{ fontSize: 7, fill: 'black' }}
                 />
-            
-
-            <Text>    </Text>
-            <Text>Pie chart for each category</Text>
+            </View>
+            <View style = {styles.chartContainer}>
+            <Text style={styles.title}>Pie chart for each category</Text>
             <VictoryPie
                 data={NumData}
                 width={400}
@@ -235,13 +236,13 @@ export default A_month = () => {
                 innerRadius={50}
                 style={{
                 labels: {
-                fill: 'black', fontSize: 15, padding: 7,
+                fill: 'black', fontSize: 12, padding: 7,
                 }, }}
                 colorScale={colorScheme}
                 /> 
 
 
-            
+            </View>
         </View>
         </ScrollView>
 
@@ -258,9 +259,6 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       marginBottom: 10
     },
-    chartContainer: {
-      height: 200
-    }, 
     contentContainer: {
         flexDirection: 'column',
         justifyContent: 'center',
@@ -295,5 +293,15 @@ const styles = StyleSheet.create({
     inputText: {
         fontSize: 13,       
         color: 'black'
+    },title:{
+        fontWeight:'bold', 
+        textDecorationLine: 'underline',
+        textShadowColor:"#c4c4c4"
     },
+    chartContainer: {
+        paddingVertical: 10,
+        borderBottomColor:'#c4c4c4',
+        borderBottomWidth:1,
+        
+    }
   });

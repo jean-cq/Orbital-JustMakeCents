@@ -17,10 +17,13 @@ import Catebutton from '../components/Catebutton.js';
 import PageControl from 'react-native-page-control';
 import PagerView from 'react-native-pager-view';
 import { authentication, db } from "../lib/firebase.js";
-import { signOut } from "firebase/auth";
+import { signOut, Auth } from "firebase/auth";
 import ProfileStacks from '../navigation/ProfileStacks.js';
-import { collection, query, doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { collection, query, doc, getDoc, onSnapshot,where } from 'firebase/firestore';
 import { async } from '@firebase/util';
+import Home_navigation from '../navigation/Home_navigation.js';
+import moment from 'moment';
+
 
 
 export default Profile = () => {
@@ -35,17 +38,33 @@ export default Profile = () => {
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [profile, setProfile] = useState('');
     const [user, setUser] = useState('');
+    const [ExpenditureData, setExpenditureData] = useState(null);
+    const [signupdate, setSignupdate] = useState(null);
+    const [days, setDays] = useState(null);
+    const [datedata,setDatedata] = useState([]);
+    const [daysrecorded, setDaysrecorded] = useState(null);
+
+   const monthNum = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
   // Handle user state changes
   function onAuthStateChanged(user) {
     setUser(user);
     
   }
-
+  const y = new Date().getFullYear();
+  const m = new Date().getMonth() + 1;
+  const month = () =>{
+      if (m < 10){
+          return y+ '/0' +m
+      }else {
+          return y+'/'+m
+      }
+  }
   
     useEffect(() => {
         const subscriber = authentication.onAuthStateChanged((user) =>
         { if (user) {
+        const signup = authentication.currentUser.metadata.creationTime;
         const userId = authentication.currentUser.uid;
         const sfDocRef = doc(db, "users/" + userId + "/profile" + '/userinfo' );
         const q = query(collection(db, "users/" + userId + "/profile"  ))
@@ -61,27 +80,95 @@ export default Profile = () => {
                     expList.push(doc.data());
                 });
             setProfile(expList[0]);
-            console.log(profile);
+            
             })
         }else{
             setProfile(null);
-        }}
-        getData();}
+        }};
+        const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==",month()));
+        const getMonthData = async () => {
+            const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
+                const expList = [];
+               
+                refSnapshot.forEach((doc) => {
+                    expList.push({type:'income', amount:doc.data().income})                   
+                    expList.push({type:'expenditure', amount:doc.data().expenditure})
+                        //doc.data().traffic + doc.data().recreation+doc.data().medical + 
+                        //doc.data().beautify + doc.data().diet + doc.data().education + doc.data().necessity + doc.data().others);
+                });
+            setExpenditureData(expList);
+            
+            
+                            
+            });
+        };
+        const DateRef = query(collection(db, "users/" + userId + "/expenditure"));
+        const getDateData = async() => {
+            const querySnapshot = onSnapshot(DateRef, (refSnapshot) => {
+                const expList = [];
+                refSnapshot.forEach((doc) => {
+                    expList.push(doc.data().date);
+                });
+                
+            setDatedata(expList);
+            })
+        };
+
+
+       const signn = new Date(moment(signupdate).format('YYYY-MM-DD')).getTime();
+       const current = new Date().getTime();
+       setDays(Math.ceil((current-signn) / (1000 * 3600 * 24)));
+
+       const removeDuplicates = (arr) => {
+        const unique = [];
+        arr.forEach(element => {
+            if (!unique.includes(element)) {
+                unique.push(element);
+            }
+        });
+        return unique;
+    }
+
+        const recordarr = removeDuplicates(datedata);
+        setDaysrecorded(recordarr.length);
+
+        const continuingg = (arr) => {
+           const curdate = moment(current).format('YYYY/MM/DD');
+           const monthsorted = arr.sort((a, b) => a.slice(5,7) - b.slice(5,7));
+           const datesorted = monthsorted.sort((a, b) => a.slice(8,10) - b.slice(8,10));
+           let i = 0;
+           
+
+           
+
+
+        }
+        
+       
+        getData();
+        getMonthData();
+        getDateData();
+        setSignupdate(signup);
+        console.log(daysrecorded);
+       
+    }
         
         });
         
         subscriber();
       }, []);
-    
-     
-          
+/*
       
-    
 
-    
-    
-
-    
+      const check = () => { 
+        let i = 0;
+        while(signn !== new Date().setDate(-i)){
+             
+            i = i ++
+        }
+        setDays(i);
+      }
+    */
 
     const trytry = async() =>{
         const q = query(collection(db, "users/" + userId + "/profile"  ));
@@ -112,7 +199,7 @@ export default Profile = () => {
         signOut(authentication)
         .then((re)=>{
             setIsSignedIn(false);
-            navigation.navigate('Starting_page')
+            navigation.navigate(Home_navigation)
         })
         .catch((re)=>{
             console.log(re)
@@ -162,7 +249,7 @@ export default Profile = () => {
                 <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#F9C70D', borderTopLeftRadius: 20 }}>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingTop: 5 }}>
-                        30
+                       {daysrecorded}
                     </Text>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingBottom: 5 }}>
@@ -181,7 +268,8 @@ export default Profile = () => {
                 </View><View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#F9C70D', borderTopRightRadius: 20 }}>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingTop: 5 }}>
-                        40
+                        {days}
+                        
                     </Text>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingBottom: 5 }}>
@@ -192,7 +280,7 @@ export default Profile = () => {
             <View style={{ height: 3, backgroundColor: '#EEE9BF', width: '100%' }}>
             </View>
 
-            { /*Bill*/}
+            { /*Bill
             <View style={{ backgroundColor: '#F9C70D', marginTop: 5, flexDirection: 'column', padding: 10, borderRadius: 20, borderColor:'yellow',borderWidth: 1}}>
                 <TouchableOpacity onPress={() => Alert.alert("This is Bill.")}>
 
@@ -214,6 +302,25 @@ export default Profile = () => {
                     <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1, marginLeft: 2 }} > Date </Text>
                     <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1 }}> Incomes: $3000 </Text>
                     <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1}}> Expenses: $250 </Text>
+
+                </View>
+
+                
+                
+            </View>*/}
+            <View style={{ backgroundColor: '#F9C70D', marginTop: 5, flexDirection: 'column', padding: 10, borderRadius: 20, borderColor:'yellow',borderWidth: 1}}>
+                
+
+
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text style={{
+                            justifyContent: 'center', fontSize: 20, marginRight: 315, fontWeight: 'bold', fontFamily:'serif' }} > Bill </Text>
+                        </View>
+
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1, marginLeft: 2 }} > {monthNum[m-1]} </Text>
+                    <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1 }}> Incomes: ${ExpenditureData === null ? 0 :ExpenditureData[0].amount} </Text>
+                    <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1}}> Expenses: ${ExpenditureData === null ? 0 :ExpenditureData[1].amount} </Text>
 
                 </View>
 
@@ -257,7 +364,7 @@ export default Profile = () => {
 
                 />
 
-            {/*button for badges*/}
+            {/*button for badges
             <View style={{flexDirection: 'column', padding: 10, borderRadius: 20}}>
                 <TouchableOpacity onPress={() => Alert.alert("This is Badge.")}>
 
@@ -313,7 +420,7 @@ export default Profile = () => {
 
 
 
-            </View>
+            </View>*/}
             {/*button for setting*/}
              
                 <TouchableOpacity style={{

@@ -49,9 +49,10 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     }, image: {
         width: WIDTH,
-        height:HEIGHT * 0.78,
+        height:HEIGHT * 0.9,
         justifyContent: "flex-start"
     }, fixToText: {
+        height:HEIGHT * 0.1,
         flexDirection: 'row',
         justifyContent: "space-around"
     }, separator: {

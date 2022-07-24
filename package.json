@@ -59,7 +59,8 @@
     "rn-segmented-control": "^1.1.2",
     "typescript": "~4.3.5",
     "victory-native": "^36.5.3",
-    "webpack-dev-server": "~3.11.0"
+    "webpack-dev-server": "~3.11.0",
+    "expo-updates": "~0.13.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

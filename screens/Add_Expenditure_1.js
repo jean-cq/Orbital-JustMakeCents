@@ -139,7 +139,7 @@ export default Add_Expenditure_1 = () => {
                 bigcat: choice,
                 expenditure: (choice === "Expenditure" || "Income") ? true : false,
                 method: selectedPayment,
-                year: moment(date).format('YYYY'),
+                year: moment(date).format('YYYY')
             }).then(() => {
                 alert('data submitted');
             }).catch((error) => {
