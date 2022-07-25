@@ -19,7 +19,8 @@ Poster: https://drive.google.com/file/d/1DzFjSj6fmMFJITypQypx04ntwSiXnsYc/view?u
 Video: 
 
 ## 💻APK
-https://drive.google.com/file/d/138IzilMbVpAZKwzwSGEoz10IOI4XzwSd/view?usp=sharing
+
+https://drive.google.com/file/d/1bhYhTnlZhs56T0zafWyiiXzH8U3r-Qr_/view?usp=sharing
 
 ## 💡Motivation
 
