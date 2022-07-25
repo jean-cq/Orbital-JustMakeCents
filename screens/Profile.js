@@ -40,10 +40,10 @@ export default Profile = () => {
     const [isSignedIn, setIsSignedIn] = useState(true);
     const [profile, setProfile] = useState('');
     const [user, setUser] = useState('');
-    const [ExpenditureData, setExpenditureData] = useState(null);
+    const [ExpenditureData, setExpenditureData] = useState([0, 0]);
     const [signupdate, setSignupdate] = useState(null);
     const [days, setDays] = useState(null);
-    const [datedata,setDatedata] = useState([]);
+    const [datedata,setDatedata] = useState(null);
     const [daysrecorded, setDaysrecorded] = useState(null);
     const [currdate, setCurrdate] = useState (moment(new Date().getTime()).format('YYYY/MM/DD')); 
     const [dayscontinue, setDayscontinue] = useState (0);
@@ -94,9 +94,16 @@ export default Profile = () => {
         }else{
             setProfile(null);
         }};
-        const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==",month()));
+       const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==",month()));
+        //const sfmonthRef = doc(db, "users/" + userId + "/month"); 
         const getMonthData = async () => {
+            //const monthDoc = await getDoc(sfmonthRef)
+            //if (monthDoc.exists() === true){
             const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
+
+                if(refSnapshot === null){
+                    setExpenditureData([0, 0]);
+                }else{
                 const expList = [];
                
                 refSnapshot.forEach((doc) => {
@@ -104,15 +111,22 @@ export default Profile = () => {
                     expList.push({type:'expenditure', amount:doc.data().expenditure})
                         //doc.data().traffic + doc.data().recreation+doc.data().medical + 
                         //doc.data().beautify + doc.data().diet + doc.data().education + doc.data().necessity + doc.data().others);
-                });
-            setExpenditureData(expList);
+                });setExpenditureData(expList);}
+
+                
+            
             
             
                             
-            });
+            });//}else{
+                //setExpenditureData(null);
+           // }
         };
         const DateRef = query(collection(db, "users/" + userId + "/expenditure"));
+        //const sfdateRef = doc(db, "users/" + userId + "/expenditure"); 
         const getDateData = async() => {
+            //const dateDoc = await getDoc(sfdateRef)
+            //if (dateDoc.exists() === true){
             const querySnapshot = onSnapshot(DateRef, (refSnapshot) => {
                 const expList = [];
                 refSnapshot.forEach((doc) => {
@@ -120,49 +134,56 @@ export default Profile = () => {
                 });
                 
             setDatedata(expList);
-            })
+
+            const signn = new Date(moment(signupdate).format('YYYY-MM-DD')).getTime();
+            const currentt = new Date().getTime();
+            setDays(Math.ceil((currentt-signn) / (1000 * 3600 * 24)));
+     
+            const removeDuplicates = (arr) => {
+             const unique = [];
+             arr.forEach(element => {
+                 if (!unique.includes(element)) {
+                     unique.push(element);
+                 }
+             });
+             return unique;
+         }
+     
+             const recordarr = removeDuplicates(datedata);
+             setDaysrecorded(recordarr.length);
+     
+             const continuingg = (arr) => {
+               // const curdate = moment(currentt).format('YYYY/MM/DD');
+               //setCurrdate(curdate.toString());
+                const monthsorted = arr.sort((a, b) => b.slice(5,7) - a.slice(5,7));
+                const datesorted = monthsorted.sort((a, b) => b.slice(8,10) - a.slice(8,10));
+                
+                
+                for (let i = 0; i < datesorted.length; i = i + 1){
+                 if (currdate === datesorted[i]){
+                 const nextdate = new Date().setDate(new Date(datesorted[i].slice(0,4) + '-' + datesorted[i].slice(5,7) + '-' + datesorted[i].slice(8,10)).getDate() -1);
+                 setCurrdate(moment(new Date(nextdate)).format('YYYY/MM/DD'));
+                 console.log(moment(new Date(nextdate)).format('YYYY/MM/DD'));
+                 setDayscontinue(i+1);
+                 
+                 }
+                }}
+                continuingg(recordarr);
+            
+            })//}else{
+
+              //  setDatedata(null);
+          //  }
         };
 
 
-       const signn = new Date(moment(signupdate).format('YYYY-MM-DD')).getTime();
-       const currentt = new Date().getTime();
-       setDays(Math.ceil((currentt-signn) / (1000 * 3600 * 24)));
-
-       const removeDuplicates = (arr) => {
-        const unique = [];
-        arr.forEach(element => {
-            if (!unique.includes(element)) {
-                unique.push(element);
-            }
-        });
-        return unique;
-    }
-
-        const recordarr = removeDuplicates(datedata);
-        setDaysrecorded(recordarr.length);
-
-        const continuingg = (arr) => {
-          // const curdate = moment(currentt).format('YYYY/MM/DD');
-          //setCurrdate(curdate.toString());
-           const monthsorted = arr.sort((a, b) => b.slice(5,7) - a.slice(5,7));
-           const datesorted = monthsorted.sort((a, b) => b.slice(8,10) - a.slice(8,10));
-           
-           
-           for (let i = 0; i < datesorted.length; i = i + 1){
-            if (currdate === datesorted[i]){
-            const nextdate = new Date().setDate(new Date(datesorted[i].slice(0,4) + '-' + datesorted[i].slice(5,7) + '-' + datesorted[i].slice(8,10)).getDate() -1);
-            setCurrdate(moment(new Date(nextdate)).format('YYYY/MM/DD'));
-            console.log(moment(new Date(nextdate)).format('YYYY/MM/DD'));
-            setDayscontinue(i+1);
-            
-            }
-            }
+      
            
 
            
 
 
-        }
+        
         
        
         getData();
@@ -180,7 +201,7 @@ export default Profile = () => {
         });
         
         subscriber();
-      }, [toggle]);
+      }, []);
 /*
       
 
@@ -270,7 +291,7 @@ export default Profile = () => {
                 <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#F9C70D', borderTopLeftRadius: 20 }}>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingTop: 5 }}>
-                       {daysrecorded}
+                       {datedata === []? '0' : daysrecorded}
                     </Text>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingBottom: 5 }}>
@@ -280,7 +301,7 @@ export default Profile = () => {
                 <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#cdad7a' }}>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: 'white', textAlign: 'center', paddingTop: 5   }}>
-                        {dayscontinue}
+                        {datedata === [] ? '0' : dayscontinue}
                     </Text>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: 'white', textAlign: 'center', paddingBottom: 5  }}>
@@ -340,8 +361,8 @@ export default Profile = () => {
 
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1, marginLeft: 2 }} > {monthNum[m-1]} </Text>
-                    <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1 }}> Incomes: ${ExpenditureData === null ? 0 :ExpenditureData[0].amount} </Text>
-                    <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1}}> Expenses: ${ExpenditureData === null ? 0 :ExpenditureData[1].amount} </Text>
+                    <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1 }}> Incomes: ${ExpenditureData === null ? '0' :ExpenditureData[0].amount} </Text>
+                    <Text style={{ justifyContent: 'center', fontSize: 15, flex: 1}}> Expenses: ${ExpenditureData === null ? '0' :ExpenditureData[1].amount} </Text>
 
                 </View>
 

@@ -104,9 +104,24 @@ export default Add_Expenditure_1 = () => {
             });
         };
         getData();
-        console.log(ExpenditureData);
-    }, []);
-    
+    }, [isModalVisible]);
+
+    const handlepayment = () => {
+         const sfRef = doc(db, "users/" + userId + "/payment" + '/cash'); 
+         
+            const sfDoc = await getDoc(sfRef)
+           if (sfDoc.exists() === true){
+
+        setDoc(doc(db, "users/" + userId + "/payment" + '/cash'), {
+            Name: 'cash',
+            DueDate: due,
+            Expenses: 0,
+            Income: 0,
+            Balance: 0,
+    })}
+    changeModalVisibility(true);
+
+}
     
 
     const create = async() => {
@@ -818,7 +833,7 @@ export default Add_Expenditure_1 = () => {
                             </View>
                         </Modal>
                     </View>
-                    <Catebutton text={selectedPayment} onPress={() => changeModalVisibility(true)} />
+                    <Catebutton text={selectedPayment} onPress={handlepayment} />
                     <Modal
                         transparent={true}
                         animationType = 'fade'
