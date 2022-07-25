@@ -1,6 +1,6 @@
 // JavaScript source code
 import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, Image, ScrollView, StyleSheet, Text, Dimensions, View, TouchableOpacity, Modal } from 'react-native';
+import { Alert, Button, Image, ScrollView, StyleSheet, Text, Dimensions, View, TouchableOpacity, Modal, InteractionManager } from 'react-native';
 import Flatbutton from '../components/Flatbutton.js';
 import DefaultImage from '../assets/starting_page.png';
 import Login_page from '../screens/Login_page.js';
@@ -31,6 +31,7 @@ export default A_year = () => {
     const [isOpen, toggleOpen] = useState(false);
     const [month, setMonth] = useState(null);
     const [IncomeData, setIncomeData] = useState([]);
+    const [EachMonData, setEachMonData] = useState([]);
     const [perData, setPerData] = useState([]);
     const [payNumData, setPayNumData] = useState([]);
     const [payCatData, setPayCatData] = useState([]);
@@ -117,8 +118,26 @@ export default A_year = () => {
             });
         };
         
+        getMonData = () => {
+            const eachRef = query(collection(db, "users/" + userId + "/month"));
+            const querySnapshot = onSnapshot(eachRef, (refSnapshot) => {
+                const eachList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                refSnapshot.forEach((doc) => {
+                    if (doc.data().mon.substring(0, 4) == selectedYear) {
+                        if (doc.data().mon[5] == "0") {
+                            eachList[(+doc.data().mon[6]) - 1] = doc.data().expenditure;
+                        }
+                        else if (doc.data().mon[5] == "1") {
+                            eachList[(+doc.data().mon[6]) - 1 + 10] = doc.data().expenditure;
+                        }
+                    }
+                });
+                setEachMonData(eachList);
+            });
+        }
         getData();
-        console.log(ExpenditureData);
+        getMonData();
+        console.log(EachMonData);
     },[])
 
 
@@ -172,7 +191,7 @@ export default A_year = () => {
             
                 <LineChart
                 style={{ height: 200 }}
-                data={data}
+                data={EachMonData}
                 svg={{ stroke: 'orange' }}
                 contentInset={{ top: 20, bottom: 20 }}
             >

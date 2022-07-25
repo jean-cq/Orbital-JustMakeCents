@@ -41,6 +41,7 @@ export default A_month = () => {
     const [isOpen, toggleOpen] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(monthh(m));
     const [IncomeData, setIncomeData] = useState([]);
+    const [EachWkData, setEachWkData] = useState([]);
     const [perData, setPerData] = useState([]);
     const [isModalVisible, setisModalVisible] = useState(false);
     const changeModalVisibility = (bool) =>{
@@ -116,7 +117,26 @@ export default A_month = () => {
                 setPerData(perList);
             });
         };
+
+        getWkData = () => {
+            const eachRef = query(collection(db, "users/" + userId + "/week"));
+            const querySnapshot = onSnapshot(eachRef, (refSnapshot) => {
+                const eachList = [0, 0, 0, 0];
+                refSnapshot.forEach((doc) => {
+                    if (doc.data().week.substring(0, 7) == y + '/' + selectedMonth) {
+                        if (doc.data().week[9] == "5") {
+                            eachList.push(doc.data().expenditure);
+                        }
+                        else{
+                            eachList[(+doc.data().week[9]) - 1] = doc.data().expenditure;
+                        }
+                    }
+                });
+                setEachWkData(eachList);
+            });
+        }
         getData();
+        getWkData();
         toggleOpen(false);
     },[])
 
@@ -167,7 +187,7 @@ export default A_month = () => {
             
                 <LineChart
                 style={{ height: 200 }}
-                data={data}
+                data={EachWkData}
                 svg={{ stroke: 'orange' }}
                 contentInset={{ top: 20, bottom: 20 }}
             >
@@ -175,8 +195,8 @@ export default A_month = () => {
             </LineChart>
             <XAxis
                     style={{ marginVertical: -10 }}
-                    data={ExpenditureData}
-                    formatLabel={(value, index) => value}
+                    data={EachWkData}
+                    formatLabel={(value, index) => value+1}
                     contentInset={{ left: 10, right: 10 }}
                     svg={{ fontSize: 10, fill: 'black' }}
                 />
