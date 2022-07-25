@@ -18,6 +18,8 @@ Poster: https://drive.google.com/file/d/1DzFjSj6fmMFJITypQypx04ntwSiXnsYc/view?u
 
 Video: 
 
+## 💻APK
+
 ## 💡Motivation
 
 Have you ever felt confused about where you spend your money when you see your banking statements? The categories shown in your Digibank may be too vague and general, and you may lose track of your daily expenses.
@@ -70,8 +72,18 @@ The mobile application provides a money manager interface for students to keep t
     - Allow users to set their own budget for each category
 7. Analytics page
     - Allow users to visualise their expenses(e.g. pie chart and bar plot) by week, by month, by year
-8.Lending & Borrowing page
+8. Lending & Borrowing page
     - Tick if the person returns money or the user returns money
+
+## ❓Problems and Suggestions Araised from Testing
+1. Analytics
+    - Better UI
+    - More analytics charts can be displayed for week
+2. Expenditure page
+    - Display expenditure in sequences and enable categories selection
+3. Profile page
+    - Profile photo can be implemented
+   
 
 ## ❓Addressing concerns raised in Milestones
 - Incentives consistently motivate users
