@@ -67,7 +67,19 @@ export default Profile = () => {
           return y+'/'+m
       }
   }
-  
+  function arrayIsEmpty(array) {
+    //If it's not an array, return FALSE.
+    if (!Array.isArray(array)) {
+        return false;
+    }
+    //If it is an array, check its length property
+    if (array.length == 0) {
+        //Return TRUE if the array is empty
+        return true;
+    }
+    //Otherwise, return FALSE.
+    return false;
+}
     useEffect(() => {
 
         setTimeout(() => setToggle((prevToggle) => !prevToggle), 1000);
@@ -101,9 +113,7 @@ export default Profile = () => {
             //if (monthDoc.exists() === true){
             const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
 
-                if(refSnapshot === null){
-                    setExpenditureData([0, 0]);
-                }else{
+                
                 const expList = [];
                
                 refSnapshot.forEach((doc) => {
@@ -111,14 +121,18 @@ export default Profile = () => {
                     expList.push({type:'expenditure', amount:doc.data().expenditure})
                         //doc.data().traffic + doc.data().recreation+doc.data().medical + 
                         //doc.data().beautify + doc.data().diet + doc.data().education + doc.data().necessity + doc.data().others);
-                });setExpenditureData(expList);}
+                });
+                if(arrayIsEmpty(expList)){
+                    setExpenditureData(null)
+                }else{
+                setExpenditureData(expList);}}
 
                 
             
             
             
                             
-            });//}else{
+            );//}else{
                 //setExpenditureData(null);
            // }
         };
@@ -132,21 +146,28 @@ export default Profile = () => {
                 refSnapshot.forEach((doc) => {
                     expList.push(doc.data().date);
                 });
-                
-            setDatedata(expList);
+                if(arrayIsEmpty(expList)){
+                    setDatedata([]);
+                }else{setDatedata(expList);
+                }
+            
 
             const signn = new Date(moment(signupdate).format('YYYY-MM-DD')).getTime();
             const currentt = new Date().getTime();
             setDays(Math.ceil((currentt-signn) / (1000 * 3600 * 24)));
      
             const removeDuplicates = (arr) => {
+                if(!arrayIsEmpty(arr)){
              const unique = [];
              arr.forEach(element => {
                  if (!unique.includes(element)) {
                      unique.push(element);
                  }
              });
-             return unique;
+             return unique;}
+             else{
+                return arr;
+             }
          }
      
              const recordarr = removeDuplicates(datedata);
@@ -155,6 +176,7 @@ export default Profile = () => {
              const continuingg = (arr) => {
                // const curdate = moment(currentt).format('YYYY/MM/DD');
                //setCurrdate(curdate.toString());
+               if(!arrayIsEmpty(arr)){
                 const monthsorted = arr.sort((a, b) => b.slice(5,7) - a.slice(5,7));
                 const datesorted = monthsorted.sort((a, b) => b.slice(8,10) - a.slice(8,10));
                 
@@ -167,7 +189,10 @@ export default Profile = () => {
                  setDayscontinue(i+1);
                  
                  }
+                }}else{
+                    setDayscontinue(0);
                 }}
+
                 continuingg(recordarr);
             
             })//}else{
@@ -189,9 +214,9 @@ export default Profile = () => {
         getData();
         getMonthData();
         getDateData();
-        continuingg(recordarr);
+        
         setSignupdate(signup);
-        console.log();
+        console.log(signupdate);
        
        
     }else{
@@ -201,7 +226,7 @@ export default Profile = () => {
         });
         
         subscriber();
-      }, []);
+      }, [toggle]);
 /*
       
 
@@ -291,7 +316,7 @@ export default Profile = () => {
                 <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#F9C70D', borderTopLeftRadius: 20 }}>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingTop: 5 }}>
-                       {datedata === []? '0' : daysrecorded}
+                       {arrayIsEmpty(datedata)? '0' : daysrecorded}
                     </Text>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingBottom: 5 }}>
@@ -301,7 +326,7 @@ export default Profile = () => {
                 <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#cdad7a' }}>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: 'white', textAlign: 'center', paddingTop: 5   }}>
-                        {datedata === [] ? '0' : dayscontinue}
+                        {arrayIsEmpty(datedata)? '0' : dayscontinue}
                     </Text>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: 'white', textAlign: 'center', paddingBottom: 5  }}>

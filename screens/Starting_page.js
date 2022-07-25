@@ -20,7 +20,7 @@ export default Starting_page = () => {
     const navigation = useNavigation();
     return (
 
-            <SafeAreaView style={styles.container}>
+            <View style={styles.container}>
                 <View>
                     <Image source={{ uri: DEFAULT_IMAGE }}
                         style={styles.image} />
@@ -35,7 +35,7 @@ export default Starting_page = () => {
                     </View>
                     <StatusBar style='auto' />
                  
-            </SafeAreaView>
+            </View>
 
     )
 }
