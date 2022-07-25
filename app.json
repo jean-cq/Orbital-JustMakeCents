@@ -4,10 +4,10 @@
     "slug": "JustMakeCents",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/JMC_logo.jpg",
+    "icon": "./assets/JMC_Icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/JMC_splash.jpg",
+      "image": "./assets/JMC_splash.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },

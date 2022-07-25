@@ -20,7 +20,7 @@ import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, 
 
 
 export default B_month = () => {
-
+    const [toggle, setToggle] = useState(false)
     const navigation = useNavigation();
     const [IncomeData, setIncomeData] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
@@ -75,6 +75,7 @@ export default B_month = () => {
     const a = new Date('2022',d,1);
     
     useEffect(() => {
+        setTimeout(() => setToggle((prevToggle) => !prevToggle), 3000);
         const getData = async () => {
             const querySnapshot = onSnapshot(expRef, (refSnapshot) => {
                 const expList = [];
@@ -112,7 +113,7 @@ export default B_month = () => {
         setSumBudget(ExpenditureData[8]);
          
        
-    }, [ExpenditureData]);
+    }, [toggle]);
 
     const updateBudget = async() => {
         const budDocRef = doc(db, "users/" + userId + "/budget" + "/month")

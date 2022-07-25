@@ -36,6 +36,7 @@ export default B_year = () => {
     ]);
     const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
+    const [toggle, setToggle] = useState(false)
 
     const updateFieldChanged = index => e => {
         console.log('index: ' + index);
@@ -69,6 +70,7 @@ export default B_year = () => {
     const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", y.toString()));
 
     useEffect(() => {
+        setTimeout(() => setToggle((prevToggle) => !prevToggle), 3000);        
         const getData = async () => {
             const querySnapshot = await onSnapshot(expRef, (refSnapshot) => {
                 const expList = [];
@@ -101,7 +103,7 @@ export default B_year = () => {
                 getData();
                 setSumBudget(ExpenditureData[8]);
                
-    }, [ExpenditureData]);
+    }, [toggle]);
 
     const updateBudget = async() => {
         const budDocRef = doc(db, "users/" + userId + "/budget" + "/year")

@@ -43,6 +43,9 @@ export default Profile = () => {
     const [days, setDays] = useState(null);
     const [datedata,setDatedata] = useState([]);
     const [daysrecorded, setDaysrecorded] = useState(null);
+    const [currdate, setCurrdate] = useState (moment(new Date().getTime()).format('YYYY/MM/DD')); 
+    const [dayscontinue, setDayscontinue] = useState (0);
+    const [toggle, setToggle] = useState(false)
 
    const monthNum = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
@@ -62,6 +65,8 @@ export default Profile = () => {
   }
   
     useEffect(() => {
+
+        setTimeout(() => setToggle((prevToggle) => !prevToggle), 1000);
         const subscriber = authentication.onAuthStateChanged((user) =>
         { if (user) {
         const signup = authentication.currentUser.metadata.creationTime;
@@ -116,8 +121,8 @@ export default Profile = () => {
 
 
        const signn = new Date(moment(signupdate).format('YYYY-MM-DD')).getTime();
-       const current = new Date().getTime();
-       setDays(Math.ceil((current-signn) / (1000 * 3600 * 24)));
+       const currentt = new Date().getTime();
+       setDays(Math.ceil((currentt-signn) / (1000 * 3600 * 24)));
 
        const removeDuplicates = (arr) => {
         const unique = [];
@@ -133,10 +138,26 @@ export default Profile = () => {
         setDaysrecorded(recordarr.length);
 
         const continuingg = (arr) => {
-           const curdate = moment(current).format('YYYY/MM/DD');
-           const monthsorted = arr.sort((a, b) => a.slice(5,7) - b.slice(5,7));
-           const datesorted = monthsorted.sort((a, b) => a.slice(8,10) - b.slice(8,10));
-           let i = 0;
+          // const curdate = moment(currentt).format('YYYY/MM/DD');
+          //setCurrdate(curdate.toString());
+           const monthsorted = arr.sort((a, b) => b.slice(5,7) - a.slice(5,7));
+           const datesorted = monthsorted.sort((a, b) => b.slice(8,10) - a.slice(8,10));
+           
+           
+           for (let i = 0; i < datesorted.length; i = i + 1){
+            if (currdate === datesorted[i]){
+            const nextdate = new Date().setDate(new Date(datesorted[i].slice(0,4) + '-' + datesorted[i].slice(5,7) + '-' + datesorted[i].slice(8,10)).getDate() -1);
+            setCurrdate(moment(new Date(nextdate)).format('YYYY/MM/DD'));
+            console.log(moment(new Date(nextdate)).format('YYYY/MM/DD'));
+            setDayscontinue(i+1);
+            
+            }else{
+            
+            }
+            
+            
+            
+            }
            
 
            
@@ -148,15 +169,17 @@ export default Profile = () => {
         getData();
         getMonthData();
         getDateData();
+        continuingg(recordarr);
         setSignupdate(signup);
-        console.log(daysrecorded);
+        console.log();
+       
        
     }
         
         });
         
         subscriber();
-      }, [ExpenditureData]);
+      }, [toggle]);
 /*
       
 
@@ -259,7 +282,7 @@ export default Profile = () => {
                 <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#cdad7a' }}>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: 'white', textAlign: 'center', paddingTop: 5   }}>
-                        5
+                        {dayscontinue}
                     </Text>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: 'white', textAlign: 'center', paddingBottom: 5  }}>
