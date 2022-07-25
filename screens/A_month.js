@@ -60,85 +60,107 @@ export default A_month = () => {
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
 
-    useEffect(() => {
-        const getData = async () => {
-            const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
-                const monthList = [];
-                const numList = [];
-                const incomeList = [];
-                const perList = [];
-                refSnapshot.forEach((doc) => {
-                    monthList.push({id: '0', category: "Traffic", amount: doc.data().traffic});
-                    monthList.push({id: '1', category: "Recreation", amount: doc.data().recreation});
-                    monthList.push({id: '2', category: "Medical", amount: doc.data().medical});
-                    monthList.push({id: '3', category: "Beautify", amount: doc.data().beautify});
-                    monthList.push({id: '4', category: "Diet", amount: doc.data().diet});
-                    monthList.push({id: '5', category: "Education", amount: doc.data().education});
-                    monthList.push({id: '6', category: "Necessity", amount: doc.data().necessity});
-                    monthList.push({id: '7', category: "Others", amount: doc.data().others});
-                    if (doc.data().traffic != 0) {
-                        numList.push({y: doc.data().traffic, x: "Traffic, "+ parseFloat(doc.data().traffic / doc.data().expenditure * 100).toFixed(2) + "%"});
-                    }
-                    if (doc.data().recreation != 0) {
-                        numList.push({y: doc.data().recreation, x: "Recreation, "+ parseFloat(doc.data().recreation / doc.data().expenditure * 100).toFixed(2) + "%"});
-                    }
-                    if (doc.data().medical != 0) {
-                        numList.push({y: doc.data().medical, x: "Medical, "+ parseFloat(doc.data().medical / doc.data().expenditure * 100).toFixed(2) + "%"});
-                    }
-                    if (doc.data().beautify != 0) {
-                        numList.push({y: doc.data().beautify, x: "Beautify, "+ parseFloat(doc.data().beautify / doc.data().expenditure * 100).toFixed(2) + "%"});
-                    }
-                    if (doc.data().diet != 0) {
-                        numList.push({y: doc.data().diet, x: "Diet, "+ parseFloat(doc.data().diet / doc.data().expenditure * 100).toFixed(2) + "%"});
-                    }
-                    if (doc.data().education != 0) {
-                        numList.push({y: doc.data().education, x: "Education, "+ parseFloat(doc.data().education / doc.data().expenditure * 100).toFixed(2) + "%"});
-                    }
-                    if (doc.data().necessity != 0) {
-                        numList.push({y: doc.data().necessity, x: "Necessity, "+ parseFloat(doc.data().necessity / doc.data().expenditure * 100).toFixed(2) + "%"});
-                    } 
-                    if (doc.data().others != 0) {
-                        numList.push({y: doc.data().others, x: "Others, "+ parseFloat(doc.data().others / doc.data().expenditure * 100).toFixed(2) + "%"});
-                    }
-                    incomeList.push({category: "Income", amount: doc.data().income});
-                    incomeList.push({category: "Expenditure", amount: doc.data().expenditure});
-                    perList.push(parseFloat(doc.data().traffic / doc.data().expenditure * 100).toFixed(2));
-                    perList.push(parseFloat(doc.data().recreation / doc.data().expenditure * 100).toFixed(2));
-                    perList.push(parseFloat(doc.data().medical / doc.data().expenditure * 100).toFixed(2));
-                    perList.push(parseFloat(doc.data().beautify / doc.data().expenditure * 100).toFixed(2));
-                    perList.push(parseFloat(doc.data().diet / doc.data().expenditure * 100).toFixed(2));
-                    perList.push(parseFloat(doc.data().education / doc.data().expenditure * 100).toFixed(2));
-                    perList.push(parseFloat(doc.data().necessity / doc.data().expenditure * 100).toFixed(2));
-                    perList.push(parseFloat(doc.data().others / doc.data().expenditure * 100).toFixed(2));
-                });
-                setExpenditureData(monthList);
-                setNumData(numList);
-                setIncomeData(incomeList);
-                setPerData(perList);
-            });
-        };
+    if (monthRef != null) {
+        useEffect(() => {
 
-        getWkData = () => {
-            const eachRef = query(collection(db, "users/" + userId + "/week"));
-            const querySnapshot = onSnapshot(eachRef, (refSnapshot) => {
-                const eachList = [0, 0, 0, 0];
-                refSnapshot.forEach((doc) => {
-                    if (doc.data().week.substring(0, 7) == y + '/' + selectedMonth) {
-                        if (doc.data().week[9] == "5") {
-                            eachList.push(doc.data().expenditure);
+            const getData = async () => {
+                const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
+                    const monthList = [];
+                    const numList = [];
+                    const incomeList = [];
+                    const perList = [];
+                    refSnapshot.forEach((doc) => {
+                        monthList.push({id: '0', category: "Traffic", amount: doc.data().traffic});
+                        monthList.push({id: '1', category: "Recreation", amount: doc.data().recreation});
+                        monthList.push({id: '2', category: "Medical", amount: doc.data().medical});
+                        monthList.push({id: '3', category: "Beautify", amount: doc.data().beautify});
+                        monthList.push({id: '4', category: "Diet", amount: doc.data().diet});
+                        monthList.push({id: '5', category: "Education", amount: doc.data().education});
+                        monthList.push({id: '6', category: "Necessity", amount: doc.data().necessity});
+                        monthList.push({id: '7', category: "Others", amount: doc.data().others});
+                        if (doc.data().traffic != 0) {
+                            numList.push({y: doc.data().traffic, x: "Traffic, "+ parseFloat(doc.data().traffic / doc.data().expenditure * 100).toFixed(2) + "%"});
                         }
-                        else{
-                            eachList[(+doc.data().week[9]) - 1] = doc.data().expenditure;
+                        if (doc.data().recreation != 0) {
+                            numList.push({y: doc.data().recreation, x: "Recreation, "+ parseFloat(doc.data().recreation / doc.data().expenditure * 100).toFixed(2) + "%"});
                         }
-                    }
+                        if (doc.data().medical != 0) {
+                            numList.push({y: doc.data().medical, x: "Medical, "+ parseFloat(doc.data().medical / doc.data().expenditure * 100).toFixed(2) + "%"});
+                        }
+                        if (doc.data().beautify != 0) {
+                            numList.push({y: doc.data().beautify, x: "Beautify, "+ parseFloat(doc.data().beautify / doc.data().expenditure * 100).toFixed(2) + "%"});
+                        }
+                        if (doc.data().diet != 0) {
+                            numList.push({y: doc.data().diet, x: "Diet, "+ parseFloat(doc.data().diet / doc.data().expenditure * 100).toFixed(2) + "%"});
+                        }
+                        if (doc.data().education != 0) {
+                            numList.push({y: doc.data().education, x: "Education, "+ parseFloat(doc.data().education / doc.data().expenditure * 100).toFixed(2) + "%"});
+                        }
+                        if (doc.data().necessity != 0) {
+                            numList.push({y: doc.data().necessity, x: "Necessity, "+ parseFloat(doc.data().necessity / doc.data().expenditure * 100).toFixed(2) + "%"});
+                        } 
+                        if (doc.data().others != 0) {
+                            numList.push({y: doc.data().others, x: "Others, "+ parseFloat(doc.data().others / doc.data().expenditure * 100).toFixed(2) + "%"});
+                        }
+                        incomeList.push({category: "Income", amount: doc.data().income});
+                        incomeList.push({category: "Expenditure", amount: doc.data().expenditure});
+                        perList.push(parseFloat(doc.data().traffic / doc.data().expenditure * 100).toFixed(2));
+                        perList.push(parseFloat(doc.data().recreation / doc.data().expenditure * 100).toFixed(2));
+                        perList.push(parseFloat(doc.data().medical / doc.data().expenditure * 100).toFixed(2));
+                        perList.push(parseFloat(doc.data().beautify / doc.data().expenditure * 100).toFixed(2));
+                        perList.push(parseFloat(doc.data().diet / doc.data().expenditure * 100).toFixed(2));
+                        perList.push(parseFloat(doc.data().education / doc.data().expenditure * 100).toFixed(2));
+                        perList.push(parseFloat(doc.data().necessity / doc.data().expenditure * 100).toFixed(2));
+                        perList.push(parseFloat(doc.data().others / doc.data().expenditure * 100).toFixed(2));
+                    });
+                    setExpenditureData(monthList);
+                    setNumData(numList);
+                    setIncomeData(incomeList);
+                    setPerData(perList);
                 });
-                setEachWkData(eachList);
-            });
-        }
-        getData();
-        getWkData();
-        toggleOpen(false);
-    },[])
+            };
+    
+            getWkData = () => {
+                const eachRef = query(collection(db, "users/" + userId + "/week"));
+                const querySnapshot = onSnapshot(eachRef, (refSnapshot) => {
+                    const eachList = [0, 0, 0, 0];
+                    refSnapshot.forEach((doc) => {
+                        if (doc.data().week.substring(0, 7) == y + '/' + selectedMonth) {
+                            if (doc.data().week[9] == "5") {
+                                eachList.push(doc.data().expenditure);
+                            }
+                            else{
+                                eachList[(+doc.data().week[9]) - 1] = doc.data().expenditure;
+                            }
+                        }
+                    });
+                    setEachWkData(eachList);
+                });
+            } 
+            getData();
+            getWkData();
+            toggleOpen(false);
+        },[])
+    } else {
+        useEffect(() => {
+            const getData = async () => {
+                setExpenditureData([{id: '0', category: "Traffic", amount: 0},
+                {id:'1', category: "Recreation", amount:0}, {id: '2', category: "Medical", amount: 0}, {id: '3', category: "Beautify", amount: 0},
+                {id: '4', category: "Diet", amount:0}, {id: '5', category: "Education", amount: 0} ]);
+                setNumData([{y:0, x:0}, {y:0, x:0}, {y:0, x:0}, {y:0, x:0}, {y:0, x:0}, {y:0, x:0}]);
+                setIncomeData([{category: "Income", amount:0}, {category: Expenditure, amount: 0}]);
+                setPerData([0, 0, 0, 0, 0, 0]);
+            }
+            const getWkData = async () => {
+                setEachWkData([0, 0, 0, 0]);
+            }
+            getData();
+            getWkData();
+            console.log(EachWkData);
+        },[])
+    }
+    
+
 
     const fill = 'rgb(134, 65, 244)';
         const data = NumData;
