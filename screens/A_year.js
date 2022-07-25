@@ -199,8 +199,8 @@ export default A_year = () => {
             </LineChart>
             <XAxis
                     style={{ marginVertical: -10 }}
-                    data={ExpenditureData}
-                    formatLabel={(value, index) => value}
+                    data={EachMonData}
+                    formatLabel={(value, index) => value+1}
                     contentInset={{ left: 10, right: 10 }}
                     svg={{ fontSize: 10, fill: 'black' }}
                 />

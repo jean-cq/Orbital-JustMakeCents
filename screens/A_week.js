@@ -189,7 +189,7 @@ export default A_week = () => {
 
             <Text style={styles.title}>Line chart for week trends</Text>
             
-            
+            {/*
                 <LineChart
                 style={{ height: 200 }}
                 data={data}
@@ -200,8 +200,8 @@ export default A_week = () => {
             </LineChart>
             <XAxis
                     style={{ marginVertical: -10 }}
-                    data={ExpenditureData}
-                    formatLabel={(value, index) => value}
+                    data={data}
+                    formatLabel={(value, index) => value+1}
                     contentInset={{ left: 10, right: 10 }}
                     svg={{ fontSize: 10, fill: 'black' }}
                 />
@@ -218,6 +218,7 @@ export default A_week = () => {
                     numberOfTicks={10}
                     formatLabel={(value) => `${value}ºC`}
                 />
+                */}
             <BarChart style={{ height: 200, marginHorizontal: 20 }} 
             data={IncomeData} 
             svg={{ stroke: 'orange', fill: 'orange' }}
@@ -253,10 +254,12 @@ export default A_week = () => {
                     svg={{ fontSize: 7, fill: 'black' }}
                 />
                 </View>
+        {/*
         <View style = {styles.chartContainer}>
             <Text style={styles.title}>Pie chart for each category</Text>
             <PieChart style={{ height: 200 }} data={pieData} />
             </View>
+            */}
         </View>
         </ScrollView>
 
