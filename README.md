@@ -18,6 +18,8 @@ Poster: https://drive.google.com/file/d/1DzFjSj6fmMFJITypQypx04ntwSiXnsYc/view?u
 
 Video: 
 
+## 💻APK
+
 ## 💡Motivation
 
 Have you ever felt confused about where you spend your money when you see your banking statements? The categories shown in your Digibank may be too vague and general, and you may lose track of your daily expenses.
@@ -44,37 +46,46 @@ As a student who tends to forget to return money, I want to be reminded of money
 ## 🔭Scope of Project
 The mobile application provides a money manager interface for students to keep track of their daily expenses, shopping list, budget, and money lending and borrowing from others.
 
-## ✅Features already completed
+## ✅Features
 1. Authentication (Firebase)
     - Register with email
     - Login with email and password
+    - Forget Password
 2. Add expenditure page
     - Select categories and date
     - Key in note and amount spent
     - Customised keyboard
 3. Profile page
+    - Edit Profile to change name and password
+    - Display Days recorded, continuing and joined to ensure user retention
+    - Bill of current month
+    - Daliy saving tips
+    - Contact us page to follow our youtube channel, github and email
     - Sign out
 4. Expenditure page (with shopping list integrated)
     - Allow users to note down items to purchase
+    - Select month to display data
 5. Wallet 
-    - Edit payment method
+    - Edit payment method(can deleted only when expenses, income and balance are 0)
 6. Budget
-    - Display the percentage of money spent against the budget 
+    - Display the percentage of money spent against the budget by a bar
     - Allow users to set their own budget for each category
 7. Analytics page
-    - Allow users to visualise their daily expenses(e.g. pie chart and bar plot)
-8. Profile
-    - Settings and badge collection
+    - Allow users to visualise their expenses(e.g. pie chart and bar plot) by week, by month, by year
+8. Lending & Borrowing page
+    - Tick if the person returns money or the user returns money
 
-## 🧭Features to be completed in the future
-1. Budget
-    - Provide recommendations on adjustments to the budget with machine learning(if possible)
-2. Shopping list
-    - Provide recommendations on how much and how frequent certain products should be purchased with machine learning
-3. Notification
-    - Remind users of returning the money to friends and banks
+## ❓Problems and Suggestions Araised from Testing
+1. Analytics
+    - Better UI
+    - More analytics charts can be displayed for week
+2. Expenditure page
+    - Display expenditure in sequences and enable categories selection
+3. Profile page
+    - Profile photo can be implemented
+   
 
-## ❓Addressing concerns raised in Milestone 1
+## ❓Addressing concerns raised in Milestones
 - Incentives consistently motivate users
   - Badge system
   - Display days continuing/days enjoyed/days recorded
