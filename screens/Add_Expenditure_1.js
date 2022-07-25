@@ -106,15 +106,15 @@ export default Add_Expenditure_1 = () => {
         getData();
     }, [isModalVisible]);
 
-    const handlepayment = () => {
+    const handlepayment = async() => {
          const sfRef = doc(db, "users/" + userId + "/payment" + '/cash'); 
          
             const sfDoc = await getDoc(sfRef)
-           if (sfDoc.exists() === true){
+           if (sfDoc.exists() !== true){
 
         setDoc(doc(db, "users/" + userId + "/payment" + '/cash'), {
             Name: 'cash',
-            DueDate: due,
+            DueDate: 'null',
             Expenses: 0,
             Income: 0,
             Balance: 0,

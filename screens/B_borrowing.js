@@ -66,7 +66,7 @@ export default B_borrowing = () => {
                 });
                 lenList.push({});
                 lenList.push({});
-                lenList.push({});
+                
                 lenList.push({});
                 setBorrowingData(lenList);
             });

@@ -78,7 +78,7 @@ export default Expenditure = () => {
                     expList.push(doc.data().traffic + doc.data().recreation+doc.data().medical + 
                         doc.data().beautify + doc.data().diet + doc.data().education + doc.data().necessity + doc.data().others);
                 });
-            setbData(expList);
+            setbData(expList.reverse());
                             
             });
         };const getMonthData = async () => {
