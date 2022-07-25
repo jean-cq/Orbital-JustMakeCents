@@ -12,6 +12,8 @@ import Starting_page from '../screens/Starting_page.js';
 import Profile_edit from '../screens/Profile_edit.js';
 import Contact_us from '../screens/Contact_us.js';
 import Home_navigation from './Home_navigation.js';
+import AuthStacks from './AuthStacks.js';
+import { startAt } from 'firebase/database';
 
 const Stack = createNativeStackNavigator();
 
@@ -47,11 +49,7 @@ export default ProfileStacks = () => {
                 
             }}
             />
-            <Stack.Screen name="Home" component={Home_navigation} options={{
-                headerShown: false
-                
-            }}
-            />
+           
             </Stack.Navigator>
         )
       

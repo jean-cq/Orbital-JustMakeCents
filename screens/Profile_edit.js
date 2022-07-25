@@ -10,21 +10,24 @@ import * as ImagePicker from 'expo-image-picker';
 import { getDoc, runTransaction, doc, setDoc, updateDoc, query, collection, onSnapshot } from 'firebase/firestore';
 import { db, authentication } from '../lib/firebase.js';
 import { getAuth, updatePassword } from "firebase/auth";
+import JMCICON from '../assets/JMC_Icon.png';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
-
+const Iconjmc = Image.resolveAssetSource(JMCICON).uri;
 export default Profile_edit = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState(null);
     const [isModalNameVisible, setModalNameVisible] = useState(false);
     const [isModalPasswordVisible, setModalPasswordVisible] = useState(false);
-    const [avatar, setAvatar] = useState(null);
+    const [avatar, setAvatar] = useState(Iconjmc);
     const [profile, setProfile] = useState('');
 
-
-
+    /*useEffect(() => {
+        console.log(avatar);
+        }, [avatar])
+    */
     const auth = getAuth();
 
     const user = auth.currentUser;
@@ -51,18 +54,22 @@ export default Profile_edit = () => {
 
     }
     const handlePickerAvatar = async() => {
-        UserPermissions.getCameraPermission()
+        UserPermissions.getCameraPermission();
 
-        let result = await ImagePicker.launchImageLibraryAsync({
+        const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes:ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect:[4, 3]
         });
 
         if (!result.cancelled){
-            setAvatar(result.uri);
-            console.log(avatar);
+            console.log(result.uri);
+            
+            setAvatar(result.uri);// action on update of movies
+           
             createAvatar();
+            
+            
         }
 
     
@@ -103,6 +110,8 @@ export default Profile_edit = () => {
 
     
     const createAvatar = async() => {
+        
+        
         const sfDocRef = doc(db, "users/" + userId + "/profile" + '/userinfo' );
         const sfDoc = await getDoc(sfDocRef)
         
@@ -122,11 +131,10 @@ export default Profile_edit = () => {
             
         
             else{
-           updateDoc(sfDocRef, {
-                
+           updateDoc(sfDocRef, {                
                 picture: avatar
             }).then(() => {
-                alert(avatar);
+                alert('data submitted');
                 changeModalNameVisibility(false);
                 
             }).catch((error) => {
@@ -136,6 +144,7 @@ export default Profile_edit = () => {
   
 
     }
+   
     
     
 
@@ -143,7 +152,7 @@ export default Profile_edit = () => {
 
 return (
 <View>
-                <TouchableOpacity onPress={handlePickerAvatar}>
+                {/*<TouchableOpacity onPress={handlePickerAvatar}>
                     <View style={{
                             flexDirection: 'row', margin: WIDTH *0.01, justifyContent: 'center', height: HEIGHT *0.1 }}>
                         <Text style={{
@@ -163,7 +172,7 @@ return (
                 </TouchableOpacity>
                 <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
-
+                    */}
                         <TouchableOpacity onPress={() => changeModalNameVisibility(true)}>
                     <View style={{
                             flexDirection: 'row', margin: WIDTH *0.01, justifyContent: 'center', height: HEIGHT *0.1 }}>

@@ -23,9 +23,11 @@ import { collection, query, doc, getDoc, onSnapshot,where } from 'firebase/fires
 import { async } from '@firebase/util';
 import Home_navigation from '../navigation/Home_navigation.js';
 import moment from 'moment';
+import JMCICON from '../assets/JMC_Icon.png';
 
 
 
+const Iconjmc = Image.resolveAssetSource(JMCICON).uri;
 export default Profile = () => {
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState([
@@ -35,7 +37,7 @@ export default Profile = () => {
     ]);
     const [current, setCurrent] = useState(0)
     const navigation = useNavigation();
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [isSignedIn, setIsSignedIn] = useState(true);
     const [profile, setProfile] = useState('');
     const [user, setUser] = useState('');
     const [ExpenditureData, setExpenditureData] = useState(null);
@@ -45,7 +47,9 @@ export default Profile = () => {
     const [daysrecorded, setDaysrecorded] = useState(null);
     const [currdate, setCurrdate] = useState (moment(new Date().getTime()).format('YYYY/MM/DD')); 
     const [dayscontinue, setDayscontinue] = useState (0);
-    const [toggle, setToggle] = useState(false)
+    const [toggle, setToggle] = useState(false);
+
+    
 
    const monthNum = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
@@ -169,6 +173,8 @@ export default Profile = () => {
         console.log();
        
        
+    }else{
+        navigation.navigate("Starting_page");
     }
         
         });
@@ -217,7 +223,7 @@ export default Profile = () => {
         signOut(authentication)
         .then((re)=>{
             setIsSignedIn(false);
-            navigation.navigate(Home_navigation)
+            navigation.navigate("Starting_page")
         })
         .catch((re)=>{
             console.log(re)
@@ -241,7 +247,7 @@ export default Profile = () => {
                     borderRadius:999,
                     overflow:'hidden',alignSelf: 'center'}}>
                         
-                    { (profile === null)
+                    {/* (profile === null)
                     ? <Ionicons           
                     name="ios-person-circle"
                     color={'black'}
@@ -250,18 +256,15 @@ export default Profile = () => {
                     />                    
                     : (profile.picture !== null)
                     ? <Image source={{uri: profile.picture}} style = {{alignSelf: 'center', height: 150, width: 150}}/>
-                    :<Ionicons           
-                    name="ios-person-circle"
-                    color={'black'}
-                    size={160}
-                    style={{ alignSelf: 'center' }}                
-                    /> } 
+                :*/} 
+                <Image source={{uri: Iconjmc}} style = {{alignSelf: 'center', height: 150, width: 150}}/>
                 </View>
                 {(profile === null)                
-                ?<Text style={{ fontSize: 30, textAlign:'center' }}>User_Name</Text>
+                ?<Text style={{ fontSize: 25, textAlign:'center' }}>Hi, user.</Text>
                 :(profile.name !== null)
-                ?<Text style={{ fontSize: 30, textAlign:'center' }}>{profile.name}</Text>
-                :<Text style={{ fontSize: 30, textAlign:'center' }}>User_Name</Text>}
+                ?<Text style={{ fontSize: 25, textAlign:'center' }}>Hi, {profile.name}.</Text>
+                :<Text style={{ fontSize: 25, textAlign:'center' }}>Hi, user.</Text>}
+                <Text style={{ fontSize: 15, textAlign:'center' }}>This is Project JMC.</Text>
             </View>
             <View style={{ flexDirection: 'row', paddingTop: 20 }}>
                 <View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#F9C70D', borderTopLeftRadius: 20 }}>
