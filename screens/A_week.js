@@ -187,7 +187,7 @@ export default A_week = () => {
             
         <View style = {styles.chartContainer}>
 
-            <Text style={styles.title}>Line chart for week trends</Text>
+            <Text style={styles.title}>Bar chart income vs expenditure</Text>
             
             {/*
                 <LineChart
