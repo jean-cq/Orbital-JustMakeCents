@@ -1,0 +1,15 @@
+android {
+  signingConfigs {
+    release {
+      storeFile file('your_key_name.keystore')
+      storePassword 'JMC2022'
+      keyAlias 'your_key_alias'
+      keyPassword 'your_key_file_alias_password'
+    }
+  }
+  buildTypes {
+    release {
+      signingConfig signingConfigs.release
+    }
+  }
+}
