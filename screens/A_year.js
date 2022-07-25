@@ -118,7 +118,7 @@ export default A_year = () => {
             });
         };
         
-        getMonData = () => {
+        const getMonData = () => {
             const eachRef = query(collection(db, "users/" + userId + "/month"));
             const querySnapshot = onSnapshot(eachRef, (refSnapshot) => {
                 const eachList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -138,7 +138,7 @@ export default A_year = () => {
         getData();
         getMonData();
         console.log(EachMonData);
-    },[])
+    },[selectedYear])
 
 
     const fill = 'rgb(134, 65, 244)'

@@ -151,12 +151,7 @@ export default Profile = () => {
             console.log(moment(new Date(nextdate)).format('YYYY/MM/DD'));
             setDayscontinue(i+1);
             
-            }else{
-            
             }
-            
-            
-            
             }
            
 
@@ -444,7 +439,7 @@ export default Profile = () => {
 
 
             </View>*/}
-            {/*button for setting*/}
+            {/*button for setting
              
                 <TouchableOpacity style={{
                     backgroundColor: '#C4C4C4', marginTop: 5, padding: 13, borderRadius: 20, flexDiection: 'row', justifyContent: 'space-between'
@@ -464,7 +459,7 @@ export default Profile = () => {
                         }} > Setting </Text>
 
                     
-                </TouchableOpacity>
+                </TouchableOpacity>*/}
 
                 {/*button for FAQ*/}
 

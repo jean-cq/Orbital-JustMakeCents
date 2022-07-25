@@ -11,9 +11,12 @@ import { getDoc, runTransaction, doc, setDoc, updateDoc, query, collection, onSn
 import { db, authentication } from '../lib/firebase.js';
 import { getAuth, updatePassword } from "firebase/auth";
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
+import JMCICON from '../assets/JMC_Icon.png';
+
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
+const Iconjmc = Image.resolveAssetSource(JMCICON).uri;
 
 export default Contact_us = () => {
 
@@ -49,15 +52,24 @@ export default Contact_us = () => {
     return (
         
         <SafeAreaView>
+<View style = {{paddingVertical: 10}}>
 
-            <View style = {{height: HEIGHT * 0.1, marginTop:30 ,width:WIDTH}}>
-            <Ionicons
-                            name="md-logo-snapchat"
-                            color={'black'}
-                            size={50}
-                            style={{ textAlign:'center',alignSelf:'center'}} />
-            </View>
-            <Text style = {{textAlign: 'center', paddingBottom: 20, fontSize: 20}}>JustMakeCents</Text>
+</View>
+<View style = {{elevation:2,
+                    height:150,
+                    width:150,
+                    backgroundColor:'#efefef',
+                    position:'relative',
+                    borderRadius:999,
+                    overflow:'hidden',alignSelf: 'center'}}>
+                        
+                    
+                    <Image source={{uri: Iconjmc }} style = {{alignSelf: 'center', height: 150, width: 150, paddingVertical:20}}/>
+                    
+                </View>
+
+            
+            <Text style = {{textAlign: 'center', paddingBottom: 20, paddingTop:5, fontSize: 20}}>JustMakeCents</Text>
             <View style = {styles.line}>
             </View>
             <TouchableOpacity onPress={handleYoutube}>

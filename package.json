@@ -37,6 +37,7 @@
     "react-native-animated-pagination-dots": "^0.1.72",
     "react-native-bouncy-checkbox": "^2.1.10",
     "react-native-custom-keyboard-kit": "^1.0.2",
+    "react-native-device-info": "^10.0.2",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~2.2.1",
     "react-native-immersive-bars": "^1.0.4",

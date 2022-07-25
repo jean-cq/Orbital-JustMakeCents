@@ -49,12 +49,15 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     }, image: {
         width: WIDTH,
-        height:HEIGHT * 0.9,
+        height:HEIGHT ,
         justifyContent: "flex-start"
     }, fixToText: {
         height:HEIGHT * 0.1,
+        marginTop: HEIGHT * 0.8,
+        position:'absolute',
         flexDirection: 'row',
-        justifyContent: "space-around"
+        textAlign:'center',
+        justifyContent: "center"
     }, separator: {
         marginVertical: 8,
         orderBottomColor: 'white',

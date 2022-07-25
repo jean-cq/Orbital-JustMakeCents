@@ -126,7 +126,7 @@ export default A_month = () => {
                 });
             };
     
-            getWkData = () => {
+            const getWkData = () => {
                 const eachRef = query(collection(db, "users/" + userId + "/week"));
                 const querySnapshot = onSnapshot(eachRef, (refSnapshot) => {
                     const eachList = [0, 0, 0, 0];
@@ -146,7 +146,7 @@ export default A_month = () => {
             getData();
             getWkData();
             toggleOpen(false);
-        },[])
+        },[selectedMonth])
 
 
     const fill = 'rgb(134, 65, 244)';

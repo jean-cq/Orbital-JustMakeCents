@@ -126,7 +126,7 @@ export default Profile_edit = () => {
                 
                 picture: avatar
             }).then(() => {
-                alert('data submitted');
+                alert(avatar);
                 changeModalNameVisibility(false);
                 
             }).catch((error) => {
