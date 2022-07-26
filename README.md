@@ -1,5 +1,7 @@
 # JustMakeCents
 
+## Proposed level of achievement: Apollo 11
+
 ### Lift-off 🚀
 Poster: https://drive.google.com/file/d/1xKcIM_fL_aNwUvlvRGxqvT1w2KhKjYVm/view?usp=sharing
 
@@ -16,7 +18,7 @@ Video: https://youtu.be/7euA97gQx0g
 ### Milestone 3
 Poster: https://drive.google.com/file/d/1DzFjSj6fmMFJITypQypx04ntwSiXnsYc/view?usp=sharing
 
-Video: 
+Video: https://youtu.be/T23AsQgnV1E
 
 ## 💻APK
 
