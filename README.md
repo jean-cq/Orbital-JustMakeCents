@@ -78,6 +78,7 @@ The mobile application provides a money manager interface for students to keep t
     - Allow users to visualise their expenses(e.g. pie chart and bar plot) by week, by month, by year
 8. Lending & Borrowing page
     - Tick if the person returns money or the user returns money
+    - Better have an notification if the user has unticked lending and borrowing record
 
 ## ❓Problems and Suggestions Araised from Testing
 1. Analytics
@@ -87,6 +88,8 @@ The mobile application provides a money manager interface for students to keep t
     - Display expenditure in sequences and enable categories selection
 3. Profile page
     - Profile photo can be implemented
+8. Lending & Borrowing page
+    - Cannot sync with month expenditure when unticked
    
 
 ## ❓Addressing concerns raised in Milestones
@@ -124,7 +127,7 @@ The mobile application provides a money manager interface for students to keep t
 - Shark Money Tracking & Reminder
   - Applications like Shark Money Tracking provide features for users to track their expenses, and reminder applications allow users to record products to be purchased. However, such features are only accessible in separate applications, without an all-in-one application for users to access all features without switching to other apps. 
 - Money +
-  - The functions in the application cater to the general public. Some of them are complicated but extra to university students.
+  - The functions in the application cater to the general public. Some of them are complicated but extra to university students and some functions that cater to students are not explicitly implemented. For example, function that records money lent to and borrow from people is not explicitly implemented for users.
 
 ## 💻Development Plan
 - 3rd week of May: Finalised pitch for Orbital Lift-off
