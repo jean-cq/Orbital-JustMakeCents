@@ -29,7 +29,7 @@ export default B_borrowing = () => {
 
     return (
         <View >
-            <View style={{ background: '#C4C4C4', flexDirection: 'row', padding: 20 }}>
+            <View style={{ background: '#C4C4C4', flexDirection: 'row', padding: 15 }}>
                 <Text style={{ flex: 1 }}>Status</Text>
                 <Text style={{ flex: 2, textAlign: 'center' }}>Who</Text>
                 <Text style={{ flex: 2, textAlign: 'center' }}>Category</Text>
@@ -43,7 +43,7 @@ export default B_borrowing = () => {
                 //ExpenditureData
                 renderItem={({ item, index }) => (
                     <View >
-                        <View style={{ flexDirection: 'row', padding: 20, backgroundColor: item.status === true ? '#C4C4C4' : 'white' }}>
+                        <View style={{ flexDirection: 'row', padding: 25, backgroundColor: item.status === true ? '#C4C4C4' : 'white' }}>
                         <BouncyCheckbox
                                 style={{ textAlign: 'center', flex: 1 }}
                                 disableText={true}
@@ -57,8 +57,8 @@ export default B_borrowing = () => {
                                               })
                                 }}
                             />
-                            <Text style={{ flex: 2, textAlign: 'center' }}>{item.note}</Text>                        
-                            <Text style={{ flex: 2, textAlign: 'center' }}> {item.category} </Text>
+                            <Text style={{ flex: 3, textAlign: 'center' }}>{item.note}</Text>                        
+                            <Text style={{ flex: 3, textAlign: 'center' }}> {item.category} </Text>
                             <Text style={{ flex: 2, textAlign: 'right' }}>{item.amount} </Text>
 
                         </View>
