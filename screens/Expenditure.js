@@ -29,6 +29,7 @@ export default Expenditure = () => {
     const [IncomeData, setIncomeData] = useState([]);
     const [isOpen, toggleOpen] = useState(false);
     const [month, setMonth] = useState(null);
+    const [toggle, setToggle] = useState(false)
     const [loading, setLoading] = useState(true); // Set loading to true on component mount
     const [users, setUsers] = useState([]); // Initial empty array of users
 
@@ -47,6 +48,7 @@ export default Expenditure = () => {
     const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==",monthb()));
 
     useEffect(() => {
+        setTimeout(() => setToggle((prevToggle) => !prevToggle), 3000); 
         const getData = async () => {
             const querySnapshot = onSnapshot(bRef, (refSnapshot) => {
                 const expList = [];
@@ -84,7 +86,7 @@ export default Expenditure = () => {
        
          
        
-    }, [bData]);
+    }, [toggle]);
 
    
 

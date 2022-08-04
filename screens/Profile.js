@@ -11,7 +11,7 @@ import Catebutton from '../components/Catebutton.js';
 import PageControl from 'react-native-page-control';
 import PagerView from 'react-native-pager-view';
 import { authentication, db } from "../lib/firebase.js";
-import { signOut, Auth } from "firebase/auth";
+import { signOut, Auth, onAuthStateChanged} from "firebase/auth";
 import { collection, query, doc, getDoc, onSnapshot,where } from 'firebase/firestore';
 import moment from 'moment';
 import JMCICON from '../assets/JMC_Icon.png';
@@ -45,10 +45,10 @@ export default Profile = () => {
    const monthNum = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
   // Handle user state changes
-  function onAuthStateChanged(user) {
-    setUser(user);
+  //function onAuthStateChanged(user) {
+  //  setUser(user);
     
-  }
+  //}
   const y = new Date().getFullYear();
   const m = new Date().getMonth() + 1;
   const month = () =>{
@@ -200,7 +200,8 @@ export default Profile = () => {
        
        
     }else{
-        navigation.navigate("Starting_page");
+        navigation.navigate('AuthStacks', { screen: "Starting_page" });
+         
     }
         
         });
