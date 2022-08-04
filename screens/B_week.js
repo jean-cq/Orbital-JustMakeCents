@@ -1,66 +1,15 @@
-import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, Modal, ListItem } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Flatbutton from '../components/Flatbutton.js';
+import { TextInput, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, Modal } from 'react-native';
 import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
-import Feather from '../node_modules/@expo/vector-icons/Feather.js';
-import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
-import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
-import { useTheme } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
-import { Input } from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
-import { Progress } from '../node_modules/react-native-progress/Bar';
-import Svg, { Circle, Rect } from 'react-native-svg';
+import Svg, { Rect } from 'react-native-svg';
 import { db, authentication } from '../lib/firebase.js';
-import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
+import { doc, getDoc, updateDoc, collection, query, where, onSnapshot } from "firebase/firestore";
 
 export default B_week = () => {
 
-    const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
     const [rem, setRem] = useState('');
-    const [hi, setHi] = useState(true);
-    const [items, setItems] = useState([
-        { id: '0', category: 'Recreation', amount: '50' },
-        { id: '1', category: 'Diet', amount: '260' },
-        { id: '2', category: 'Education', amount: '260' },
-        { id: '3', category: 'Medical', amount: '40' },
-        { id: '4', category: 'Traffic', amount: '30' },
-        { id: '5', category: 'Beautify', amount: null },
-        { id: '6', category: 'Others', amount: null },
-    ]);
-    const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
-
-    const updateFieldChanged = index => e => {
-        console.log('index: ' + index);
-        console.log('property name: ' + e.target.name);
-        let newArr = [...items]; // copying the old datas array
-        newArr[index] = e.amount; // replace e.target.value with whatever you want to change it to
-
-        setItems(newArr);
-    }
-    const deleteItem = id => {
-        setItems(previousItems => {
-            return previousItems.filter(item => item.id !== id);
-        });
-    };
-    const status_change = () => {
-        setItems(item => item.status = !item.status)
-    }
-
-    const loadAllExpenditure = async () => {
-
-        const { Expenditure, error } = await supabase.getAllExpenditure();
-        setExpenditureData(Expenditure)
-    }
-    useEffect(() => {
-        loadAllExpenditure();
-
-    }, [])
-
     const userId = authentication.currentUser.uid;
     const expRef = query(collection(db, "users/" + userId + "/budget"), where("category", "==", "week"));
 
@@ -84,10 +33,7 @@ export default B_week = () => {
         getData();
     }, []);
 
-  
-
     const updateBudget = async() => {
-    
         const budDocRef = doc(db, "users/" + userId + "/budget" + "/week")
         const sfDoc = await getDoc(budDocRef)
                await updateDoc(budDocRef , {
@@ -115,10 +61,7 @@ export default B_week = () => {
     return (
         <SafeAreaView >
             <View style={styles.container}>
-
                 <Text style={{ marginLeft: 20, fontSize: 16, fontWeight: 'bold' }}>Budget used : $150</Text>
-
-
                 <Svg width='500' height='40'>
                     <Rect
                         x="40"
@@ -138,31 +81,20 @@ export default B_week = () => {
                         strokeWidth="3"
 
                     />
-
                 </Svg>
-
-
                 <Text style={{ textAlign: 'right', marginRight: 20, fontSize: 10 }}>75%</Text>
             </View>
-
             <View style={{ backgroundColor: '#C4C4C4', padding: 10 }}>
                 <Text style={{ textAlign: 'left', fontSize: 18, marginLeft: 7 }}>Category Budget</Text>
             </View>
-            {/*Flatlist*/}
-
-
             <FlatList
                 showsVerticalScrollIndicator={true}
                 data={ExpenditureData}
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
-
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-
-
                             <Text style={{ flex: 2 }}>{item.category}</Text>
-
                             <TouchableOpacity onPress={() => {
                                 setRem(item.id)
                                 setModalVisible(true);
@@ -224,19 +156,10 @@ export default B_week = () => {
             <View style={styles.buttonposition}>
             </View>
         </SafeAreaView >
-
-
-
-
     );
-
-
 }
 
-
-
 const styles = StyleSheet.create({
-
     container: {
         backgroundColor: '#EDE9FB',
         flexDirection: 'column',
@@ -249,7 +172,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'grey',
         marginTop: 35
     },
-
     buttontext1: {
 
         color: 'black',
@@ -286,20 +208,13 @@ const styles = StyleSheet.create({
         elevation: 5
     }, modalText: {
         marginBottom: 15,
-        textAlign: "center"
-
-
-
+        textAlign: "center",
     },
     textInput: {
         height: 40,
         margin: 12,
         borderBottomColor: '#C4C4C4',
         borderBottomWidth: 2,
-        padding: 10
+        padding: 10,
     }
-
-
-
-
 })

@@ -1,63 +1,20 @@
-import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, Modal, ListItem } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Flatbutton from '../components/Flatbutton.js';
+import { TextInput, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, Modal } from 'react-native';
 import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
-import Feather from '../node_modules/@expo/vector-icons/Feather.js';
-import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
-import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
-import { useTheme } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
-import { Input } from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
-import { Progress } from '../node_modules/react-native-progress/Bar';
-import Svg, { Circle, Rect } from 'react-native-svg';
+import Svg, { Rect } from 'react-native-svg';
 import { db, authentication } from '../lib/firebase.js';
-import moment from 'moment';
-import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
+import { doc, getDoc, updateDoc, collection, query, where, onSnapshot } from "firebase/firestore";
 
 
 
 export default B_month = () => {
     const [toggle, setToggle] = useState(false)
-    const navigation = useNavigation();
     const [IncomeData, setIncomeData] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [rem, setRem] = useState('');
-    const [exp,setExp] = useState(0);
     const [sumBudget,setSumBudget] = useState(0);
-    const [items, setItems] = useState([
-        { id: '0', category: 'Recreation', amount: '50' },
-        { id: '1', category: 'Diet', amount: '260' },
-        { id: '2', category: 'Education', amount: '260' },
-        { id: '3', category: 'Medical', amount: '40' },
-        { id: '4', category: 'Traffic', amount: '30' },
-        { id: '5', category: 'Beautify', amount: null },
-        { id: '6', category: 'Others', amount: null },
-    ]);
-    const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
-
-    const updateFieldChanged = index => e => {
-        console.log('index: ' + index);
-        console.log('property name: ' + e.target.name);
-        let newArr = [...items]; // copying the old datas array
-        newArr[index] = e.amount; // replace e.target.value with whatever you want to change it to
-
-        setItems(newArr);
-    }
-    const deleteItem = id => {
-        setItems(previousItems => {
-            return previousItems.filter(item => item.id !== id);
-        });
-    };
-    const status_change = () => {
-        setItems(item => item.status = !item.status)
-    }
-
-   
-
+    const [exp,setExp] = useState(0);
     const y = new Date().getFullYear();
     const m = new Date().getMonth() + 1;
     const month = () =>{
@@ -67,19 +24,15 @@ export default B_month = () => {
             return y+'/'+m
         }
     }
-    
     const userId = authentication.currentUser.uid;
     const expRef = query(collection(db, "users/" + userId + "/budget"), where("category", "==", "month"));
     const monthRef = query(collection(db, "users/" + userId + "/month"), where("mon", "==",month()));
-    const d = new Date(moment('2022/07/05').format('YYYY-MM-DD')).getMonth();
-    const a = new Date('2022',d,1);
     
     useEffect(() => {
         setTimeout(() => setToggle((prevToggle) => !prevToggle), 3000);
         const getData = async () => {
             const querySnapshot = onSnapshot(expRef, (refSnapshot) => {
-                const expList = [];
-               
+                const expList = [];   
                 refSnapshot.forEach((doc) => {
                     expList.push({id: '0', category: "Traffic", amount: doc.data().traffic});
                     expList.push({id: '1', category: "Recreation", amount: doc.data().recreation});
@@ -92,10 +45,7 @@ export default B_month = () => {
                     expList.push(doc.data().traffic + doc.data().recreation+doc.data().medical + 
                         doc.data().beautify + doc.data().diet + doc.data().education + doc.data().necessity + doc.data().others);
                 });
-            setExpenditureData(expList);
-            
-            
-                      
+            setExpenditureData(expList);          
             });
         };const getMonthData = async () => {
             const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
@@ -110,9 +60,7 @@ export default B_month = () => {
         getData();
         getMonthData();
         setExp(IncomeData[0]);
-        setSumBudget(ExpenditureData[8]);
-         
-       
+        setSumBudget(ExpenditureData[8]);  
     }, [toggle]);
 
     const updateBudget = async() => {
@@ -130,21 +78,15 @@ export default B_month = () => {
                     category: "month",
             }).then(() => {
                 alert('data submitted');
-                setModalVisible(!modalVisible)
-                
+                setModalVisible(!modalVisible) 
             }).catch((error) => {
                 alert(error)
             })}
 
-            
-
     return (
         <SafeAreaView >
             <View style={styles.container}>
-
                 <Text style={{ marginLeft: 20, fontSize: 16, fontWeight: 'bold' }}>Budget used : $150</Text>
-
-
                 <Svg width='500' height='40'>
                     <Rect
                         x="40"
@@ -164,12 +106,8 @@ export default B_month = () => {
                         height="15"
                         fill='yellow'
                         strokeWidth="3"
-
                     />
-
                 </Svg>
-
-
                 <Text style={{ textAlign: 'right', marginRight: 20, fontSize: 10 }}>{(sumBudget === 0)
                 ? 'please set your budget'
                 : IncomeData[0] === undefined
@@ -181,21 +119,14 @@ export default B_month = () => {
             <View style={{ backgroundColor: '#C4C4C4', padding: 10 }}>
                 <Text style={{ textAlign: 'left', fontSize: 18, marginLeft: 7 }}>Category Budget</Text>
             </View>
-            {/*Flatlist*/}
-
-
             <FlatList
                 showsVerticalScrollIndicator={true}
                 data={ExpenditureData}
                 //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
-
                         <View style={{ flexDirection: 'row', padding: 20 }}>
-
-
                             <Text style={{ flex: 2 }}>{item.category}</Text>
-
                             <TouchableOpacity onPress={() => {
                                 setRem(item.id)
                                 setModalVisible(true);
@@ -257,19 +188,10 @@ export default B_month = () => {
             <View style={styles.buttonposition}>
             </View>
         </SafeAreaView >
-
-
-
-
     );
-
-
 }
 
-
-
 const styles = StyleSheet.create({
-
     container: {
         backgroundColor: '#EDE9FB',
         flexDirection: 'column',
@@ -282,7 +204,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'grey',
         marginTop: 35
     },
-
     buttontext1: {
 
         color: 'black',
@@ -294,7 +215,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginLeft: 320,
         marginTop: 500
-
     },
     centeredView: {
         flex: 1,
@@ -320,9 +240,6 @@ const styles = StyleSheet.create({
     }, modalText: {
         marginBottom: 15,
         textAlign: "center"
-
-
-
     },
     textInput: {
         height: 40,
@@ -331,8 +248,4 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         padding: 10
     }
-
-
-
-
 })

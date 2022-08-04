@@ -10,7 +10,6 @@ import Tips1 from '../screens/tips1'
 import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import { useTheme } from '@react-navigation/native';
 import { useState, useRef, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';

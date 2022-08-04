@@ -10,7 +10,6 @@ import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
 // Set up a Login component
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
 import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { authentication } from "../lib/firebase.js";

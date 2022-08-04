@@ -7,8 +7,6 @@ import { createNativeStackNavigator }from '@react-navigation/native-stack';
 import  AuthStacks  from './navigation/AuthStacks.js';
 import Home_navigation  from './navigation/Home_navigation.js';
 import { useState, useEffect, useContext } from 'react';
-import { supabase } from './lib/supabase';
-import {supabaseClient} from './lib/supabase.ts';
 import { authentication } from './lib/firebase.js';
 
 

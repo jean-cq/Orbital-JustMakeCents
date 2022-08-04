@@ -10,7 +10,6 @@ import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useState } from 'react';
 import { useTheme } from '@react-navigation/native';
-import { supabase } from '../lib/supabase';
 import { useNavigation } from '@react-navigation/native';
 import { authentication } from "../lib/firebase.js";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
