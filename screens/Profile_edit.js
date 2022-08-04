@@ -1,10 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, Image, StyleSheet, SafeAreaView, Dimensions, TouchableOpacity, Text, View, TextInput, Modal } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator }from '@react-navigation/native-stack';
-import { useState, useEffect, useContext } from 'react';
+import { Image, StyleSheet, Dimensions, TouchableOpacity, Text, View, TextInput, Modal } from 'react-native';
+import { useState } from 'react';
 import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
-import Ionicons from '../node_modules/@expo/vector-icons/Ionicons.js';
 import UserPermissions from '../lib/UserPermissions.js';
 import * as ImagePicker from 'expo-image-picker';
 import { getDoc, runTransaction, doc, setDoc, updateDoc, query, collection, onSnapshot } from 'firebase/firestore';
@@ -16,13 +12,11 @@ const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 const Iconjmc = Image.resolveAssetSource(JMCICON).uri;
 export default Profile_edit = () => {
-    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState(null);
     const [isModalNameVisible, setModalNameVisible] = useState(false);
     const [isModalPasswordVisible, setModalPasswordVisible] = useState(false);
     const [avatar, setAvatar] = useState(Iconjmc);
-    const [profile, setProfile] = useState('');
 
     /*useEffect(() => {
         console.log(avatar);
@@ -69,10 +63,8 @@ export default Profile_edit = () => {
            
             createAvatar();
             
-            
         }
 
-    
     }
     const create = async() => {
         const sfDocRef = doc(db, "users/" + userId + "/profile" + '/userinfo' );
@@ -179,11 +171,6 @@ return (
                         <Text style={{
                             textAlign:'left', alignSelf:'center', fontSize: 15, fontFamily: 'serif',flex:5
                         }} > Name </Text>
-
-                    
-            
-                     
-                    
 
                         <MaterialIcons
                             name="keyboard-arrow-right"
@@ -325,20 +312,6 @@ const styles = StyleSheet.create({
      alignContent: 'flex-end',
      justifyContent:'flex-end',
      paddingLeft:300
-     
-        
-        
-
-       /* <View style={styles.icons}>
-            <TouchableOpacity onPress={() => handleGoogleLogin('LOGIN')}>
-            <AntDesign
-                name="google"
-                color={colors.text}
-                size={20}
-
-                />
-            </TouchableOpacity>
-            </View>*/
     },
     button1: {
         borderRadius: 20,
@@ -421,9 +394,7 @@ const createAvatar = async() => {
             }).catch((error) => {
                 alert(error)
             })}
-          
-  
-
+       
     }
 
 */

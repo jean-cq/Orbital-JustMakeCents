@@ -1,26 +1,18 @@
 ﻿// JavaScript source codeimport { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
 import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, ScrollView} from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Flatbutton from '../components/Flatbutton.js';
 import MaterialCommunityIcons from '../node_modules/@expo/vector-icons/MaterialCommunityIcons.js';
 import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
 import Ionicons from '../node_modules/@expo/vector-icons/Ionicons.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
-import Tips1 from '../screens/tips1'
-import Feather from '../node_modules/@expo/vector-icons/Feather.js';
-import { useTheme } from '@react-navigation/native';
+import Tips1 from '../screens/tips1';
 import { useState, useRef, useEffect } from 'react';
-import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';
 import PageControl from 'react-native-page-control';
 import PagerView from 'react-native-pager-view';
 import { authentication, db } from "../lib/firebase.js";
 import { signOut, Auth } from "firebase/auth";
-import ProfileStacks from '../navigation/ProfileStacks.js';
 import { collection, query, doc, getDoc, onSnapshot,where } from 'firebase/firestore';
-import { async } from '@firebase/util';
-import Home_navigation from '../navigation/Home_navigation.js';
 import moment from 'moment';
 import JMCICON from '../assets/JMC_Icon.png';
 
@@ -199,17 +191,6 @@ export default Profile = () => {
               //  setDatedata(null);
           //  }
         };
-
-
-      
-           
-
-           
-
-
-        
-        
-       
         getData();
         getMonthData();
         getDateData();
@@ -226,18 +207,6 @@ export default Profile = () => {
         
         subscriber();
       }, [toggle]);
-/*
-      
-
-      const check = () => { 
-        let i = 0;
-        while(signn !== new Date().setDate(-i)){
-             
-            i = i ++
-        }
-        setDays(i);
-      }
-    */
 
     const trytry = async() =>{
         const q = query(collection(db, "users/" + userId + "/profile"  ));
@@ -509,7 +478,7 @@ export default Profile = () => {
                     
                 </TouchableOpacity>*/}
 
-                {/*button for FAQ*/}
+                {/*button for Contact Us*/}
 
                 <TouchableOpacity style={{
                     backgroundColor: '#C4C4C4', marginTop: 5, padding: 13, borderRadius: 20, flexDiection: 'row', justifyContent: 'space-between'
@@ -561,18 +530,3 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
     })
-
-            /*avatar& username
-               <View style={{ flexDirection: 'column', flex: 50 }}>
-                 
-                       <Catebutton test='Edit your porfile' onPress={() => Alert.alert("This is date.")} />
-                  
-                   <FontAwesome
-                       name="user-o"
-                       color={'black'}
-                       size={20}
-                       style={{ flex: 5, alignItems: 'center' }}
-                   />
-                   <Text style={{ flex: 2, textAlign: 'center' }}>Username</Text>
-               </View>
-               */

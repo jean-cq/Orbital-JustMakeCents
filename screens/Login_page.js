@@ -1,16 +1,12 @@
 // JavaScript source code
-import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Alert, TextInput, StyleSheet, Text, View } from 'react-native';
 import Flatbutton from '../components/Flatbutton.js';
 //import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
 import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
-import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useTheme } from '@react-navigation/native';
 // Set up a Login component
 import { useState, useEffect } from 'react';
-import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { authentication } from "../lib/firebase.js";
 import { signInWithEmailAndPassword, signInWithCredential } from 'firebase/auth';
@@ -30,81 +26,12 @@ export default Login_page = () => {
     });
 
     const { colors } = useTheme();
-
-    const textInputChange = (val) => {
-        if (val.trim().length >= 4) {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: true,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: false,
-                isValidUser: false
-            });
-        }
-    }
-
-    const handlePasswordChange = (val) => {
-        if (val.trim().length >= 8) {
-            setData({
-                ...data,
-                password: val,
-                isValidPassword: true
-            });
-        } else {
-            setData({
-                ...data,
-                password: val,
-                isValidPassword: false
-            });
-        }
-    }
-
-    const updateSecureTextEntry = () => {
-        setData({
-            ...data,
-            secureTextEntry : !data.secureTextEntry
-        });
-    }
-
-    const handleValidUser = (val) => {
-        if (val.trim().length >= 4) {
-            setData({
-                ...data,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                isValidUser: false
-            });
-        }
-    }
     
     const [isSignedIn, setIsSignedIn] = useState(false);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-
-   /* const SignInWithGoogle = async() => {
-        const provider = new GoogleAuthProvider();
-        const { idToken } = await GoogleSignin.signIn();
-        // Create a Google credential with the token
-    const googleCredential = provider.credential(idToken);
-
-    // Sign-in the user with the credential
-    return signInWithCredential(googleCredential);
-        
-    }
-    
-*/
-  
 
     const SignInUser = () => {
         signInWithEmailAndPassword(authentication, email, password)
@@ -126,55 +53,6 @@ export default Login_page = () => {
         })
         return unsubscribe
     }, [])
-
-    const handleLogin = () => {
-        auth
-        .signInWithEmailAndPassword(email, password)
-        .then(userCredentials => {
-            const user = userCredentials.user;
-        })
-        .catch(error => alert(error.message))
-    }
-/*    const handleLogin = async (type, email, password) => {
-        setLoading(type)
-        const { error, user } =
-          type === 'LOGIN'
-                ? await supabase.supabaseClient.auth.signIn({ email, password })
-             
-            : await supabase.supabaseClient.auth.signUp({ email, password })
-        if (!error && !user) Alert.alert('Check your email for the login link!')
-        if (error) Alert.alert(error.message)
-        else navigation.navigate('Books')
-
-        setLoading('')
-      }
-    /* const handleTwitterLogin = async (type) => {
-        setLoading(type)
-        const { user, session, error } =
-            await supabase.auth.signIn({
-                provider: 'twitter'
-            }, {
-                redirectTo: 'https://xlmxiwbuyvnpmipnzzfy.supabase.co/auth/v1/authorize?provider=twitter'
-            })
-       
-
-        setLoading('')
-    }*/
-/*    const handleGoogleLogin = async (type) => {
-        setLoading(type)
-        const { user, session, error } =
-            type === 'LOGIN'
-                ? await supabase.auth.signIn({
-                    provider: 'google'
-                }, {
-                    redirectTo: 'https://xlmxiwbuyvnpmipnzzfy.supabase.co/auth/v1/authorize?provider=google'})
-                : await supabase.auth.signUp({
-                    provider: 'google'
-                }, {
-                    redirectTo: 'https://xlmxiwbuyvnpmipnzzfy.supabase.co/auth/v1/authorize?provider=google'})
-        setLoading('')
-    }
-*/
 
     return (
         <SafeAreaView style={styles.container}>
@@ -227,16 +105,6 @@ export default Login_page = () => {
             onPress={() => navigation.navigate('ForgetPassword')}>
                 Forget your password?</Text>
                 <View style={styles.icons}>
-            {/* 
-            <TouchableOpacity onPress={SignInWithGoogle}>
-            <AntDesign
-                name="google"
-                color={colors.text}
-                size={20}
-
-                />
-            </TouchableOpacity>
-            */}
             </View>
             <View style={styles.fixToText}>
                 <Flatbutton text='Log In' onPress={SignInUser} />
@@ -299,136 +167,7 @@ const styles = StyleSheet.create({
      alignContent: 'flex-end',
      justifyContent:'flex-end',
      paddingLeft:300
-     
-        
-        
-
-       /* <View style={styles.icons}>
-            <TouchableOpacity onPress={() => handleGoogleLogin('LOGIN')}>
-            <AntDesign
-                name="google"
-                color={colors.text}
-                size={20}
-
-                />
-            </TouchableOpacity>
-            </View>*/
-    } 
+     } 
 
 });
-/*   {data.secureTextEntry ?
-               <Feather
-                   name="eye-off"
-                   color="grey"
-                   size={20}
-               />
-               :
-               <Feather
-                   name="eye"
-                   color="grey"
-                   size={20}
-               />
-           }
-           */
-/*
-const [data, setData] = React.useState({
-    username: '',
-    password: '',
-    check_textInputChange: false,
-    secureTextEntry: true,
-    isValidUser: true,
-    isValidPassword: true,
-});
 
-        const { colors } = useTheme();
-
-        const { signIn } = React.useContext(AuthContext);
-
-        const textInputChange = (val) => {
-            if (val.trim().length >= 4) {
-                setData({
-                    ...data,
-                    username: val,
-                    check_textInputChange: true,
-                    isValidUser: true
-                });
-            } else {
-                setData({
-                    ...data,
-                    username: val,
-                    check_textInputChange: false,
-                    isValidUser: false
-                });
-            }
-        }
-
-        const handlePasswordChange = (val) => {
-            if (val.trim().length >= 8) {
-                setData({
-                    ...data,
-                    password: val,
-                    isValidPassword: true
-                });
-            } else {
-                setData({
-                    ...data,
-                    password: val,
-                    isValidPassword: false
-                });
-            }
-        }
-
-        const updateSecureTextEntry = () => {
-            setData({
-                ...data,
-                secureTextEntry: !data.secureTextEntry
-            });
-        }
-
-        const handleValidUser = (val) => {
-            if (val.trim().length >= 4) {
-                setData({
-                    ...data,
-                    isValidUser: true
-                });
-            } else {
-                setData({
-                    ...data,
-                    isValidUser: false
-                });
-            }
-        }
-
-        const loginHandle = (userName, password) => {
-
-            const foundUser = Users.filter(item => {
-                return userName == item.username && password == item.password;
-            });
-
-            if (data.username.length == 0 || data.password.length == 0) {
-                Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
-                    { text: 'Okay' }
-                ]);
-                return;
-            }
-
-            if (foundUser.length == 0) {
-                Alert.alert('Invalid User!', 'Username or password is incorrect.', [
-                    { text: 'Okay' }
-                ]);
-                return;
-            }
-            signIn(foundUser);
-          
-        }//const {params} = useRoute();
-            </View>
-            <View style={styles.icons}>
-                <TouchableOpacity onPress={() => handleTwitterLogin('LOGIN')}>
-                    <AntDesign
-                        name="twitter"
-                        color={colors.text}
-                        size={20}
-
-                    />
-                </TouchableOpacity>
-            </View>*/

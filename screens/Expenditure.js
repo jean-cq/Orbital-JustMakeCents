@@ -1,30 +1,18 @@
-import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, Modal, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList, is, ListItem, ScrollView } from 'react-native';
+import { Alert, Modal, StyleSheet, TouchableOpacity, SafeAreaView, Text, View, FlatList } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 //import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
-import Feather from '../node_modules/@expo/vector-icons/Feather.js';
-import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
-import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
-import { useTheme } from '@react-navigation/native';
 import { React, useEffect, useState, useCallback } from 'react';
-import { Input } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-import { Progress } from '../node_modules/react-native-progress/Bar';
 import Svg, { Circle, Rect } from 'react-native-svg';
-import DatePicker from 'react-native-modern-datepicker';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { db, authentication } from '../lib/firebase.js';
-import { ActivityIndicator } from 'react-native';
-import {database} from 'firebase/database';
-import { FirebaseError } from 'firebase/app';
 import { ref, set, onValue, getDatabase } from "firebase/database";
 import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc } from "firebase/firestore";
 import moment from 'moment';
 import MonthPicker from 'react-native-month-picker';
 
 
-const Stack = createNativeStackNavigator();
 
 
 export default Expenditure = () => {
@@ -35,12 +23,10 @@ export default Expenditure = () => {
         { id: '2', status: true, category: 'beauty', name: 'lipstick', income: false, amount: 25.00, note: 'lolll' },
         { id: '3', status: true, category: 'others', name: 'scholarship', income: true, amount: 300.00, note : 'qkym'},
     ]);
-    const [inputValue, setInputValue] = useState('');
     const [sumBudget,setSumBudget] = useState(0);
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [bData, setbData] = useState([]);
     const [IncomeData, setIncomeData] = useState([]);
-    const [show, setShow] = useState(false);
     const [isOpen, toggleOpen] = useState(false);
     const [month, setMonth] = useState(null);
     const [loading, setLoading] = useState(true); // Set loading to true on component mount
