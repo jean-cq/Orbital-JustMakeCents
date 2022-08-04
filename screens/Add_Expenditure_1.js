@@ -134,7 +134,7 @@ export default Add_Expenditure_1 = () => {
                 note: note,
                 amount: +num,
                 id: unique_ref.toString(),
-                status:choice == "Borrowing" ? false : true,
+                status:(choice === "Expenditure" || "Income") ? true : false,
                 category: chosen,
                 date: date,
                 month: moment(date).format('YYYY/MM'),
