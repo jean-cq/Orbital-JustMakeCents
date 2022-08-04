@@ -1,10 +1,9 @@
 // JavaScript source code
-import { StatusBar } from 'expo-status-bar';
 import { TouchableOpacity, StyleSheet, Text, View, Dimensions } from 'react-native';
 
 
 const WIDTH = Dimensions.get('window').width;
-    const HEIGHT = Dimensions.get('window').height;
+const HEIGHT = Dimensions.get('window').height;
 export default Flat_button = ({ text, onPress  }) => {
     
 
