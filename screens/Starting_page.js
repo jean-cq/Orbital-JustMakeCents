@@ -1,13 +1,10 @@
 // JavaScript source code
 import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, Image, StyleSheet, SafeAreaView, Dimensions, Text, View } from 'react-native';
+import {  Image, StyleSheet, Dimensions, View } from 'react-native';
 import Flatbutton from '../components/Flatbutton.js';
 import DefaultImage from '../assets/starting_page.png';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
-const Stack = createNativeStackNavigator();
-//import Navigator from './Navigation/HomeStack.js'
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 const DEFAULT_IMAGE = Image.resolveAssetSource(DefaultImage).uri;
@@ -24,19 +21,14 @@ export default Starting_page = () => {
                 <View>
                     <Image source={{ uri: DEFAULT_IMAGE }}
                         style={styles.image} />
-
                 </View>
-                <Separator />
-                
-
+                <Separator />              
                     <View style={styles.fixToText}>
                         <Flatbutton text='Log In' onPress={() => navigation.navigate('Login_page')} />
                 <Flatbutton text='Register' onPress={() => navigation.navigate('Register_page')} />
                     </View>
-                    <StatusBar style='auto' />
-                 
+                    <StatusBar style='auto' />           
             </View>
-
     )
 }
 
@@ -62,7 +54,6 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         orderBottomColor: 'white',
         borderBottomWidth: StyleSheet.hairlineWidth,
-
     },
 });
 

@@ -10,6 +10,7 @@ import { doc, setDoc, collection, addDoc,onSnapshot, query, getDoc, updateDoc, i
 import moment from 'moment';
 import DatePicker from 'react-native-modern-datepicker';
 import CardModal from '../components/CardModal.js';
+import { StatusBar } from 'expo-status-bar';
 
 
 const WIDTH = Dimensions.get('window').width;

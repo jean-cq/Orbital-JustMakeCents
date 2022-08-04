@@ -1,25 +1,13 @@
-import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, Modal, Text, View, FlatList, ListItem } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Flatbutton from '../components/Flatbutton.js';
+import { Alert, TextInput, StyleSheet, TouchableOpacity, Modal, Text, View, FlatList } from 'react-native';
 import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
-import Feather from '../node_modules/@expo/vector-icons/Feather.js';
-import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
 import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
-import { useTheme } from '@react-navigation/native';
-import { useEffect, useState, useCallback } from 'react';
-import { Input } from 'react-native-elements';
+import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Progress } from '../node_modules/react-native-progress/Bar';
-import ExpenditureStacks from '../navigation/ExpenditureStacks.js';
-import Svg, { Circle, Rect } from 'react-native-svg';
+import Svg, { Rect } from 'react-native-svg';
 import { db, authentication } from '../lib/firebase.js';
-import { doc, getDoc, getDocs, deleteDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc } from "firebase/firestore";
-import { ref, set, onValue, getDatabase } from "firebase/database";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { doc, deleteDoc, collection, query, onSnapshot, setDoc } from "firebase/firestore";
 
 export default Wallet = () => {
-
     const userId = authentication.currentUser.uid;
     const walletRef = query(collection(db, "users/" + userId + "/payment"));
     useEffect(() => {
@@ -28,44 +16,18 @@ export default Wallet = () => {
                 const walletList = [];
                 refSnapshot.forEach((doc) => {
                     walletList.push(doc.data());
-                });
-            
+                });  
             setExpenditureData(walletList);
             });
         };
         getData();
     }, []);
-
     const navigation = useNavigation();
-    const [items, setItems] = useState([
-
-        { id: '0', Name: 'Cash', DueDate: null, Expenses: '13.50', Income: '20.00', Balance: '6.50' },
-        { id: '1',  Name: 'Visa', DueDate: '13 May', Expenses: '40.00', Income: '250.50', Balance: '160.50' },
-    ]);
-    const [inputValue, setInputValue] = useState('');
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [show, setShow] = useState(false)
     const [add, setAdd] = useState(false)
     const [name, setName] = useState('');
     const [due, setDue] = useState('');
-
-    const deleteItem = id => {
-        setItems(previousItems => {
-            return previousItems.filter(item => item.id !== id);
-        })
-
-    };
-
-    const status_change = () => {
-        setItems(item => item.status = !item.status)
-    }
-    const addItem = (text) => {
-        setItems(items.push(
-            {id: (Math.random()*10+ 2).toString(),  Name: {text}, DueDate: null, Expenses: '0.00', Income: '0.00', Balance: '0.00' }
-          
-    ))
-      };
-
 
     const create = () => {
         if (name == "" || due == "") {
@@ -90,10 +52,6 @@ const showBudget = async() => {
     const budgetWkDocRef = doc(db, "users/" + userId + "/budget/" + "week");
     const budgetMnDocRef = doc(db, "users/" + userId + "/budget/" + "month");
     const budgetYrDocRef = doc(db, "users/" + userId + "/budget/" + "year");
-    const WkDoc = await getDoc(budgetWkDocRef);
-    const MnDoc = await getDoc(budgetMnDocRef);
-    const YrDoc = await getDoc(budgetYrDocRef);
-    
     const budgetset = async() => {
         if (WkDoc.exists() === false) {
         await setDoc(budgetWkDocRef, {
@@ -141,14 +99,10 @@ const showBudget = async() => {
 
     return (
         <View style={{ flexDirection: 'column' }}>
-            { /*Budget*/}
-
             < View style={styles.container} >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
                     <Text style={{ marginLeft: 50, fontSize: 16, fontWeight: 'bold' }}>Budget</Text>
-
                     <TouchableOpacity style={{ marginLeft: 70 }} onPress={showBudget}>
-
                         <Svg width='300' height='30'>
                             <Rect
                                 x="0"
@@ -157,7 +111,6 @@ const showBudget = async() => {
                                 height="15"
                                 fill='#3C3056'
                                 strokeWidth="3"
-
                             />
                             <Rect
                                 x="0"
@@ -166,18 +119,14 @@ const showBudget = async() => {
                                 height="15"
                                 fill='yellow'
                                 strokeWidth="3"
-
                             />
-
                         </Svg>
-
                     </TouchableOpacity>
                 </View>
                 <View >
                     <Text style={{ textAlign: 'right', marginRight: 40, fontSize: 10 }}>75%</Text>
                 </View >
             </View>
-            { /*Edit*/}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <TouchableOpacity onPress={() => setShow(!show)}>
                     <View style={styles.editbutton} >
@@ -193,7 +142,6 @@ const showBudget = async() => {
                             }}>
                             <View style={styles.contentContainer}>
                                 <View style={styles.content}>
-
                                 <TextInput
                             placeholder="New Payment Method"
                             placeholderTextColor="grey"
@@ -208,7 +156,6 @@ const showBudget = async() => {
                             style={styles.textInput}
                             value ={due}                    
                             onChangeText={(text) => setDue(text)} />
-
                                     <TouchableOpacity
                                         style={styles.button1}
                                         onPress={create}>
@@ -225,35 +172,25 @@ const showBudget = async() => {
                         onPress={() => setAdd(true)}
                         style={{ marginRight: 35, marginTop: 10 }}
                     />
-
-
                     : null}
             </View>
             <View style={{ height: 1, backgroundColor: '#C4C4C4' }}>
             </View >
-
             <View style={{ flexDirection: 'row', padding: 20 }}>
                 {show === true
                     ? <Text style={{ flex: 2 }}> </Text>
                     : null}
-               
-
                 <Text style={{ flex: 2 }}>Name</Text>
-
                 <Text style={{ flex: 3 }}>Due Date</Text>
                 <Text style={{ flex: 3, textAlign: 'right' }}>Expenses</Text>
-
                 <Text style={{ flex: 3, textAlign: 'right' }}>Income</Text>
-
                 <Text style={{ flex: 3, textAlign: 'right' }}>Balance</Text>
-
             </View>
             <View style={{ height: 1, backgroundColor: 'grey' }}>
             </View>
             <FlatList
                 showsVerticalScrollIndicator={true}
                 data={ExpenditureData}
-                //ExpenditureData
                 renderItem={({ item }) => (
                     <View >
                         <View style={{ flexDirection: 'row', padding: 20 }}>
@@ -268,21 +205,14 @@ const showBudget = async() => {
                                 />
                                     : <View style={{ flex: 2 }}></View>
                                 : null}
-                           
-
                             <Text style={{ flex: 2 }}>{item.Name}</Text>
-
                             <Text style={{ flex: 3 }}> {item.DueDate} </Text>
                             <Text style={{ flex: 3, textAlign: 'right' }}> {item.Expenses} </Text>
-
                             <Text style={{ flex: 3, textAlign: 'right' }}> {item.Income} </Text>
-
                             <Text style={{ flex: 3, textAlign: 'right' }}> {item.Balance} </Text>
-
                         </View>
                         <View style={{ height: 1, backgroundColor: 'grey' }}>
                         </View>
-
                     </View>
                 )}
                 keyExtractor={
@@ -292,19 +222,10 @@ const showBudget = async() => {
             <View style={styles.buttonposition}>
             </View>
         </View >
-
-
-
-
     );
-
-
 }
 
-
-
 const styles = StyleSheet.create({
-
     container: {
         backgroundColor: '#EDE9FB',
         flexDirection: 'column',
@@ -312,13 +233,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     button1: {
-        
         paddingVertical: 14,
         paddingHorizontal: 10,
         backgroundColor: 'yellow',
-
     },
-
     buttontext1: {
         color: 'black',
         fontSize: 18,
@@ -329,7 +247,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginLeft: 320,
         marginTop: 500
-
     },
     editbutton: {
         borderRadius: 20,
@@ -337,10 +254,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         marginLeft: 20,
         marginVertical: 10,
-
         backgroundColor: 'orange',
-
-
     },
     contentContainer: {
         flexDirection: 'column',
@@ -360,9 +274,4 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         padding: 10
     }
-
-
-
-
-
 })

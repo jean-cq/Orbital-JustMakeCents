@@ -1,20 +1,13 @@
-// JavaScript source code
-import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import {
-    Alert, TouchableOpacity, TextInput, Button, Image, StyleSheet, SafeAreaView, Text, View
-} from 'react-native';
+import { TextInput, StyleSheet, SafeAreaView, Text, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Flatbutton from '../components/Flatbutton.js';
 import Feather from '../node_modules/@expo/vector-icons/Feather.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
-import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
 import { useState } from 'react';
 import { useTheme } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import { authentication } from "../lib/firebase.js";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import Login_page from './Login_page.js';
-
 
 const Stack = createNativeStackNavigator();
 export default Register_page = () => {
@@ -22,10 +15,6 @@ export default Register_page = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const { colors } = useTheme();
-    //const [loading, setLoading] = useState('')
-    //const { colors } = useTheme();
-    //const { params } = useRoute();
-
     const RegisterUser = () => {
         createUserWithEmailAndPassword(authentication, email, password)
         .then((re)=>{
@@ -38,49 +27,12 @@ export default Register_page = () => {
         })
     }
 
-/*    const handleLogin = async (type, email, password) => {
-        setLoading(type)
-        const { error, session, user } =
-          type === 'LOGIN'
-            ? await supabase.supabaseClient.auth.signIn({ email, password })
-            : await supabase.supabaseClient.auth.signUp({ email, password })
-        if (!error && !user) Alert.alert('Check your email for the login link!')
-        if (error) Alert.alert(error.message)
-        else navigation.navigate('Login_page')
-        setLoading('')
-    }
-  /*  const handleTwitterLogin = async (type, email, password) => {
-        setLoading(type)
-        const { user, session, error } =
-            await supabase.auth.signUp({
-                    provider: 'twitter'
-            })
-        setLoading('')
-    }*/
-/*    const handleGoogleLogin = async (type, email, password) => {
-        setLoading(type)
-        const { user, session, error } =
-            type === 'LOGIN'
-                ? await supabase.auth.signIn({
-                    provider: 'Google'
-                }, {
-                    redirectTo: 'https://xlmxiwbuyvnpmipnzzfy.supabase.co/auth/v1/callback'
-                })
-                : await supabase.auth.signUp({
-                    provider: 'Google'
-                }, {
-                    redirectTo: 'https://xlmxiwbuyvnpmipnzzfy.supabase.co/auth/v1/callback'
-                })
-        setLoading('')
-    }
-*/
     return (
         <SafeAreaView style={styles.container}>
             <Text style={[styles.text_footer, {
                 marginTop: 35, marginLeft: 10, marginBottom: 10
             }]}>Email</Text>
-            <View style={styles.action}>
-                
+            <View style={styles.action}>          
                     <FontAwesome
                         name="user-o"
                         color={colors.text}
@@ -93,21 +45,17 @@ export default Register_page = () => {
                     style={styles.textInput}
                     autoCapitalize="none"
                     value={email}
-                    onChangeText={(text) => setEmail(text)}
-                    
+                    onChangeText={(text) => setEmail(text)}  
                 />
-
             </View>
             <Text style={[styles.text_footer, {
                 marginTop: 35, marginLeft: 10, marginBottom: 10
-            }]}>Password</Text>
-           
+            }]}>Password</Text>  
             <View style={styles.action}>
                 <Feather
                     name="lock"
                     color={colors.text}
                     size={20}
-
                 />
                 <TextInput
                     placeholder="Your Password"
@@ -115,12 +63,9 @@ export default Register_page = () => {
                     style={styles.textInput}
                     marginHorizontal={10}
                     autoCapitalize="none"
-                    onChangeText={(text) => setPassword(text)}
-                    
+                    onChangeText={(text) => setPassword(text)}            
                 />
-
-            </View>
-           
+            </View>    
             <Text style={[styles.text_footer, {
                 marginTop: 35, marginLeft: 10, marginBottom: 10
             }]}>Confirmation</Text>
@@ -129,7 +74,6 @@ export default Register_page = () => {
                     name="lock"
                     color={colors.text}
                     size={20}
-
                 />
                 <TextInput
                     placeholder="Confirm Your Password"
@@ -137,31 +81,14 @@ export default Register_page = () => {
                     marginHorizontal={10}
                     style={styles.textInput}
                     autoCapitalize="none"
-                    onChangeText={(text) => setPassword(text)}
-                  
+                    onChangeText={(text) => setPassword(text)}            
                 />
-
             </View>
-            {/*<View style={styles.icons}>
-                <TouchableOpacity onPress={() => handleTwitterLogin('LOGIN')}>
-                    <AntDesign
-                        name="twitter"
-                        color={colors.text}
-                        size={20}
-
-                    />
-                </TouchableOpacity>
-        </View> */}
             <View style={styles.fixToText}>
                 <Flatbutton text='Register' onPress={RegisterUser} />
             </View>
-           
         </SafeAreaView>
-
-
-
     )
-
 }
 
 const styles = StyleSheet.create({
@@ -201,30 +128,4 @@ const styles = StyleSheet.create({
         color: '#05375a',
         fontSize: 18
     },
-    /* icons: {
-    flexDirection: 'row',
-    alignContent: 'flex-end'
-     </View>
-            <View style={styles.icons}>
-                <TouchableOpacity onPress={() => handleTwitterLogin('LOGIN')}>
-                    <AntDesign
-                        name="twitter"
-                        color={colors.text}
-                        size={20}
-
-                    />
-                </TouchableOpacity>
-            </View>
-    <View style={styles.icons}>
-            <TouchableOpacity onPress={() => handleGoogleLogin('SIGNUP', email, password)}>
-            <AntDesign
-                name="google"
-                color={colors.text}
-                size={20}
-
-                />
-            </TouchableOpacity>
-            </View>
-} */
-
 });
