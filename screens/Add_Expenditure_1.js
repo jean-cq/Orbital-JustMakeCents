@@ -134,14 +134,14 @@ export default Add_Expenditure_1 = () => {
                 note: note,
                 amount: +num,
                 id: unique_ref.toString(),
-                status:(choice === "Expenditure" || "Income") ? true : false,
+                status:(choice === "Expenditure" || choice === "Income") ? true : false,
                 category: chosen,
                 date: date,
                 month: moment(date).format('YYYY/MM'),
                 displaydate: moment(date).format("Do MMM"),
                 income: choice == "Income" ? true : false,
                 bigcat: choice,
-                expenditure: (choice === "Expenditure" || "Income") ? true : false,
+                expenditure: (choice === "Expenditure" || choice === "Income") ? true : false,
                 method: selectedPayment,
                 year: moment(date).format('YYYY')
             }).then(() => {
