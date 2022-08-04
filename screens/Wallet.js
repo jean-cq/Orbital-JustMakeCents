@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Svg, { Rect } from 'react-native-svg';
 import { db, authentication } from '../lib/firebase.js';
-import { doc, deleteDoc, collection, query, onSnapshot, setDoc } from "firebase/firestore";
+import { doc, deleteDoc, collection, query, onSnapshot, setDoc, getDoc } from "firebase/firestore";
 
 export default Wallet = () => {
     const userId = authentication.currentUser.uid;
@@ -52,6 +52,10 @@ const showBudget = async() => {
     const budgetWkDocRef = doc(db, "users/" + userId + "/budget/" + "week");
     const budgetMnDocRef = doc(db, "users/" + userId + "/budget/" + "month");
     const budgetYrDocRef = doc(db, "users/" + userId + "/budget/" + "year");
+    const WkDoc = await getDoc(budgetWkDocRef);
+    const MnDoc = await getDoc(budgetMnDocRef);
+    const YrDoc = await getDoc(budgetYrDocRef);
+
     const budgetset = async() => {
         if (WkDoc.exists() === false) {
         await setDoc(budgetWkDocRef, {
@@ -96,7 +100,6 @@ const showBudget = async() => {
     }}
     budgetset().then(navigation.navigate('Budget'));
 }
-
     return (
         <View style={{ flexDirection: 'column' }}>
             < View style={styles.container} >
@@ -115,7 +118,7 @@ const showBudget = async() => {
                             <Rect
                                 x="0"
                                 y="10"
-                                width={0.75 * 225}
+                                width={225}
                                 height="15"
                                 fill='yellow'
                                 strokeWidth="3"
@@ -124,7 +127,7 @@ const showBudget = async() => {
                     </TouchableOpacity>
                 </View>
                 <View >
-                    <Text style={{ textAlign: 'right', marginRight: 40, fontSize: 10 }}>75%</Text>
+                    <Text style={{ textAlign: 'right', marginRight: 40, fontSize: 10 }}>Press the bar to set your budget</Text>
                 </View >
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

@@ -112,7 +112,7 @@ export default B_month = () => {
                 ? 'please set your budget'
                 : IncomeData[0] === undefined
                 ? 'no expenses'
-                : 100 * IncomeData[0]/ sumBudget + '%'
+                : Math.round((100 * IncomeData[0]/ sumBudget ) * 100) / 100+ '%'
                 }</Text>
             </View>
 
