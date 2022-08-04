@@ -43,7 +43,7 @@ export default Profile = () => {
     const [ExpenditureData, setExpenditureData] = useState([0, 0]);
     const [signupdate, setSignupdate] = useState(null);
     const [days, setDays] = useState(null);
-    const [datedata,setDatedata] = useState(null);
+    const [datedata,setDatedata] = useState([]);
     const [daysrecorded, setDaysrecorded] = useState(null);
     const [currdate, setCurrdate] = useState (moment(new Date().getTime()).format('YYYY/MM/DD')); 
     const [dayscontinue, setDayscontinue] = useState (0);
