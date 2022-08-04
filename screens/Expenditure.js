@@ -8,7 +8,7 @@ import Svg, { Circle, Rect } from 'react-native-svg';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { db, authentication } from '../lib/firebase.js';
 import { ref, set, onValue, getDatabase } from "firebase/database";
-import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc } from "firebase/firestore";
+import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc, increment } from "firebase/firestore";
 import moment from 'moment';
 import MonthPicker from 'react-native-month-picker';
 
@@ -294,14 +294,422 @@ export default Expenditure = () => {
                                 disableBuiltInState
                                 isChecked={item.status}
                                 onPress={async() => {
-                            
-                                    const statusref = doc(db, "users/" + userId + "/expenditure/" + item.id);    
-                                    const matches = await getDoc(statusref);                            
-                                     await updateDoc(statusref, {
-                                                status: !item.status
+                                    
+                                    
+
+                                    const statusref = doc(db, "users/" + userId + "/expenditure/" + item.id);
+                                    const matches = await getDoc(statusref);   
+                                    await updateDoc(statusref, {
+                                        status: !item.status
+                                      });
+
+
+                                      const monthRef = doc(db, "users/" + userId + "/month/" + item.month.slice(0, 4) + item.month.slice(5, 7));
+                                      const monthDoc = await getDoc(monthRef);
+                                      
+                                      if (item.status == true) {
+                                          await updateDoc(monthRef, {
+                                              expenditure: increment(-item.amount),
+                                          })
+  
+                                          if (item.category == "Traffic") {
+                                              await updateDoc(monthRef, {
+                                                  traffic: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
                                               })
+                                          }
+                                          else if (item.category == "Recreation") {
+                                              await updateDoc(monthRef, {
+                                                  recreation: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Medical") {
+                                              await updateDoc(monthRef, {
+                                                  medical: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Beautify") {
+                                              await updateDoc(monthRef, {
+                                                  beautify: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Diet") {
+                                              await updateDoc(monthRef, {
+                                                  diet: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Education") {
+                                              await updateDoc(monthRef, {
+                                                  education: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Necessity") {
+                                              await updateDoc(monthRef, {
+                                                  necessity: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Others") {
+                                              await updateDoc(monthRef, {
+                                                  others: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                      } 
+                                  else {
+                                      await updateDoc(monthRef, {
+                                          expenditure: increment(item.amount),
+                                      })
+  
+                                      if (item.category == "Traffic") {
+                                      await updateDoc(monthRef, {
+                                          traffic: increment(item.amount),
+                                      }).catch((error) => {
+                                          alert(error)
+                                      })
+                                  }
+                                      else if (item.category == "Recreation") {
+                                          await updateDoc(monthRef, {
+                                              recreation: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }
+                                      else if (item.category == "Medical") {
+                                          await updateDoc(monthRef, {
+                                              medical: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }
+                                      else if (item.category == "Beautify") {
+                                          await updateDoc(monthRef, {
+                                              beautify: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }
+                                      else if (item.category == "Diet") {
+                                          await updateDoc(monthRef, {
+                                              diet: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }
+                                      else if (item.category == "Education") {
+                                          await updateDoc(monthRef, {
+                                              education: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }
+                                      else if (item.category == "Necessity") {
+                                          await updateDoc(monthRef, {
+                                              necessity: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }
+                                      else if (item.category == "Others") {
+                                          await updateDoc(monthRef, {
+                                              others: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }}
+                                    
+
+                                      const yearRef = doc(db, "users/" + userId + "/year/" + item.year);
+                                      const yearDoc = await getDoc(yearRef);
+                                      
+                                      if (item.status == true) {
+                                          await updateDoc(yearRef, {
+                                              expenditure: increment(-item.amount),
+                                          })
+  
+                                          if (item.category == "Traffic") {
+                                              await updateDoc(yearRef, {
+                                                  traffic: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Recreation") {
+                                              await updateDoc(yearRef, {
+                                                  recreation: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Medical") {
+                                              await updateDoc(yearRef, {
+                                                  medical: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Beautify") {
+                                              await updateDoc(yearRef, {
+                                                  beautify: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Diet") {
+                                              await updateDoc(yearRef, {
+                                                  diet: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Education") {
+                                              await updateDoc(yearRef, {
+                                                  education: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Necessity") {
+                                              await updateDoc(yearRef, {
+                                                  necessity: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                          else if (item.category == "Others") {
+                                              await updateDoc(yearRef, {
+                                                  others: increment(-item.amount),
+                                              }).catch((error) => {
+                                                  alert(error)
+                                              })
+                                          }
+                                      } 
+                                  else {
+                                      await updateDoc(yearRef, {
+                                          expenditure: increment(item.amount),
+                                      })
+  
+                                      if (item.category == "Traffic") {
+                                      await updateDoc(yearRef, {
+                                          traffic: increment(item.amount),
+                                      }).catch((error) => {
+                                          alert(error)
+                                      })
+                                  }
+                                      else if (item.category == "Recreation") {
+                                          await updateDoc(yearRef, {
+                                              recreation: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }
+                                      else if (item.category == "Medical") {
+                                          await updateDoc(yearRef, {
+                                              medical: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }
+                                      else if (item.category == "Beautify") {
+                                          await updateDoc(yearRef, {
+                                              beautify: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }
+                                      else if (item.category == "Diet") {
+                                          await updateDoc(yearRef, {
+                                              diet: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }
+                                      else if (item.category == "Education") {
+                                          await updateDoc(yearRef, {
+                                              education: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }
+                                      else if (item.category == "Necessity") {
+                                          await updateDoc(yearRef, {
+                                              necessity: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }
+                                      else if (item.category == "Others") {
+                                          await updateDoc(yearRef, {
+                                              others: increment(item.amount),
+                                          }).catch((error) => {
+                                              alert(error)
+                                          })
+                                      }}
 
 
+                                    const entryDate = moment(item.date).format('YYYY-MM-DD');
+                                    const m = new Date(entryDate).getMonth();
+                                    const y = new Date(entryDate).getFullYear();
+                                    const getDateMonth = (year, month, da) => {
+                                    return new Date(year,month,da).getDate();
+                                    };
+                                    const getDayMonth = (year, month, da) => {
+                                        return new Date(year,month,da).getDay();
+                                    }
+                                
+                                    const d = new Date(entryDate).getDay();
+                                    const dt = new Date(entryDate).getDate();
+                                    const week = () => {
+                                            const firstdayMonth = getDayMonth(y, m, 1);
+                                            if(firstdayMonth === 0){
+                                                const w = Math.ceil(dt/7);
+                                                return 'w' + w;
+                                            }else{
+                                                const differ =  dt - ((6 - firstdayMonth) + 1) ;
+                                                const ww = Math.ceil(differ/7);
+                                                return 'w' + ww;
+                                            }
+                                        }
+
+                                    const weekRef = doc(db, "users/" + userId + "/week/" + week());
+                                    const weekDoc = await getDoc(weekRef);
+                                    
+                                    if (item.status == true) {
+                                        await updateDoc(weekRef, {
+                                            expenditure: increment(-item.amount),
+                                        })
+
+                                        if (item.category == "Traffic") {
+                                            await updateDoc(weekRef, {
+                                                traffic: increment(-item.amount),
+                                            }).catch((error) => {
+                                                alert(error)
+                                            })
+                                        }
+                                        else if (item.category == "Recreation") {
+                                            await updateDoc(weekRef, {
+                                                recreation: increment(-item.amount),
+                                            }).catch((error) => {
+                                                alert(error)
+                                            })
+                                        }
+                                        else if (item.category == "Medical") {
+                                            await updateDoc(weekRef, {
+                                                medical: increment(-item.amount),
+                                            }).catch((error) => {
+                                                alert(error)
+                                            })
+                                        }
+                                        else if (item.category == "Beautify") {
+                                            await updateDoc(weekRef, {
+                                                beautify: increment(-item.amount),
+                                            }).catch((error) => {
+                                                alert(error)
+                                            })
+                                        }
+                                        else if (item.category == "Diet") {
+                                            await updateDoc(weekRef, {
+                                                diet: increment(-item.amount),
+                                            }).catch((error) => {
+                                                alert(error)
+                                            })
+                                        }
+                                        else if (item.category == "Education") {
+                                            await updateDoc(weekRef, {
+                                                education: increment(-item.amount),
+                                            }).catch((error) => {
+                                                alert(error)
+                                            })
+                                        }
+                                        else if (item.category == "Necessity") {
+                                            await updateDoc(weekRef, {
+                                                necessity: increment(-item.amount),
+                                            }).catch((error) => {
+                                                alert(error)
+                                            })
+                                        }
+                                        else if (item.category == "Others") {
+                                            await updateDoc(weekRef, {
+                                                others: increment(-item.amount),
+                                            }).catch((error) => {
+                                                alert(error)
+                                            })
+                                        }
+                                    } 
+                                else {
+                                    await updateDoc(weekRef, {
+                                        expenditure: increment(item.amount),
+                                    })
+
+                                    if (item.category == "Traffic") {
+                                    await updateDoc(weekRef, {
+                                        traffic: increment(item.amount),
+                                    }).catch((error) => {
+                                        alert(error)
+                                    })
+                                }
+                                    else if (item.category == "Recreation") {
+                                        await updateDoc(weekRef, {
+                                            recreation: increment(item.amount),
+                                        }).catch((error) => {
+                                            alert(error)
+                                        })
+                                    }
+                                    else if (item.category == "Medical") {
+                                        await updateDoc(weekRef, {
+                                            medical: increment(item.amount),
+                                        }).catch((error) => {
+                                            alert(error)
+                                        })
+                                    }
+                                    else if (item.category == "Beautify") {
+                                        await updateDoc(weekRef, {
+                                            beautify: increment(item.amount),
+                                        }).catch((error) => {
+                                            alert(error)
+                                        })
+                                    }
+                                    else if (item.category == "Diet") {
+                                        await updateDoc(weekRef, {
+                                            diet: increment(item.amount),
+                                        }).catch((error) => {
+                                            alert(error)
+                                        })
+                                    }
+                                    else if (item.category == "Education") {
+                                        await updateDoc(weekRef, {
+                                            education: increment(item.amount),
+                                        }).catch((error) => {
+                                            alert(error)
+                                        })
+                                    }
+                                    else if (item.category == "Necessity") {
+                                        await updateDoc(weekRef, {
+                                            necessity: increment(item.amount),
+                                        }).catch((error) => {
+                                            alert(error)
+                                        })
+                                    }
+                                    else if (item.category == "Others") {
+                                        await updateDoc(weekRef, {
+                                            others: increment(item.amount),
+                                        }).catch((error) => {
+                                            alert(error)
+                                        })
+                                    }}
                                 }}
 
                             />
