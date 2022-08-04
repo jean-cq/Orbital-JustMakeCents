@@ -1,19 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
-import Flatbutton from '../components/Flatbutton.js';
-import Login_page from '../screens/Login_page.js'
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Expenditure from '../screens/Expenditure.js';
-import Add_Expenditure_1 from '../screens/Add_Expenditure_1.js';
-import { useState, useEffect } from 'react';
 import Profile from '../screens/Profile.js';
-import Starting_page from '../screens/Starting_page.js';
 import Profile_edit from '../screens/Profile_edit.js';
 import Contact_us from '../screens/Contact_us.js';
-import Home_navigation from './Home_navigation.js';
-import AuthStacks from './AuthStacks.js';
-import { startAt } from 'firebase/database';
 
 const Stack = createNativeStackNavigator();
 

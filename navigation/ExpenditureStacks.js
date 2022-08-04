@@ -1,14 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
-import Flatbutton from '../components/Flatbutton.js';
-import Login_page from '../screens/Login_page.js'
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Expenditure from '../screens/Expenditure.js';
-import Add_Expenditure_1 from '../screens/Add_Expenditure_1.js';
-import { useState, useEffect } from 'react';
 import Wallet from '../screens/Wallet.js';
-import Budget from '../screens/Budget.js';
 import BudgetStacks from '../navigation/BudgetStack.js';
 
 
