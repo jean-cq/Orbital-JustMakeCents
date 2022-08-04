@@ -8,7 +8,7 @@ import Svg, { Circle, Rect } from 'react-native-svg';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { db, authentication } from '../lib/firebase.js';
 import { ref, set, onValue, getDatabase } from "firebase/database";
-import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc, increment } from "firebase/firestore";
+import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc, increment, orderBy } from "firebase/firestore";
 import moment from 'moment';
 import MonthPicker from 'react-native-month-picker';
 
@@ -113,7 +113,7 @@ export default Expenditure = () => {
 
     const datas = getDatabase();
     
-    const expRef = query(collection(db, "users/" + userId + "/expenditure"), where("bigcat", "in", ["Expenditure", "Income"]), 
+    const expRef = query(collection(db, "users/" + userId + "/expenditure"), orderBy("date"), where("bigcat", "in", ["Expenditure", "Income"]), 
     where("month", "==", moment(month).format('YYYY/MM')));
 
     
