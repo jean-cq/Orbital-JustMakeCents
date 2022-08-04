@@ -176,7 +176,7 @@ export default Add_Expenditure_1 = () => {
         const monthDocRef = doc(db, "users/" + userId + "/month/" + date.slice(0, 4) + date.slice(5, 7));
         const monthDoc = await getDoc(monthDocRef);
 
-        if (choice == "Expenditure" || "Income") {
+        if (choice === "Expenditure" || choice === "Income") {
             if (monthDoc.exists() == false) {
                 if (choice == "Expenditure") {
                     await setDoc(monthDocRef, {
@@ -347,7 +347,7 @@ export default Add_Expenditure_1 = () => {
         const yearDocRef = doc(db, "users/" + userId + "/year/" + date.slice(0, 4));
         const yearDoc = await getDoc(yearDocRef);
 
-        if (choice == "Expenditure" || "Income") {
+        if (choice === "Expenditure" || choice === "Income") {
             if (yearDoc.exists() == false) {
                 if (choice == "Expenditure") {
                     await setDoc(yearDocRef, {
@@ -543,7 +543,7 @@ export default Add_Expenditure_1 = () => {
         const weekDocRef = doc(db, "users/" + userId + "/week/" + date.slice(0, 4) + date.slice(5, 7) + week());
         const weekDoc = await getDoc(weekDocRef);
 
-        if (choice == "Expenditure" || "Income") {
+        if (choice === "Expenditure" || choice === "Income") {
             if (weekDoc.exists() == false) {
                 if (choice == "Expenditure") {
                     await setDoc(weekDocRef, {
