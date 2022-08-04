@@ -1,13 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, Image, StyleSheet, SafeAreaView, Text, View } from 'react-native';
-import Flatbutton from '../components/Flatbutton.js';
+import { StyleSheet } from 'react-native';
 import Login_page from '../screens/Login_page.js'
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Starting_page from '../screens/Starting_page.js';
 import Register_page from '../screens/Register_page.js';
-import { useState, useEffect } from 'react';
-import Books from '../screens/Books.js'
 import Home_navigation from './Home_navigation.js';
 import ForgetPassword from '../screens/ForgetPassword.js';
 

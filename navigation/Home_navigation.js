@@ -1,45 +1,16 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Profile from '../screens/Profile.js';
 import ProfileStacks from './ProfileStacks.js';
 import Ionicons from '../node_modules/@expo/vector-icons/Ionicons.js';
 import MaterialCommunityIcons from '../node_modules/@expo/vector-icons/MaterialCommunityIcons.js';
 import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js'
 
 import ExpenditureStacks from '../navigation/ExpenditureStacks.js';
-import Expenditure from '../screens/Expenditure.js';
-import BudgetStacks from './BudgetStack.js';
 import AnalyticsStacks from './AnalyticsStacks.js';
 import LendingStacks from './LendingStacks.js';
 
 import Add_Expenditure_1 from '../screens/Add_Expenditure_1.js';
-
-function ShoppingListScreen() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Shopping List!</Text>
-      </View>
-    );
-  }
-  
-  function AnanlyticsScreen() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Analytics!</Text>
-      </View>
-    );
-  }
-  
-  function LendingScreen() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Lending and Borrowing!</Text>
-      </View>
-    );
-  }
-
 
   const Tab = createBottomTabNavigator();
   
