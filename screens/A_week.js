@@ -1,21 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import { Alert, Button, Image, ScrollView, StyleSheet, Text, Dimensions, View, TouchableOpacity, Modal } from 'react-native';
-import Flatbutton from '../components/Flatbutton.js';
-import DefaultImage from '../assets/starting_page.png';
-import Login_page from '../screens/Login_page.js';
-import Register_page from '../screens/Register_page.js';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ScrollView, StyleSheet, Text, Dimensions, View, Modal } from 'react-native';
 import { ref, set, onValue, getDatabase } from "firebase/database";
 import { useEffect, useState } from 'react';
 import { db, authentication } from '../lib/firebase.js';
 import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 import { BarChart, Grid, LineChart, PieChart, XAxis, YAxis } from 'react-native-svg-charts';
-import Expenditure from './Expenditure.js';
-import DatePicker from 'react-native-modern-datepicker';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import moment from 'moment';
-import MonthPicker from 'react-native-month-picker';
 import Catebutton from '../components/Catebutton.js';
 import { VictoryPie } from 'victory-native';
 
@@ -26,13 +14,9 @@ const HEIGHT = Dimensions.get('window').height;
 export default A_week = () => {
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [NumData, setNumData] = useState([]);
-    const [show, setShow] = useState(false);
-    const [isOpen, toggleOpen] = useState(false);
     const [IncomeData, setIncomeData] = useState([]);
     const [perData, setPerData] = useState([]);
-    const [payNumData, setPayNumData] = useState([]);
     const [selectedWeek, setSelectedWeek] = useState('this week');
-    const [payCatData, setPayCatData] = useState([]);
     const [isModalVisible, setisModalVisible] = useState(false);
     const changeModalVisibility = (bool) =>{
         setisModalVisible(bool)

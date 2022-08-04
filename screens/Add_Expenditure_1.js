@@ -1,27 +1,16 @@
 // JavaScript source code
-import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { Alert, TextInput, Button, Image, StyleSheet, TouchableOpacity, Modal, Text, View, FlatList, ListItem, Dimensions, ScrollView } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Flatbutton from '../components/Flatbutton.js';
-//import MaterialIcons from '../node_modules/@expo/vector-icons/MaterialIcons.js';
-import Feather from '../node_modules/@expo/vector-icons/Feather.js';
-import FontAwesome from '../node_modules/@expo/vector-icons/FontAwesome.js';
-import AntDesign from '../node_modules/@expo/vector-icons/AntDesign.js';
-import { useTheme } from '@react-navigation/native';
+import { Alert, TextInput, StyleSheet, TouchableOpacity, Modal, Text, View, FlatList, Dimensions} from 'react-native';
 import { useState, useEffect } from 'react';
-import { Input } from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
 import Catebutton from '../components/Catebutton.js';
 import SimpleSelectButton from '../components/SimpleSelectButton.js';
 import SimpleSelectIcon from '../components/SimpleSelectIcon.js';
 import VirtualKeyboard from '../components/src/VirtualKeyboard.js';
 import { authentication, db } from '../lib/firebase.js';
-import { ref, set } from "firebase/database";
 import { doc, setDoc, collection, addDoc,onSnapshot, query, getDoc, updateDoc, increment } from "firebase/firestore";
 import moment from 'moment';
 import DatePicker from 'react-native-modern-datepicker';
 import CardModal from '../components/CardModal.js';
-import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -914,70 +903,3 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
-/*
-    return (
-        <SafeAreaView style={{ flexDirection : 'column' }}>
-            <View style={{ flexDirection: 'row' }}>
-                <SimpleSelectButton
-                    text="Expenditure"
-                    textSize={14}
-                    iconName="checkcircleo"
-                    iconColor="#fff"
-                    iconSize={14}
-                    buttonDefaultColor="yellow"
-                    buttonSelectedColor="orange"
-                    textDefaultColor="#333"
-                    textSelectedColor="#fff"
-                    isChecked={true}
-                    onPress={() => Alert.alert('this is expenditure')}
-                    style={{marginVertical: 20}}
-                />
-              
-                <SimpleSelectButton
-                    text="Income"
-                    textSize={14}
-                    iconName="checkcircleo"
-                    iconColor="#fff"
-                    iconSize={14}
-                    buttonDefaultColor="yellow"
-                    buttonSelectedColor="orange"
-                    textDefaultColor="#333"
-                    textSelectedColor="#fff"
-                    isChecked={true}
-                    onPress={() => Alert.alert('this is income')}
-                    style={{ marginVertical: 20 }}
-                /><SimpleSelectButton
-                    text="Lending"
-                    textSize={14}
-                    iconName="checkcircleo"
-                    iconColor="#fff"
-                    iconSize={14}
-                    buttonDefaultColor="yellow"
-                    buttonSelectedColor="orange"
-                    textDefaultColor="#333"
-                    textSelectedColor="#fff"
-                    isChecked={true}
-                    onPress={() => Alert.alert('this is lending')}
-                    style={{ marginVertical: 20 }}
-                /><SimpleSelectButton
-                    text="Borrowing"
-                    textSize={14}
-                    iconName="checkcircleo"
-                    iconColor="#fff"
-                    iconSize={14}
-                    buttonDefaultColor="yellow"
-                    buttonSelectedColor="orange"
-                    textDefaultColor="#333"
-                    textSelectedColor="#fff"
-                    isChecked={true}
-                    onPress={() => Alert.alert('this is borrowing')}
-                    style={{ marginVertical: 20 }}
-                />
-            
-            </View>
-            <View>
-                <Text>haha</Text>
-            </View>
-        </SafeAreaView>
-    )
-}*/
