@@ -196,7 +196,7 @@ export default Profile = () => {
         getDateData();
         
         setSignupdate(signup);
-        console.log(signupdate);
+        
        
        
     }else{
