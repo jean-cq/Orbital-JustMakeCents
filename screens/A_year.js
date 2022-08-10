@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet, Text, Dimensions, View, Modal } from 'react-nati
 import { ref, set, onValue, getDatabase } from "firebase/database";
 import { useEffect, useState } from 'react';
 import { db, authentication } from '../lib/firebase.js';
-import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
+import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc } from "firebase/firestore";
 import { BarChart, Grid, LineChart, PieChart, XAxis, YAxis } from 'react-native-svg-charts';
 import { VictoryPie } from 'victory-native';
 import Catebutton from '../components/Catebutton.js';
@@ -34,6 +34,17 @@ export default A_year = () => {
 
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
+    const month = (m) =>{
+        if (m < 10){
+            return '0' + m
+        }else {
+            return m
+        }
+    }
+    
+    const todaymon = month(new Date().getMonth() + 1);
+    const todayyear = new Date().getFullYear();
+    const todaydate = new Date().getDate();
 
     const setData = (data) => {
         setSelectedYear(data)
@@ -41,7 +52,14 @@ export default A_year = () => {
 
     useEffect(() => {
 
+        const yeear = async() => {
+
+            const yearDefault = doc(db, "users/" + userId + "/year/" + todayyear);
+            const yeardefaultdoc= await getDoc(yearDefault);
+   
         const getData = () => {
+
+
             const yearRef = query(collection(db, "users/" + userId + "/year"), where("year", "==", selectedYear));
 
            
@@ -118,9 +136,25 @@ export default A_year = () => {
                 setEachMonData(eachList);
             });
         }
-        getData();
-        getMonData();
-        console.log(EachMonData);
+        if (yeardefaultdoc.exists() === true){
+            getData();
+        getMonData();}else{
+         await setDoc(yeardefaultdoc, {
+                expenditure: 0,
+                income: 0,
+                traffic: 0,
+                recreation: 0,
+                medical: 0,
+                beautify: 0,
+                diet: 0,
+                education: 0,
+                necessity:0,
+                others:0,
+                mon: todayyear}).then(getData()).then(getMonData())
+                
+        }}
+        yeear();
+
     },[selectedYear])
 
 

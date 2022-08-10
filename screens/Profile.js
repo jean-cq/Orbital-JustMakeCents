@@ -176,7 +176,7 @@ export default Profile = () => {
                  if (currdate === datesorted[i]){
                  const nextdate = new Date().setDate(new Date(datesorted[i].slice(0,4) + '-' + datesorted[i].slice(5,7) + '-' + datesorted[i].slice(8,10)).getDate() -1);
                  setCurrdate(moment(new Date(nextdate)).format('YYYY/MM/DD'));
-                 console.log(moment(new Date(nextdate)).format('YYYY/MM/DD'));
+             
                  setDayscontinue(i+1);
                  
                  }
@@ -229,7 +229,7 @@ export default Profile = () => {
             setProfile(null);
         }}
         getData();
-        console.log(profile);
+ 
         
     }
     

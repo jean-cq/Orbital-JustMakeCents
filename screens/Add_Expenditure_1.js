@@ -112,6 +112,16 @@ export default Add_Expenditure_1 = () => {
 
 }
     
+    const month = (m) =>{
+        if (m < 10){
+            return '0' + m
+        }else {
+            return m
+        }
+    }
+    const todaymon = month(new Date().getMonth() + 1);
+    const todayyear = new Date().getFullYear();
+    const todaydate = new Date().getDate();
 
     const create = async() => {
         if ((num[0] ===  '0' && num[1] !== '.') || 
@@ -172,10 +182,9 @@ export default Add_Expenditure_1 = () => {
                 
         
 
-
+           
         const monthDocRef = doc(db, "users/" + userId + "/month/" + date.slice(0, 4) + date.slice(5, 7));
-        const monthDoc = await getDoc(monthDocRef);
-
+        const monthDoc = await getDoc(monthDocRef); 
         if (choice === "Expenditure" || choice === "Income") {
             if (monthDoc.exists() == false) {
                 if (choice == "Expenditure") {
@@ -342,11 +351,11 @@ export default Add_Expenditure_1 = () => {
                     })
                 }
             }
-        }
+        };
 
         const yearDocRef = doc(db, "users/" + userId + "/year/" + date.slice(0, 4));
         const yearDoc = await getDoc(yearDocRef);
-
+       
         if (choice === "Expenditure" || choice === "Income") {
             if (yearDoc.exists() == false) {
                 if (choice == "Expenditure") {
@@ -542,7 +551,7 @@ export default Add_Expenditure_1 = () => {
         };
         const weekDocRef = doc(db, "users/" + userId + "/week/" + date.slice(0, 4) + date.slice(5, 7) + week());
         const weekDoc = await getDoc(weekDocRef);
-
+        
         if (choice === "Expenditure" || choice === "Income") {
             if (weekDoc.exists() == false) {
                 if (choice == "Expenditure") {
