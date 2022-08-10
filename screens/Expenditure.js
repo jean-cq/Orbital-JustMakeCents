@@ -80,7 +80,6 @@ export default Expenditure = () => {
         };
         getData();
         getMonthData();
-        
         setSumBudget(bData[8]);
             //bData[0].amount + bData[1].amount + bData[2].amount + bData[3].amount + bData[4].amount + bData[5].amount + bData[6].amount + bData[7].amount);
        

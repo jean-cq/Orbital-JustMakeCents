@@ -136,7 +136,7 @@ export default A_year = () => {
         }
         getData();
         getMonData();
-        console.log(EachMonData);
+        
     },[selectedYear])
 
 

@@ -640,7 +640,7 @@ export default Add_Expenditure_1 = () => {
                         education: 0,
                         necessity:0,
                         others:0,
-                        year: date.slice(0, 4),
+                        year: date.slice(0, 7) + '/' + week(),
                     }).catch((error) => {
                         alert(error)
                     })

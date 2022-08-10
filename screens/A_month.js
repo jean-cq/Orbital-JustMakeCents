@@ -121,7 +121,7 @@ export default A_month = () => {
                     setExpenditureData(monthList);
                     setNumData(numList);
                     setIncomeData(incomeList);
-                    setPerData(perList);
+                    setPerData(perList);    
                 });
             };
     
@@ -130,8 +130,8 @@ export default A_month = () => {
                 const querySnapshot = onSnapshot(eachRef, (refSnapshot) => {
                     const eachList = [0, 0, 0, 0];
                     refSnapshot.forEach((doc) => {
-                        if (doc.data().week.substring(0, 7) == y + '/' + selectedMonth) {
-                            if (doc.data().week[9] == "5") {
+                        if (doc.data().week.substring(0, 7) === y + '/' + selectedMonth) {
+                            if (doc.data().week[9] === "5") {
                                 eachList.push(doc.data().expenditure);
                             }
                             else{

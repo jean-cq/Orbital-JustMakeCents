@@ -45,6 +45,7 @@ export default A_week = () => {
         const y = currentDate.getFullYear();
         const d = currentDate.getDay();
         const dt = currentDate.getDate();
+        const lwd = new Date().setDate(-7);
         const getDateMonth = (year, month, da) => {
            return new Date(year,month,da).getDate();
         };
@@ -78,7 +79,7 @@ export default A_week = () => {
             return month(m) + '/' + 'w' + week(y, m, dt);
         }else{
             if(week(y, m, dt) === 1){
-            return month(m - 1) + '/' + 'w' + week(y, m - 1,new Date().setDate(-7).getDate() );}
+            return month(m - 1) + '/' + 'w' + week(y, m - 1,new Date(lwd).getDate());}
             else{
                 return month(m) + '/' + 'w' + (week(y, m, dt) - 1);
 
@@ -140,7 +141,6 @@ export default A_week = () => {
         
         
         getData();
-        console.log(selected());
     },[selectedWeek]);
 
 
