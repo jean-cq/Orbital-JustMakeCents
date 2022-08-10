@@ -1,14 +1,23 @@
-// JavaScript source code
 import { StatusBar } from 'expo-status-bar';
+import Flatbutton from '../components/Flatbutton.js';
+import DefaultImage from '../assets/starting_page.png';
+import Login_page from '../screens/Login_page.js';
+import Register_page from '../screens/Register_page.js';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Alert, ScrollView, StyleSheet, Text, Dimensions, View, Modal } from 'react-native';
 import { ref, set, onValue, getDatabase } from "firebase/database";
 import { useEffect, useState } from 'react';
 import { db, authentication } from '../lib/firebase.js';
-import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc } from "firebase/firestore";
+import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 import { BarChart, Grid, LineChart, PieChart, XAxis, YAxis } from 'react-native-svg-charts';
+import Expenditure from './Expenditure.js';
+import DatePicker from 'react-native-modern-datepicker';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import moment from 'moment';
+import MonthPicker from 'react-native-month-picker';
 import { VictoryPie } from 'victory-native';
 import Catebutton from '../components/Catebutton.js';
-import { async } from '@firebase/util';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -27,6 +36,7 @@ export default A_month = () => {
     const monthNum = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [NumData, setNumData] = useState([]);
+    const [show, setShow] = useState(false);
     const [isOpen, toggleOpen] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState(monthh(m));
     const [IncomeData, setIncomeData] = useState([]);
@@ -39,18 +49,7 @@ export default A_month = () => {
 
     const userId = authentication.currentUser.uid;
 
-    const month = (m) =>{
-        if (m < 10){
-            return '0' + m
-        }else {
-            return m
-        }
-    }
-    
-    const todaymon = month(new Date().getMonth() + 1);
-    const todayyear = new Date().getFullYear();
-    const todaydate = new Date().getDate();
-
+  
 
     const setData = (data) => {
         setSelectedMonth(data)
@@ -62,12 +61,7 @@ export default A_month = () => {
 
         useEffect(() => {
 
-            const moonth = async() => {
-             const monthDefault = doc(db, "users/" + userId + "/month/" + todayyear+todaymon);
-            const mondefaultdoc= await getDoc(monthDefault);
-
             const getData = async () => {
-
                 const querySnapshot = onSnapshot(monthRef, (refSnapshot) => {
                     const monthList = [{id: '0', category: "Traffic", amount: 0}, 
                     {id: '1', category: "Recreation", amount: 0},
@@ -147,28 +141,10 @@ export default A_month = () => {
                     });
                     setEachWkData(eachList);
                 });
-            }
-            
-            if (mondefaultdoc.exists() === true){
+            } 
             getData();
             getWkData();
             toggleOpen(false);
-            }else{
-              await  setDoc(mondefaultdoc, {
-                    expenditure: 0,
-                    income: 0,
-                    traffic: 0,
-                    recreation: 0,
-                    medical: 0,
-                    beautify: 0,
-                    diet: 0,
-                    education: 0,
-                    necessity:0,
-                    others:0,
-                    mon: todayyear+ '/' + todaymon}).then(getData()).then(getWkData()).then(toggleOpen(false))}}
-
-                    moonth();
-           
         },[selectedMonth])
 
 

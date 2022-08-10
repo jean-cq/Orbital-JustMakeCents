@@ -1,9 +1,21 @@
+import { StatusBar } from 'expo-status-bar';
+import Flatbutton from '../components/Flatbutton.js';
+import DefaultImage from '../assets/starting_page.png';
+import Login_page from '../screens/Login_page.js';
+import Register_page from '../screens/Register_page.js';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ScrollView, StyleSheet, Text, Dimensions, View, Modal } from 'react-native';
 import { ref, set, onValue, getDatabase } from "firebase/database";
 import { useEffect, useState } from 'react';
 import { db, authentication } from '../lib/firebase.js';
-import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot, setDoc } from "firebase/firestore";
+import { doc, getDoc, getDocs, updateDoc, collection, query, where, onSnapshot, QueryDocumentSnapshot } from "firebase/firestore";
 import { BarChart, Grid, LineChart, PieChart, XAxis, YAxis } from 'react-native-svg-charts';
+import Expenditure from './Expenditure.js';
+import DatePicker from 'react-native-modern-datepicker';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import moment from 'moment';
+import MonthPicker from 'react-native-month-picker';
 import Catebutton from '../components/Catebutton.js';
 import { VictoryPie } from 'victory-native';
 
@@ -14,9 +26,13 @@ const HEIGHT = Dimensions.get('window').height;
 export default A_week = () => {
     const [ExpenditureData, setExpenditureData] = useState([]);
     const [NumData, setNumData] = useState([]);
+    const [show, setShow] = useState(false);
+    const [isOpen, toggleOpen] = useState(false);
     const [IncomeData, setIncomeData] = useState([]);
     const [perData, setPerData] = useState([]);
+    const [payNumData, setPayNumData] = useState([]);
     const [selectedWeek, setSelectedWeek] = useState('this week');
+    const [payCatData, setPayCatData] = useState([]);
     const [isModalVisible, setisModalVisible] = useState(false);
     const changeModalVisibility = (bool) =>{
         setisModalVisible(bool)
@@ -71,28 +87,15 @@ export default A_week = () => {
 
 
     }
-    
-    const todaymon = month(new Date().getMonth() + 1);
-    const todayyear = new Date().getFullYear();
-    const todaydate = new Date().getDate();
 
 
     const userId = authentication.currentUser.uid;
     
     const colorScheme = ["#f83d41","#ff9506","#ff5e01","#fbe7d3","#963f2d","#ed6f00","#fbe7d3","#fd5e53"];
     const categories = ["Traffic", "Recreation", "Medical", "Beautify", "Diet", "Education", "Necessity", "Others"];
-   
-    
-        
 
-     
-            
-     
     useEffect(() => {
-        const weeek = async() =>{
         const getData = async () => {
-            
-        
             const weekRef = query(collection(db, "users/" + userId + "/week"), where("week", "==", selected()));
             const querySnapshot = onSnapshot(weekRef, (refSnapshot) => {
                 const monthList = [];
@@ -134,27 +137,10 @@ export default A_week = () => {
             });
         };
 
-        const weekDefault = doc(db, "users/" + userId + "/week" + '/200207w1');
-        const weekdefaultdoc= await getDoc(weekDefault);
-        if (weekdefaultdoc.exists() === true){
-        getData()
-    }else{
-             setDoc(weekdefaultdoc, {
-                expenditure: 0,
-                income: 0,
-                traffic: 0,
-                recreation: 0,
-                medical: 0,
-                beautify: 0,
-                diet: 0,
-                education: 0,
-                necessity:0,
-                others:0,
-                mon: '2022/07/w1'}).then(getData())
-         
-        } }
-        weeek();
         
+        
+        getData();
+        console.log(selected());
     },[selectedWeek]);
 
 

@@ -304,7 +304,7 @@ export default Profile = () => {
                 </View><View style={{ flexDirection: 'column', flex: 1, backgroundColor: '#F9C70D', borderTopRightRadius: 20 }}>
                     <Text
                         style={{ fontSize: 10, fontWeight: 'bold', color: '#979C9E', textAlign: 'center', paddingTop: 5 }}>
-                        {days + 1}
+                        {days}
                         
                     </Text>
                     <Text
