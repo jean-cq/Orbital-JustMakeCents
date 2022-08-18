@@ -27,7 +27,7 @@ Video: https://www.youtube.com/watch?v=-ib0BHviyCQ
 
 ## 💻APK
 
-https://drive.google.com/file/d/1bhYhTnlZhs56T0zafWyiiXzH8U3r-Qr_/view?usp=sharing
+https://drive.google.com/file/d/1p3uXJqtau4Y2cNeZQJmkV7zCFlxxBK8Y/view?usp=sharing
 
 ## 💡Motivation
 
